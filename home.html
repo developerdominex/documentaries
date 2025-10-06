@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legends Through the Ages</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Georgia', serif;
+    background: url('https://i.imgur.com/JJxM5rP.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #f3eacb;
+    user-select: none;
+  }
+
+  .overlay {
+    background: rgba(0, 0, 0, 0.7);
+    min-height: 100vh;
+    padding: 40px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 3em;
+    letter-spacing: 3px;
+    color: #e4c97a;
+    text-shadow: 0 0 10px #000;
+    margin-bottom: 40px;
+  }
+
+  section {
+    max-width: 900px;
+    margin: 0 auto 60px;
+    background: rgba(40, 30, 10, 0.7);
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  }
+
+  h2 {
+    color: #e0b45f;
+    border-bottom: 2px solid #e0b45f;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  li {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  a {
+    text-decoration: none;
+    color: #f9e8b3;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  a:hover {
+    color: #ffd674;
+  }
+
+  .year {
+    font-size: 0.9em;
+    color: #d3c7a4;
+    font-style: italic;
+    margin-left: 8px;
+  }
+</style>
+
+<script>
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) e.preventDefault();
+  if (e.key === 'F12' || e.key === 'I' && e.ctrlKey && e.shiftKey) e.preventDefault();
+});
+</script>
+</head>
+
+<body>
+<div class="overlay">
+  <h1>Legends Through the Ages</h1>
+
+  <section>
+    <h2>Ancient Greece (c. 800–146 BCE)</h2>
+    <ul>
+      <li><a href="homer.html">Homer</a> <span class="year">(8th century BCE)</span></li>
+      <li><a href="leonidas.html">Leonidas I</a> <span class="year">(540–480 BCE)</span></li>
+      <li><a href="socrates.html">Socrates</a> <span class="year">(470–399 BCE)</span></li>
+      <li><a href="plato.html">Plato</a> <span class="year">(427–347 BCE)</span></li>
+      <li><a href="aristotle.html">Aristotle</a> <span class="year">(384–322 BCE)</span></li>
+      <li><a href="alexander.html">Alexander the Great</a> <span class="year">(356–323 BCE)</span></li>
+      <li><a href="pericles.html">Pericles</a> <span class="year">(495–429 BCE)</span></li>
+      <li><a href="archimedes.html">Archimedes</a> <span class="year">(287–212 BCE)</span></li>
+      <li><a href="hippocrates.html">Hippocrates</a> <span class="year">(460–370 BCE)</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Ancient Rome (509 BCE – 476 CE)</h2>
+    <ul>
+      <li><a href="caesar.html">Julius Caesar</a> <span class="year">(100–44 BCE)</span></li>
+      <li><a href="augustus.html">Augustus</a> <span class="year">(63 BCE – 14 CE)</span></li>
+      <li><a href="cicero.html">Cicero</a> <span class="year">(106–43 BCE)</span></li>
+      <li><a href="marcusaurelius.html">Marcus Aurelius</a> <span class="year">(121–180 CE)</span></li>
+      <li><a href="constantine.html">Constantine the Great</a> <span class="year">(272–337 CE)</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Medieval Era (400–1500 CE)</h2>
+    <ul>
+      <li><a href="charlemagne.html">Charlemagne</a> <span class="year">(742–814)</span></li>
+      <li><a href="saladin.html">Saladin</a> <span class="year">(1137–1193)</span></li>
+      <li><a href="joan.html">Joan of Arc</a> <span class="year">(1412–1431)</span></li>
+      <li><a href="genghiskhan.html">Genghis Khan</a> <span class="year">(1162–1227)</span></li>
+      <li><a href="marcopolo.html">Marco Polo</a> <span class="year">(1254–1324)</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Renaissance (1300–1600 CE)</h2>
+    <ul>
+      <li><a href="leonardo.html">Leonardo da Vinci</a> <span class="year">(1452–1519)</span></li>
+      <li><a href="michelangelo.html">Michelangelo</a> <span class="year">(1475–1564)</span></li>
+      <li><a href="shakespeare.html">William Shakespeare</a> <span class="year">(1564–1616)</span></li>
+      <li><a href="galileo.html">Galileo Galilei</a> <span class="year">(1564–1642)</span></li>
+      <li><a href="copernicus.html">Nicolaus Copernicus</a> <span class="year">(1473–1543)</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Enlightenment & Revolution (1600–1800 CE)</h2>
+    <ul>
+      <li><a href="newton.html">Isaac Newton</a> <span class="year">(1643–1727)</span></li>
+      <li><a href="descartes.html">René Descartes</a> <span class="year">(1596–1650)</span></li>
+      <li><a href="voltaire.html">Voltaire</a> <span class="year">(1694–1778)</span></li>
+      <li><a href="franklin.html">Benjamin Franklin</a> <span class="year">(1706–1790)</span></li>
+      <li><a href="napoleon.html">Napoleon Bonaparte</a> <span class="year">(1769–1821)</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Industrial Age (1800–1900 CE)</h2>
+    <ul>
+      <li><a href="darwin.html">Charles Darwin</a> <span class="year">(1809–1882)</span></li>
+      <li><a href="marx.html">Karl Marx</a> <span class="year">(1818–1883)</span></li>
+      <li><a href="tesla.html">Nikola Tesla</a> <span class="year">(1856–1943)</span></li>
+      <li><a href="edison.html">Thomas Edison</a> <span class="year">(1847–1931)</span></li>
+      <li><a href="lincoln.html">Abraham Lincoln</a> <span class="year">(1809–1865)</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Modern Era (1900–Present)</h2>
+    <ul>
+      <li><a href="einstein.html">Albert Einstein</a> <span class="year">(1879–1955)</span></li>
+      <li><a href="gandhi.html">Mahatma Gandhi</a> <span class="year">(1869–1948)</span></li>
+      <li><a href="mandela.html">Nelson Mandela</a> <span class="year">(1918–2013)</span></li>
+      <li><a href="mlk.html">Martin Luther King Jr.</a> <span class="year">(1929–1968)</span></li>
+      <li><a href="jobs.html">Steve Jobs</a> <span class="year">(1955–2011)</span></li>
+      <li><a href="musk.html">Elon Musk</a> <span class="year">(1971–Present)</span></li>
+      <li><a href="malala.html">Malala Yousafzai</a> <span class="year">(1997–Present)</span></li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
