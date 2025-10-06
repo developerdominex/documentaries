@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homer — The Voice of Ancient Greece</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  body {
+    margin: 0;
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+    background: url('https://images.unsplash.com/photo-1586769852836-bc069f19c0a0?auto=format&fit=crop&w=1740&q=80')
+                no-repeat center center fixed;
+    background-size: cover;
+    color: #f5e7c6;
+    overflow-x: hidden;
+  }
+
+  .overlay {
+    background: rgba(0, 0, 0, 0.75);
+    min-height: 100vh;
+    padding: 60px 20px;
+  }
+
+  .content {
+    max-width: 900px;
+    margin: auto;
+    background: rgba(80, 50, 20, 0.7);
+    border: 1px solid #d4af37;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    position: relative;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 3em;
+    color: #d4af37;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    text-align: center;
+    font-weight: normal;
+    color: #f8e4b7;
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+
+  .homer-img {
+    display: block;
+    margin: 0 auto 30px auto;
+    border-radius: 10px;
+    width: 60%;
+    border: 2px solid #d4af37;
+    box-shadow: 0 0 15px rgba(0,0,0,0.8);
+  }
+
+  p {
+    font-size: 1.15em;
+    line-height: 1.8;
+    text-align: justify;
+    color: #f5e7c6;
+  }
+
+  blockquote {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #ffeab6;
+    border-left: 3px solid #d4af37;
+    margin: 30px 0;
+    padding-left: 20px;
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-top: 40px;
+    padding: 10px 20px;
+    color: #f8e4b7;
+    border: 1px solid #d4af37;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1em;
+  }
+
+  .back-btn i {
+    margin-right: 8px;
+    color: #d4af37;
+  }
+
+  .back-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Decorative icon in the corner */
+  .decorative-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #d4af37;
+    font-size: 1.5em;
+    opacity: 0.8;
+  }
+
+  .decorative-icon:hover {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  // Disable right-click and dev tools
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && (
+        e.key === 'u' || e.key === 'U' || 
+        e.key === 's' || e.key === 'S' || 
+        e.key === 'i' || e.key === 'I' || 
+        e.key === 'j' || e.key === 'J')) {
+      e.preventDefault();
+    }
+    if (e.key === 'F12') e.preventDefault();
+  });
+</script>
+</head>
+
+<body>
+<div class="overlay">
+  <div class="content">
+    <i class="fas fa-feather-alt decorative-icon" title="Ancient Poet"></i>
+
+    <h1><i class="fas fa-scroll"></i> Homer</h1>
+    <h3>The Blind Poet of Ancient Greece (c. 8th Century BCE)</h3>
+
+    <img class="homer-img" src="https://upload.wikimedia.org/wikipedia/commons/7/76/Homer_British_Museum.jpg" alt="Homer, the Ancient Greek Poet">
+
+    <p>
+      <i class="fas fa-quote-left" style="color:#d4af37"></i> 
+      Homer stands as one of the most revered figures in the history of world literature.
+      Believed to have lived around the 8th century BCE, he is credited with composing 
+      <em>The Iliad</em> and <em>The Odyssey</em> — two monumental epic poems that shaped
+      the very foundation of Western storytelling.
+      <i class="fas fa-quote-right" style="color:#d4af37"></i>
+    </p>
+
+    <p>
+      His verses captured the essence of heroism, fate, honor, and the relationship between 
+      gods and mortals. Though little is known about his life — and debate persists over whether
+      he was a single person or a collective tradition — the power of his poetry remains
+      timeless and universal.
+    </p>
+
+    <blockquote>
+      <i class="fas fa-music"></i> “Sing, O Muse, of the wrath of Achilles, son of Peleus — that brought countless ills upon the Achaeans.”
+    </blockquote>
+
+    <p>
+      Through the centuries, Homer’s epics have inspired countless generations of poets, 
+      artists, philosophers, and historians. His influence extends from ancient Greece to 
+      modern civilization, making him not just a poet but the eternal voice of human experience.
+    </p>
+
+    <p>
+      The stories he told — of courage and compassion, of war and wisdom — remain alive even 
+      today, echoing through every tale of heroism and every song of humanity.
+    </p>
+
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i>Back to Legends</a>
+  </div>
+</div>
+</body>
+</html>
