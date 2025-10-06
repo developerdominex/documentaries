@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Socrates — The Philosopher of Wisdom</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  body {
+    margin: 0;
+    font-family: "Palatino Linotype", "Book Antiqua", serif;
+    background: url('https://images.unsplash.com/photo-1529253355930-c3398eb5a1b5?auto=format&fit=crop&w=1740&q=80')
+                no-repeat center center fixed;
+    background-size: cover;
+    color: #f5e7c6;
+    overflow-x: hidden;
+  }
+
+  .overlay {
+    background: rgba(0, 0, 0, 0.8);
+    min-height: 100vh;
+    padding: 60px 20px;
+  }
+
+  .content {
+    max-width: 900px;
+    margin: auto;
+    background: rgba(70, 40, 10, 0.7);
+    border: 1px solid #d4af37;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 3em;
+    color: #d4af37;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    text-align: center;
+    font-weight: normal;
+    color: #f8e4b7;
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+
+  .hero-img {
+    display: block;
+    margin: 0 auto 30px auto;
+    border-radius: 10px;
+    width: 60%;
+    border: 2px solid #d4af37;
+    box-shadow: 0 0 15px rgba(0,0,0,0.8);
+  }
+
+  p {
+    font-size: 1.15em;
+    line-height: 1.8;
+    text-align: justify;
+    color: #f5e7c6;
+  }
+
+  blockquote {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #ffeab6;
+    border-left: 3px solid #d4af37;
+    margin: 30px 0;
+    padding-left: 20px;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 40px;
+    padding: 10px 20px;
+    color: #f8e4b7;
+    border: 1px solid #d4af37;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+
+  .back-btn i {
+    margin-right: 10px;
+  }
+
+  .back-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+  }
+</style>
+
+<script>
+  // Disable right-click and developer tools
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && (
+        e.key === 'u' || e.key === 'U' ||
+        e.key === 's' || e.key === 'S' ||
+        e.key === 'i' || e.key === 'I' ||
+        e.key === 'j' || e.key === 'J')) {
+      e.preventDefault();
+    }
+    if (e.key === 'F12') e.preventDefault();
+  });
+</script>
+</head>
+
+<body>
+<div class="overlay">
+  <div class="content">
+    <h1><i class="fa-solid fa-scroll"></i> Socrates</h1>
+    <h3>The Father of Western Philosophy (469–399 BCE)</h3>
+
+    <img class="hero-img" src="https://upload.wikimedia.org/wikipedia/commons/3/39/Socrates_Louvre.jpg" alt="Bust of Socrates">
+
+    <p>
+      Socrates, one of the most profound thinkers of ancient Greece, transformed philosophy from abstract speculation to an examination of human ethics and self-knowledge.
+      He left no written works of his own, but his student Plato immortalized his ideas and method of dialogue — the <em>Socratic Method</em> — in timeless dialogues.
+    </p>
+
+    <p>
+      A man of unmatched moral integrity, Socrates believed that wisdom begins in recognizing one’s ignorance. 
+      His relentless questioning challenged the assumptions of Athenian society, provoking admiration and controversy alike.
+      In 399 BCE, he was condemned to death for "corrupting the youth" and "impiety", yet faced his fate with calm dignity.
+    </p>
+
+    <blockquote>
+      “The unexamined life is not worth living.”
+    </blockquote>
+
+    <p>
+      His death became a symbol of intellectual freedom and integrity.
+      Socrates’ courage to stand by his principles, even unto death, laid the ethical foundation for Western thought — influencing philosophers from Plato and Aristotle to Descartes and Nietzsche.
+    </p>
+
+    <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i>Back to Legends</a>
+  </div>
+</div>
+</body>
+</html>
