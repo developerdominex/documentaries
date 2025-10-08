@@ -3,21 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Socrates — The Philosopher of Wisdom</title>
+<title>Socrates — The Philosopher of Athens</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
   body {
     margin: 0;
     font-family: "Palatino Linotype", "Book Antiqua", serif;
-    background: url('https://images.unsplash.com/photo-1529253355930-c3398eb5a1b5?auto=format&fit=crop&w=1740&q=80')
-                no-repeat center center fixed;
-    background-size: cover;
-    color: #f5e7c6;
+    background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+    background-size: 400% 400%;
+    animation: gradientMove 22s ease infinite;
+    color: #eae7dc;
     overflow-x: hidden;
   }
 
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
   .overlay {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.65);
     min-height: 100vh;
     padding: 60px 20px;
   }
@@ -25,50 +31,43 @@
   .content {
     max-width: 900px;
     margin: auto;
-    background: rgba(70, 40, 10, 0.7);
-    border: 1px solid #d4af37;
+    background: rgba(50, 60, 80, 0.55);
+    border: 1px solid #c0b283;
     border-radius: 12px;
     padding: 40px;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
   }
 
   h1 {
     text-align: center;
     font-size: 3em;
-    color: #d4af37;
+    color: #c0b283;
     letter-spacing: 2px;
     margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(192, 178, 131, 0.5);
   }
 
   h3 {
     text-align: center;
     font-weight: normal;
-    color: #f8e4b7;
+    color: #f4e1b5;
     margin-bottom: 40px;
     font-style: italic;
-  }
-
-  .hero-img {
-    display: block;
-    margin: 0 auto 30px auto;
-    border-radius: 10px;
-    width: 60%;
-    border: 2px solid #d4af37;
-    box-shadow: 0 0 15px rgba(0,0,0,0.8);
   }
 
   p {
     font-size: 1.15em;
     line-height: 1.8;
     text-align: justify;
-    color: #f5e7c6;
+    color: #eae7dc;
   }
 
   blockquote {
     font-size: 1.2em;
     font-style: italic;
-    color: #ffeab6;
-    border-left: 3px solid #d4af37;
+    color: #f8f1da;
+    border-left: 3px solid #c0b283;
     margin: 30px 0;
     padding-left: 20px;
   }
@@ -78,25 +77,26 @@
     align-items: center;
     margin-top: 40px;
     padding: 10px 20px;
-    color: #f8e4b7;
-    border: 1px solid #d4af37;
+    color: #f4e1b5;
+    border: 1px solid #c0b283;
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
   }
 
   .back-btn i {
     margin-right: 10px;
+    color: #c0b283;
   }
 
   .back-btn:hover {
-    background: rgba(212, 175, 55, 0.2);
+    background: rgba(192, 178, 131, 0.2);
+    transform: translateY(-2px);
   }
 </style>
 
 <script>
-  // Disable right-click and developer tools
   document.addEventListener('contextmenu', e => e.preventDefault());
   document.addEventListener('keydown', e => {
     if (e.ctrlKey && (
@@ -115,19 +115,18 @@
 <div class="overlay">
   <div class="content">
     <h1><i class="fa-solid fa-scroll"></i> Socrates</h1>
-    <h3>The Father of Western Philosophy (469–399 BCE)</h3>
-
-    <img class="hero-img" src="https://upload.wikimedia.org/wikipedia/commons/3/39/Socrates_Louvre.jpg" alt="Bust of Socrates">
+    <h3>The Philosopher of Athens — The Father of Western Thought (c. 470–399 BCE)</h3>
 
     <p>
-      Socrates, one of the most profound thinkers of ancient Greece, transformed philosophy from abstract speculation to an examination of human ethics and self-knowledge.
-      He left no written works of his own, but his student Plato immortalized his ideas and method of dialogue — the <em>Socratic Method</em> — in timeless dialogues.
+      Socrates stands as one of the most profound figures in the history of philosophy — a man who questioned everything
+      and sought truth not through wealth or power, but through dialogue and reflection. His legacy became the foundation
+      of Western philosophy, inspiring thinkers like Plato and Aristotle.
     </p>
 
     <p>
-      A man of unmatched moral integrity, Socrates believed that wisdom begins in recognizing one’s ignorance. 
-      His relentless questioning challenged the assumptions of Athenian society, provoking admiration and controversy alike.
-      In 399 BCE, he was condemned to death for "corrupting the youth" and "impiety", yet faced his fate with calm dignity.
+      He lived simply, walking the streets of Athens, engaging citizens in deep discussions about virtue, justice, and
+      the meaning of a good life. Socrates believed that true wisdom came from recognizing one’s own ignorance.
+      His humility in the face of knowledge transformed the way humanity understands wisdom itself.
     </p>
 
     <blockquote>
@@ -135,8 +134,9 @@
     </blockquote>
 
     <p>
-      His death became a symbol of intellectual freedom and integrity.
-      Socrates’ courage to stand by his principles, even unto death, laid the ethical foundation for Western thought — influencing philosophers from Plato and Aristotle to Descartes and Nietzsche.
+      Condemned to death for challenging the norms of his society, Socrates met his end with calm dignity, drinking the
+      cup of hemlock rather than abandoning his principles. His final act was not a defeat, but a triumph of integrity —
+      a reminder that truth and virtue are worth more than life itself.
     </p>
 
     <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i>Back to Legends</a>
