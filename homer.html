@@ -5,19 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Homer — The Voice of Ancient Greece</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
   body {
     margin: 0;
     font-family: "Palatino Linotype", "Book Antiqua", serif;
-    background: url('https://images.unsplash.com/photo-1586769852836-bc069f19c0a0?auto=format&fit=crop&w=1740&q=80')
-                no-repeat center center fixed;
-    background-size: cover;
+    background: linear-gradient(145deg, #1b1712, #3b2d1f, #6b5231);
+    background-size: 400% 400%;
+    animation: gradientMove 18s ease infinite;
     color: #f5e7c6;
     overflow-x: hidden;
   }
 
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
   .overlay {
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.6);
     min-height: 100vh;
     padding: 60px 20px;
   }
@@ -25,12 +32,13 @@
   .content {
     max-width: 900px;
     margin: auto;
-    background: rgba(80, 50, 20, 0.7);
+    background: rgba(80, 50, 20, 0.55);
     border: 1px solid #d4af37;
     border-radius: 12px;
     padding: 40px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
     position: relative;
+    backdrop-filter: blur(6px);
   }
 
   h1 {
@@ -39,6 +47,7 @@
     color: #d4af37;
     letter-spacing: 2px;
     margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
   }
 
   h3 {
@@ -47,15 +56,6 @@
     color: #f8e4b7;
     margin-bottom: 40px;
     font-style: italic;
-  }
-
-  .homer-img {
-    display: block;
-    margin: 0 auto 30px auto;
-    border-radius: 10px;
-    width: 60%;
-    border: 2px solid #d4af37;
-    box-shadow: 0 0 15px rgba(0,0,0,0.8);
   }
 
   p {
@@ -77,7 +77,7 @@
   .back-btn {
     display: inline-block;
     margin-top: 40px;
-    padding: 10px 20px;
+    padding: 10px 22px;
     color: #f8e4b7;
     border: 1px solid #d4af37;
     border-radius: 8px;
@@ -92,11 +92,10 @@
   }
 
   .back-btn:hover {
-    background: rgba(212, 175, 55, 0.2);
+    background: rgba(212, 175, 55, 0.15);
     transform: translateY(-2px);
   }
 
-  /* Decorative icon in the corner */
   .decorative-icon {
     position: absolute;
     top: 20px;
@@ -104,15 +103,19 @@
     color: #d4af37;
     font-size: 1.5em;
     opacity: 0.8;
+    transition: opacity 0.3s;
   }
 
   .decorative-icon:hover {
     opacity: 1;
   }
+
+  script, style {
+    user-select: none;
+  }
 </style>
 
 <script>
-  // Disable right-click and dev tools
   document.addEventListener('contextmenu', e => e.preventDefault());
   document.addEventListener('keydown', e => {
     if (e.ctrlKey && (
@@ -135,19 +138,17 @@
     <h1><i class="fas fa-scroll"></i> Homer</h1>
     <h3>The Blind Poet of Ancient Greece (c. 8th Century BCE)</h3>
 
-    <img class="homer-img" src="https://upload.wikimedia.org/wikipedia/commons/7/76/Homer_British_Museum.jpg" alt="Homer, the Ancient Greek Poet">
-
     <p>
-      <i class="fas fa-quote-left" style="color:#d4af37"></i> 
+      <i class="fas fa-quote-left" style="color:#d4af37"></i>
       Homer stands as one of the most revered figures in the history of world literature.
-      Believed to have lived around the 8th century BCE, he is credited with composing 
+      Believed to have lived around the 8th century BCE, he is credited with composing
       <em>The Iliad</em> and <em>The Odyssey</em> — two monumental epic poems that shaped
       the very foundation of Western storytelling.
       <i class="fas fa-quote-right" style="color:#d4af37"></i>
     </p>
 
     <p>
-      His verses captured the essence of heroism, fate, honor, and the relationship between 
+      His verses captured the essence of heroism, fate, honor, and the relationship between
       gods and mortals. Though little is known about his life — and debate persists over whether
       he was a single person or a collective tradition — the power of his poetry remains
       timeless and universal.
@@ -158,13 +159,13 @@
     </blockquote>
 
     <p>
-      Through the centuries, Homer’s epics have inspired countless generations of poets, 
-      artists, philosophers, and historians. His influence extends from ancient Greece to 
+      Through the centuries, Homer’s epics have inspired countless generations of poets,
+      artists, philosophers, and historians. His influence extends from ancient Greece to
       modern civilization, making him not just a poet but the eternal voice of human experience.
     </p>
 
     <p>
-      The stories he told — of courage and compassion, of war and wisdom — remain alive even 
+      The stories he told — of courage and compassion, of war and wisdom — remain alive even
       today, echoing through every tale of heroism and every song of humanity.
     </p>
 
