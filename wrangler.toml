@@ -1,9 +1,0 @@
-name = "dominexmanifesto"
-compatibility_date = "2025-10-08"
-type = "javascript"
-
-site = { 
-  bucket = ".",        # "." means the current root folder
-  include = ["**/*"],  # include all files
-  exclude = []         # exclude nothing
-}
