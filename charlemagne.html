@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Charlemagne — Father of Europe</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root{--gold:#d4af37;--muted:#efe7d1}
+  body{
+    margin:0;font-family:"Palatino Linotype","Book Antiqua",serif;
+    background: linear-gradient(135deg,#0b132b,#2b2f42,#3b2f1f);
+    background-size:400% 400%;animation:grad 20s ease infinite;
+    color:var(--muted);-webkit-font-smoothing:antialiased;
+  }
+  @keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .wrap{min-height:100vh;padding:60px 20px;display:flex;align-items:start;justify-content:center;background:rgba(0,0,0,0.25)}
+  .card{
+    width:100%;max-width:920px;background:rgba(45,38,30,0.6);border:1px solid rgba(212,175,55,0.12);
+    border-radius:14px;padding:36px;box-shadow:0 10px 30px rgba(0,0,0,0.6);backdrop-filter:blur(6px);
+  }
+  h1{margin:0;text-align:center;font-size:2.6rem;color:var(--gold);letter-spacing:1px}
+  h3{margin:8px 0 28px;text-align:center;color:#f6e9c6;font-style:italic}
+  p{line-height:1.75;font-size:1.05rem;margin-bottom:16px;text-align:justify}
+  blockquote{margin:26px 0;padding-left:18px;border-left:3px solid var(--gold);color:#fff6dc;font-style:italic}
+  .back{display:inline-flex;align-items:center;padding:10px 18px;border-radius:8px;border:1px solid var(--gold);color:var(--muted);text-decoration:none;font-weight:600;margin-top:18px}
+  .back i{margin-right:10px;color:var(--gold)}
+  .back:hover{background:rgba(212,175,55,0.12)}
+  /* disable basic shortcuts */
+  script, style{user-select:none}
+</style>
+<script>
+  document.addEventListener('contextmenu', e=> e.preventDefault());
+  document.addEventListener('keydown', e=>{
+    if (e.ctrlKey && ['u','U','s','S'].includes(e.key)) e.preventDefault();
+    if (e.key==='F12' || (e.ctrlKey && e.shiftKey && e.key==='I')) e.preventDefault();
+  });
+</script>
+</head>
+<body>
+  <div class="wrap">
+    <article class="card">
+      <h1><i class="fa-solid fa-crown"></i> Charlemagne</h1>
+      <h3>King of the Franks, Emperor of the Romans (742–814)</h3>
+
+      <p>
+        Charlemagne (Charles the Great) united much of Western and Central Europe during the early Middle Ages.  
+        Crowned Emperor by Pope Leo III in 800 CE, he founded the Carolingian Empire and promoted Christian rule, administrative reforms,
+        literacy, and learning — prompting the cultural renewal historians call the Carolingian Renaissance.
+      </p>
+
+      <p>
+        His reign re-shaped medieval Europe: he reorganized territories into counties and appointed trusted counts, standardized weights and measures,
+        and supported monastic and cathedral schools to revive learning. Charlemagne’s legacy is the political and cultural template for later European states.
+      </p>
+
+      <blockquote>“To have great men to rule is a blessing and a danger.”</blockquote>
+
+      <p>
+        Though his empire fragmented after his death, Charlemagne remains a central figure in European history — hailed as the “Father of Europe”
+        for his role in forging political unity and reviving classical knowledge.
+      </p>
+
+      <a class="back" href="index.html"><i class="fa-solid fa-arrow-left"></i>Back to Legends</a>
+    </article>
+  </div>
+</body>
+</html>
