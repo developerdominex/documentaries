@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Michelangelo — Sculptor of the Divine Form</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root{--gold:#d4af37;--iv:#f6ecd9}
+  body{margin:0;font-family:"Palatino Linotype","Book Antiqua",serif;
+    background:linear-gradient(135deg,#1b1f2a,#49332a,#7a5a45);background-size:400% 400%;animation:move 20s ease infinite;color:var(--iv)}
+  @keyframes move{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .wrap{min-height:100vh;padding:56px 18px;display:flex;align-items:start;justify-content:center;background:rgba(0,0,0,0.18)}
+  .card{max-width:920px;background:rgba(30,26,24,0.62);padding:36px;border-radius:12px;border:1px solid rgba(212,175,55,0.12);box-shadow:0 12px 32px rgba(0,0,0,0.6);backdrop-filter:blur(6px)}
+  h1{text-align:center;color:var(--gold);font-size:2.6rem;margin:0}
+  h3{text-align:center;color:#fff3d6;margin:8px 0 24px;font-style:italic}
+  p{font-size:1.05rem;line-height:1.75;text-align:justify;margin-bottom:14px}
+  blockquote{border-left:3px solid var(--gold);padding-left:18px;color:#fff6d9;margin:26px 0;font-style:italic}
+  .back{display:inline-flex;align-items:center;padding:10px 18px;border-radius:8px;border:1px solid var(--gold);color:var(--iv);text-decoration:none;font-weight:600}
+  .back i{margin-right:10px;color:var(--gold)}
+  .back:hover{background:rgba(212,175,55,0.12)}
+</style>
+<script>
+  document.addEventListener('contextmenu', e=> e.preventDefault());
+  document.addEventListener('keydown', e=>{ if(e.ctrlKey && ['u','U','s','S'].includes(e.key)) e.preventDefault(); if(e.key==='F12') e.preventDefault(); });
+</script>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card">
+      <h1><i class="fa-solid fa-sculpture"></i> Michelangelo</h1>
+      <h3>Sculptor, Painter, and Architect (1475–1564)</h3>
+
+      <p>
+        Michelangelo Buonarroti was a towering figure of the High Renaissance — sculptor of the sublime <em>David</em>, painter of the Sistine Chapel ceiling, and architect of St. Peter’s dome.
+        His works capture an intense physical realism married to spiritual aspiration.
+      </p>
+
+      <p>
+        Michelangelo’s mastery of form, anatomy, and emotional power influenced Western art profoundly. He pursued a vision of beauty that combined classical harmony with bold energy.
+      </p>
+
+      <blockquote>“The greatest danger for most of us is not that our aim is too high and we miss it, but that it is too low and we reach it.”</blockquote>
+
+      <p>
+        His legacy is everywhere in Rome and beyond — monuments and frescoes that continue to move and inspire.
+      </p>
+
+      <a class="back" href="index.html"><i class="fa-solid fa-arrow-left"></i>Back to Legends</a>
+    </main>
+  </div>
+</body>
+</html>
