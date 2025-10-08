@@ -8,81 +8,106 @@
   body {
     margin: 0;
     padding: 0;
-    font-family: 'Georgia', serif;
-    background: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1740&q=80') 
-                no-repeat center center fixed;
-    background-size: cover;
-    color: #f3eacb;
+    font-family: "Segoe UI", "Georgia", serif;
+    background: linear-gradient(135deg, #1e1f29, #343746, #1e1f29);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+    color: #f3f3f3;
     user-select: none;
   }
 
-  .overlay {
-    background: rgba(0, 0, 0, 0.7);
-    min-height: 100vh;
-    padding: 40px;
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
+  .overlay {
+    min-height: 100vh;
+    padding: 40px 20px;
+    backdrop-filter: blur(6px);
+  }
   h1 {
     text-align: center;
-    font-size: 3em;
-    letter-spacing: 3px;
-    color: #e4c97a;
-    text-shadow: 0 0 10px #000;
-    margin-bottom: 40px;
+    font-size: 2.8em;
+    letter-spacing: 2px;
+    color: #ffd86b;
+    text-shadow: 0 0 10px rgba(255, 216, 107, 0.5);
+    margin-bottom: 50px;
   }
 
   section {
     max-width: 900px;
-    margin: 0 auto 60px;
-    background: rgba(40, 30, 10, 0.7);
-    padding: 20px 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    margin: 0 auto 50px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 25px 30px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+
+  section:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.1);
   }
 
   h2 {
-    color: #e0b45f;
-    border-bottom: 2px solid #e0b45f;
-    padding-bottom: 5px;
-    margin-bottom: 15px;
+    color: #ffd86b;
+    border-bottom: 2px solid rgba(255, 216, 107, 0.5);
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+    font-size: 1.5em;
   }
 
   ul {
-    list-style-type: none;
+    list-style: none;
     padding-left: 0;
   }
 
   li {
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  li:last-child {
+    border-bottom: none;
   }
 
   a {
     text-decoration: none;
-    color: #f9e8b3;
+    color: #f7f4de;
     font-weight: bold;
-    transition: color 0.3s;
+    letter-spacing: 0.3px;
+    transition: color 0.3s ease;
   }
 
   a:hover {
-    color: #ffd674;
+    color: #ffd86b;
   }
 
   .year {
     font-size: 0.9em;
-    color: #d3c7a4;
+    color: #d8d1b0;
     font-style: italic;
-    margin-left: 8px;
+  }
+
+  @media (max-width: 700px) {
+    h1 { font-size: 2.2em; }
+    section { padding: 20px; }
+    h2 { font-size: 1.3em; }
   }
 </style>
 
 <script>
-document.addEventListener('contextmenu', event => event.preventDefault());
-
-document.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) e.preventDefault();
-  if (e.key === 'F12' || e.key === 'I' && e.ctrlKey && e.shiftKey) e.preventDefault();
-});
+  document.addEventListener('contextmenu', event => event.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && (['u','U','s','S'].includes(e.key))) e.preventDefault();
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) e.preventDefault();
+  });
 </script>
 </head>
 
@@ -159,7 +184,6 @@ document.addEventListener('keydown', function(e) {
       <li><a href="lincoln.html">Abraham Lincoln</a> <span class="year">(1809–1865)</span></li>
     </ul>
   </section>
-
   <section>
     <h2>Modern Era (1900–Present)</h2>
     <ul>
