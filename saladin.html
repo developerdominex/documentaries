@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Saladin — The Noble Sultan</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root{--gold:#d4af37;--iv:#f4ead6}
+  body{margin:0;font-family:"Palatino Linotype","Book Antiqua",serif;
+    background: linear-gradient(135deg,#3a2a1a,#6b4a2a,#a77b45);
+    background-size:400% 400%;animation:gr 20s ease infinite;color:var(--iv)}
+  @keyframes gr{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .wrap{min-height:100vh;padding:56px 18px;display:flex;align-items:start;justify-content:center;background:rgba(0,0,0,0.22)}
+  .card{max-width:920px;background:rgba(40,30,22,0.6);border-radius:12px;padding:36px;border:1px solid rgba(212,175,55,0.12);box-shadow:0 12px 32px rgba(0,0,0,0.6);backdrop-filter:blur(6px)}
+  h1{text-align:center;color:var(--gold);font-size:2.6rem;margin:0}
+  h3{text-align:center;color:#f7ead1;margin:8px 0 28px;font-style:italic}
+  p{font-size:1.05rem;line-height:1.75;text-align:justify;margin-bottom:14px}
+  blockquote{border-left:3px solid var(--gold);padding-left:18px;color:#fff3d6;margin:26px 0;font-style:italic}
+  .back{display:inline-flex;align-items:center;padding:10px 18px;border-radius:8px;border:1px solid var(--gold);color:var(--iv);text-decoration:none;font-weight:600}
+  .back i{margin-right:10px;color:var(--gold)}
+  .back:hover{background:rgba(212,175,55,0.12)}
+</style>
+<script>
+  document.addEventListener('contextmenu', e=> e.preventDefault());
+  document.addEventListener('keydown', e=>{ if(e.ctrlKey && ['u','U','s','S'].includes(e.key)) e.preventDefault(); if(e.key==='F12') e.preventDefault(); });
+</script>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card">
+      <h1><i class="fa-solid fa-sword"></i> Saladin</h1>
+      <h3>The Sultan of Egypt and Syria — A Chivalrous Leader (1137–1193)</h3>
+
+      <p>
+        Ṣalāḥ ad-Dīn Yūsuf ibn Ayyūb, known as Saladin, was a Kurdish Muslim leader who founded the Ayyubid dynasty and recaptured Jerusalem from the Crusaders in 1187.
+        Celebrated in both Islamic and European sources for his military skill and chivalry, Saladin combined political acumen with a reputation for mercy.
+      </p>
+
+      <p>
+        He united Muslim forces across Syria and Egypt, reformed administration, and deftly balanced warfare with diplomacy. His victory at the Battle of Hattin paved the way for the end of Crusader dominance in Jerusalem.
+      </p>
+
+      <blockquote>“Nothing is as dear to me as justice.”</blockquote>
+
+      <p>
+        Saladin’s legacy endures as an exemplar of honor and magnanimity during war — a leader respected even by his adversaries, remembered for mercy toward civilians and for restoring religious sites.
+      </p>
+
+      <a class="back" href="index.html"><i class="fa-solid fa-arrow-left"></i>Back to Legends</a>
+    </main>
+  </div>
+</body>
+</html>
