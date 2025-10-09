@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subatomic Particles — Chemistry Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --paper: #ffffff;
+    --ink: #1e293b;
+    --accent: #5c7cfa;
+    --shadow: rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-family: "Crimson Pro", serif;
+    text-align: center;
+    color: var(--accent);
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
+
+  .folder-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .folder {
+    background: var(--paper);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow);
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 6px solid var(--accent);
+  }
+
+  .folder:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  }
+
+  .folder-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .folder-header i {
+    font-size: 1.6rem;
+    color: var(--accent);
+  }
+
+  .folder-header h2 {
+    font-size: 1.2rem;
+    margin: 0;
+    font-family: "Crimson Pro", serif;
+  }
+
+  .folder-content {
+    display: none;
+    margin-top: 14px;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #374151;
+    background: #fefefe;
+    border-left: 4px solid var(--accent);
+    padding: 16px 18px;
+    border-radius: 8px;
+  }
+
+  .folder.active .folder-content {
+    display: block;
+  }
+
+  .folder-content h3 {
+    color: var(--accent);
+    font-family: "Crimson Pro", serif;
+    font-size: 1.1rem;
+    margin-top: 1em;
+  }
+
+  footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+</style>
+</head>
+<body>
+
+<h1>⚛️ Subatomic Particles</h1>
+
+<div class="folder-container">
+
+  <!-- Protons -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-circle-plus"></i>
+      <h2>Protons</h2>
+    </div>
+    <div class="folder-content">
+      <p>Protons are positively charged particles found in the nucleus of an atom. They have a relative charge of +1 and a mass of approximately 1 atomic mass unit (amu). The number of protons defines the atomic number of an element and its identity.</p>
+      <h3>Key Properties:</h3>
+      <ul>
+        <li>Charge: +1</li>
+        <li>Mass: ~1 amu</li>
+        <li>Location: Nucleus</li>
+        <li>Determines element identity</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Neutrons -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-circle-minus"></i>
+      <h2>Neutrons</h2>
+    </div>
+    <div class="folder-content">
+      <p>Neutrons are neutral particles, also found in the nucleus. They have no charge and a mass slightly greater than that of protons. Neutrons play a key role in the stability of the nucleus and isotopic variations of elements.</p>
+      <h3>Key Properties:</h3>
+      <ul>
+        <li>Charge: 0</li>
+        <li>Mass: ~1 amu</li>
+        <li>Location: Nucleus</li>
+        <li>Determines isotopes of elements</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Electrons -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-circle"></i>
+      <h2>Electrons</h2>
+    </div>
+    <div class="folder-content">
+      <p>Electrons are negatively charged particles that orbit the nucleus in electron shells. They are much lighter than protons or neutrons and determine the chemical behavior of atoms by forming bonds.</p>
+      <h3>Key Properties:</h3>
+      <ul>
+        <li>Charge: −1</li>
+        <li>Mass: ~1/1836 amu</li>
+        <li>Location: Electron cloud around nucleus</li>
+        <li>Responsible for chemical bonding</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-table-cells"></i>
+      <h2>Comparison of Subatomic Particles</h2>
+    </div>
+    <div class="folder-content">
+      <table style="width:100%; border-collapse: collapse; text-align: left;">
+        <tr>
+          <th style="border-bottom:1px solid #ccc; padding:8px;">Particle</th>
+          <th style="border-bottom:1px solid #ccc; padding:8px;">Charge</th>
+          <th style="border-bottom:1px solid #ccc; padding:8px;">Mass (amu)</th>
+          <th style="border-bottom:1px solid #ccc; padding:8px;">Location</th>
+        </tr>
+        <tr>
+          <td>Proton</td>
+          <td>+1</td>
+          <td>~1</td>
+          <td>Nucleus</td>
+        </tr>
+        <tr>
+          <td>Neutron</td>
+          <td>0</td>
+          <td>~1</td>
+          <td>Nucleus</td>
+        </tr>
+        <tr>
+          <td>Electron</td>
+          <td>−1</td>
+          <td>~1/1836</td>
+          <td>Electron cloud</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2025 Chemistry Knowledge Project — Dominex Macedon</footer>
+
+<script>
+function toggleFolder(folder) {
+  folder.classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
