@@ -3,270 +3,249 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chemistry — Foundations and Research Overview</title>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<title>Chemistry — Modern Research Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Crimson+Pro:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-  :root {
-    --bg: #f9f7f3;
-    --paper: #fffdf9;
-    --ink: #1e293b;
-    --accent: #ba8c4e;
-    --shadow: rgba(0, 0, 0, 0.08);
-  }
+:root {
+  --bg: #eef0f4;
+  --paper: #ffffff;
+  --accent: #0074d9;
+  --ink: #1e293b;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --dialog-bg: rgba(255, 255, 255, 0.98);
+  --glass: rgba(255, 255, 255, 0.6);
+}
 
-  * { box-sizing: border-box; }
-  body {
-    font-family: "Inter", sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    margin: 0;
-    padding: 40px 20px;
-  }
+* { box-sizing: border-box; }
 
-  h1 {
-    font-family: "Crimson Pro", serif;
-    text-align: center;
-    color: var(--accent);
-    font-size: 2.5rem;
-    letter-spacing: 0.5px;
-    margin-bottom: 40px;
-  }
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  padding: 40px 20px;
+  min-height: 100vh;
+}
 
-  .folder-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-  }
+h1 {
+  font-family: "Crimson Pro", serif;
+  font-size: 2.6rem;
+  text-align: center;
+  color: var(--accent);
+  margin-bottom: 40px;
+  letter-spacing: 0.5px;
+}
 
-  .folder {
-    background: var(--paper);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px var(--shadow);
-    padding: 22px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-top: 6px solid var(--accent);
-  }
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
 
-  .folder:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  }
+.folder {
+  background: var(--paper);
+  border-radius: 16px;
+  box-shadow: 0 4px 14px var(--shadow);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 5px solid var(--accent);
+}
 
-  .folder-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+.folder:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
 
-  .folder-header i {
-    font-size: 1.6rem;
-    color: var(--accent);
-  }
+.folder i {
+  font-size: 2rem;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
 
-  .folder-header h2 {
-    font-size: 1.2rem;
-    margin: 0;
-    font-family: "Crimson Pro", serif;
-  }
+.folder h2 {
+  font-family: "Crimson Pro", serif;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 0;
+}
 
-  .folder-content {
-    display: none;
-    margin-top: 14px;
-    font-size: 1rem;
-    line-height: 1.7;
-    color: #374151;
-    background: #fffdfa;
-    border-left: 4px solid var(--accent);
-    padding: 16px 18px;
-    border-radius: 8px;
-  }
+.dialog {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(5px);
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
 
-  .folder.active .folder-content {
-    display: block;
-  }
+.dialog-content {
+  background: var(--dialog-bg);
+  border-radius: 14px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  padding: 30px 40px;
+  animation: pop 0.3s ease;
+}
 
-  .folder-content h3 {
-    color: var(--accent);
-    font-family: "Crimson Pro", serif;
-    font-size: 1.1rem;
-    margin-top: 1em;
-  }
+@keyframes pop {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-  footer {
-    margin-top: 60px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #6b7280;
-  }
+.dialog h2 {
+  color: var(--accent);
+  font-family: "Crimson Pro", serif;
+  margin-top: 0;
+}
+
+.dialog-content h3 {
+  margin-top: 1.5em;
+  color: var(--accent);
+  font-family: "Crimson Pro", serif;
+}
+
+.dialog-content p, li {
+  line-height: 1.7;
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--accent);
+}
+
+footer {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
 </style>
 </head>
 <body>
 
-<h1>🔬 Chemistry: The Central Science</h1>
+<h1>🔬 Chemistry: Modern Foundations & Research</h1>
 
-<div class="folder-container">
-
-  <!-- 1. History -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header">
-      <i class="fa-solid fa-scroll"></i>
-      <h2>History and Scope of Chemistry</h2>
-    </div>
-    <div class="folder-content">
-      <p>Chemistry, derived from the ancient practice of alchemy, matured into a modern science during the 17th–19th centuries. Antoine Lavoisier’s identification of oxygen’s role in combustion, Dalton’s atomic theory, and Mendeleev’s periodic table established chemistry as a fundamental natural science. Today, it forms a bridge between physics and biology — explaining the composition, structure, and transformation of matter at both macroscopic and molecular levels.</p>
-      <p>From the synthesis of ammonia in the early 1900s to modern nanochemistry and quantum modeling, chemistry continues to evolve as a dynamic, data-driven science — one that defines materials, medicine, and the molecular basis of life.</p>
-    </div>
-  </div>
-
-  <!-- 2. Periodic Table -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header">
-      <i class="fa-solid fa-table"></i>
-      <h2>The Periodic Table of Elements</h2>
-    </div>
-    <div class="folder-content">
-      <p>The periodic table organizes the 118 known elements by increasing atomic number, revealing recurring patterns of physical and chemical properties. Mendeleev’s genius lay in predicting undiscovered elements — now verified by modern spectroscopy and quantum theory.</p>
-      <h3>Trends and Properties</h3>
-      <ul>
-        <li><b>Atomic Radius:</b> Decreases across a period; increases down a group.</li>
-        <li><b>Ionization Energy:</b> Energy needed to remove an electron — increases across a period.</li>
-        <li><b>Electronegativity:</b> Tendency to attract electrons; highest in fluorine.</li>
-        <li><b>Metallic Character:</b> Decreases across, increases down.</li>
-      </ul>
-      <p>The table reflects the underlying electronic structure of atoms — each period corresponds to a filled electron shell. The layout is a map of quantum mechanics in visible form.</p>
-    </div>
-  </div>
-
-  <!-- 3. Atomic Structure -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header">
-      <i class="fa-solid fa-atom"></i>
-      <h2>Atomic Structure and Quantum Model</h2>
-    </div>
-    <div class="folder-content">
-      <p>Atoms are composed of protons, neutrons, and electrons — with electrons arranged in discrete orbitals defined by quantum numbers. Bohr’s early model introduced quantized orbits, but modern quantum mechanics replaced it with probabilistic electron clouds.</p>
-      <h3>Key Concepts</h3>
-      <ul>
-        <li><b>Heisenberg Uncertainty Principle:</b> Position and momentum cannot both be precisely known.</li>
-        <li><b>Schrödinger Equation:</b> Describes wavefunction (ψ) of an electron.</li>
-        <li><b>Orbitals:</b> Regions where electrons are likely to be found — s, p, d, f types define chemical behavior.</li>
-      </ul>
-      <p>The periodic law arises from these principles — electronic configuration governs reactivity, color, magnetism, and even biological interaction.</p>
-    </div>
-  </div>
-
-  <!-- 4. Chemical Bonding -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header">
-      <i class="fa-solid fa-link"></i>
-      <h2>Chemical Bonding and Molecular Geometry</h2>
-    </div>
-    <div class="folder-content">
-      <p>Chemical bonds are the glue of matter. They arise when atoms share or transfer electrons to achieve stable configurations. The nature of bonding defines structure, reactivity, and properties.</p>
-      <h3>Major Types of Bonds</h3>
-      <ul>
-        <li><b>Ionic Bonds:</b> Electron transfer between metals and nonmetals (e.g., NaCl).</li>
-        <li><b>Covalent Bonds:</b> Electron sharing between nonmetals (e.g., H₂O, CH₄).</li>
-        <li><b>Metallic Bonds:</b> Delocalized electrons create conductivity and malleability.</li>
-      </ul>
-      <h3>Molecular Geometry</h3>
-      <p>VSEPR theory (Valence Shell Electron Pair Repulsion) predicts 3D molecular shapes: linear, bent, tetrahedral, trigonal planar, etc. This geometry influences boiling point, solubility, and reactivity — central to organic chemistry and drug design.</p>
-    </div>
-  </div>
-
-  <!-- 5. States of Matter -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header">
-      <i class="fa-solid fa-cubes"></i>
-      <h2>States of Matter and Kinetic Theory</h2>
-    </div>
-    <div class="folder-content">
-      <p>Matter exists primarily in four states: solid, liquid, gas, and plasma. Each state corresponds to energy levels and particle arrangements.</p>
-      <ul>
-        <li><b>Solids:</b> Fixed shape and volume; strong intermolecular forces.</li>
-        <li><b>Liquids:</b> Fixed volume but variable shape; particles slide past each other.</li>
-        <li><b>Gases:</b> No fixed shape or volume; expand to fill container.</li>
-        <li><b>Plasmas:</b> Ionized gases found in stars and lightning.</li>
-      </ul>
-      <p>Kinetic molecular theory relates temperature to particle motion. Phase changes — melting, evaporation, condensation, and sublimation — occur when energy input alters intermolecular forces.</p>
-    </div>
-  </div>
-
-  <!-- 6. Acids & Bases -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header">
-      <i class="fa-solid fa-droplet"></i>
-      <h2>Acids, Bases, and pH</h2>
-    </div>
-    <div class="folder-content">
-      <p>Acid–base chemistry is foundational to biochemistry, industrial processes, and environmental science.</p>
-      <ul>
-        <li><b>Arrhenius Definition:</b> Acids release H⁺, bases release OH⁻.</li>
-        <li><b>Brønsted–Lowry:</b> Acids donate protons, bases accept them.</li>
-        <li><b>Lewis Theory:</b> Acids accept electron pairs, bases donate them.</li>
-      </ul>
-      <p>The pH scale quantifies hydrogen ion concentration: pH = −log[H⁺]. A buffer resists pH change — vital in blood chemistry and ecosystems. Industrially, acid–base reactions underpin fertilizer production, electrolysis, and corrosion control.</p>
-    </div>
-  </div>
-
-  <!-- 7. Organic Chemistry -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header">
-      <i class="fa-solid fa-dna"></i>
-      <h2>Organic Chemistry and Functional Groups</h2>
-    </div>
-    <div class="folder-content">
-      <p>Organic chemistry is the study of carbon-based compounds — the chemistry of life. Carbon’s tetravalency allows it to form complex molecules, from simple methane to intricate biomolecules.</p>
-      <h3>Functional Groups</h3>
-      <ul>
-        <li>–OH (Alcohols)</li>
-        <li>–COOH (Carboxylic acids)</li>
-        <li>–NH₂ (Amines)</li>
-        <li>–CHO (Aldehydes)</li>
-        <li>–C=O (Ketones)</li>
-      </ul>
-      <p>Isomerism gives rise to structural and stereochemical diversity. Polymers, both natural (proteins, cellulose) and synthetic (nylon, polyethylene), revolutionized materials science. Modern organic synthesis drives pharmaceuticals, dyes, and nanotechnology.</p>
-    </div>
-  </div>
-
-  <!-- 8. Chemical Kinetics -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header">
-      <i class="fa-solid fa-hourglass-half"></i>
-      <h2>Chemical Kinetics and Reaction Rates</h2>
-    </div>
-    <div class="folder-content">
-      <p>Chemical kinetics studies the speed and mechanisms of reactions. The rate depends on temperature, concentration, catalysts, and surface area.</p>
-      <h3>Arrhenius Equation:</h3>
-      <p>k = A·e<sup>−Ea/RT</sup> — describes how rate constant (k) increases with temperature (T).</p>
-      <p>Understanding kinetics is essential in drug metabolism, combustion, enzyme catalysis, and industrial reactor design.</p>
-    </div>
-  </div>
-
-  <!-- 9. Environmental Chemistry -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header">
-      <i class="fa-solid fa-leaf"></i>
-      <h2>Environmental Chemistry</h2>
-    </div>
-    <div class="folder-content">
-      <p>This branch examines chemical processes in the environment — air, water, soil — and human impact. Key topics include greenhouse gases, ozone depletion, acid rain, and heavy metal pollution.</p>
-      <p>Modern sustainable chemistry seeks to minimize waste through “green chemistry” — designing reactions that use renewable feedstocks and non-toxic catalysts.</p>
-    </div>
-  </div>
-
+<div class="folder-grid">
+  <div class="folder" onclick="openDialog('history')"><i class="fa-solid fa-scroll"></i><h2>History of Chemistry</h2></div>
+  <div class="folder" onclick="openDialog('periodic')"><i class="fa-solid fa-table"></i><h2>Periodic Table</h2></div>
+  <div class="folder" onclick="openDialog('atomic')"><i class="fa-solid fa-atom"></i><h2>Atomic Structure</h2></div>
+  <div class="folder" onclick="openDialog('bonding')"><i class="fa-solid fa-link"></i><h2>Chemical Bonding</h2></div>
+  <div class="folder" onclick="openDialog('states')"><i class="fa-solid fa-cubes"></i><h2>States of Matter</h2></div>
+  <div class="folder" onclick="openDialog('acids')"><i class="fa-solid fa-droplet"></i><h2>Acids & Bases</h2></div>
+  <div class="folder" onclick="openDialog('organic')"><i class="fa-solid fa-dna"></i><h2>Organic Chemistry</h2></div>
+  <div class="folder" onclick="openDialog('kinetics')"><i class="fa-solid fa-hourglass-half"></i><h2>Chemical Kinetics</h2></div>
+  <div class="folder" onclick="openDialog('environmental')"><i class="fa-solid fa-leaf"></i><h2>Environmental Chemistry</h2></div>
 </div>
 
-<footer>© 2025 Research Edition — Compiled by Dominex Macedon | Chemistry Knowledge Project</footer>
+<!-- Dialogs -->
+<div id="dialogContainer">
+  <div id="history" class="dialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeDialog('history')"></i>
+      <h2>History and Scope of Chemistry</h2>
+      <p>Chemistry evolved from alchemy into a systematic science in the 17th century. Lavoisier’s discovery of oxygen and Dalton’s atomic theory formed its backbone. Over time, the discipline expanded through thermodynamics, quantum chemistry, and biochemistry, uniting physics with biology through the study of matter and energy.</p>
+      <p>From ancient Egyptian metallurgy to molecular nanotechnology, chemistry remains the foundation of materials, medicine, and environmental science — continuously refined through experiment and computation.</p>
+    </div>
+  </div>
+
+  <div id="periodic" class="dialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeDialog('periodic')"></i>
+      <h2>The Periodic Table of Elements</h2>
+      <p>The periodic table arranges elements by atomic number, grouping them by recurring properties. Mendeleev’s foresight in predicting undiscovered elements demonstrated its predictive power. Modern quantum theory explains these patterns via electron configuration.</p>
+      <h3>Key Trends</h3>
+      <ul>
+        <li><b>Atomic radius:</b> decreases across, increases down.</li>
+        <li><b>Ionization energy:</b> increases across, decreases down.</li>
+        <li><b>Electronegativity:</b> highest in fluorine.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="atomic" class="dialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeDialog('atomic')"></i>
+      <h2>Atomic Structure</h2>
+      <p>Atoms are the fundamental building blocks of matter, composed of protons, neutrons, and electrons. Quantum mechanics defines electron orbitals as regions of probability — leading to modern electron cloud models.</p>
+      <p>The Heisenberg principle and Schrödinger’s equation describe electron behavior and explain why elements form predictable bonds and colors.</p>
+    </div>
+  </div>
+
+  <div id="bonding" class="dialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeDialog('bonding')"></i>
+      <h2>Chemical Bonding</h2>
+      <p>Bonds form through electron exchange or sharing to achieve stability. Ionic, covalent, and metallic bonds govern structure and reactivity. Molecular geometry, explained by VSEPR theory, determines physical and biological properties.</p>
+    </div>
+  </div>
+
+  <div id="states" class="dialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeDialog('states')"></i>
+      <h2>States of Matter</h2>
+      <p>Solid, liquid, gas, and plasma differ by energy and intermolecular forces. The kinetic molecular theory links temperature to motion. Phase transitions like melting and condensation involve breaking or forming intermolecular attractions.</p>
+    </div>
+  </div>
+
+  <div id="acids" class="dialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeDialog('acids')"></i>
+      <h2>Acids, Bases, and pH</h2>
+      <p>Acids donate protons, bases accept them. pH measures hydrogen ion concentration: low pH is acidic, high pH is basic. Buffers stabilize biological systems, while acid-base reactions are essential in batteries, fertilizers, and metabolism.</p>
+    </div>
+  </div>
+
+  <div id="organic" class="dialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeDialog('organic')"></i>
+      <h2>Organic Chemistry</h2>
+      <p>The chemistry of carbon — from hydrocarbons to biomolecules. Functional groups like alcohols, carboxylic acids, amines, and ketones define molecular identity. Organic synthesis drives pharmaceuticals, plastics, and nanomaterials.</p>
+    </div>
+  </div>
+
+  <div id="kinetics" class="dialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeDialog('kinetics')"></i>
+      <h2>Chemical Kinetics</h2>
+      <p>Kinetics studies the rate of reactions and their mechanisms. The Arrhenius equation links reaction rate with temperature. Catalysts lower activation energy — crucial for enzymes, combustion, and industrial synthesis.</p>
+    </div>
+  </div>
+
+  <div id="environmental" class="dialog">
+    <div class="dialog-content">
+      <i class="fa-solid fa-xmark close-btn" onclick="closeDialog('environmental')"></i>
+      <h2>Environmental Chemistry</h2>
+      <p>Explores chemical interactions in air, water, and soil. Key issues include pollution, ozone depletion, and climate change. Green chemistry promotes sustainable industrial processes and minimizes toxic waste.</p>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 Chemistry Research — Compiled by Dominex Macedon</footer>
 
 <script>
-function toggleFolder(folder) {
-  folder.classList.toggle('active');
+function openDialog(id) {
+  document.getElementById(id).style.display = "flex";
+}
+function closeDialog(id) {
+  document.getElementById(id).style.display = "none";
 }
 </script>
 
