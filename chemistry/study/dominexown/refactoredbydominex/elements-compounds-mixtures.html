@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elements, Compounds, and Mixtures — Chemistry Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --accent: #2563eb;
+  --accent2: #d97706;
+  --text: #111827;
+  --muted: #6b7280;
+  --radius: 14px;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+body {
+  margin:0;
+  padding:30px;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+header.hero {
+  display:flex;
+  gap:20px;
+  align-items:center;
+  background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(217,119,6,0.04));
+  padding:20px;
+  border-radius: var(--radius);
+  margin-bottom: 30px;
+  border:1px solid rgba(0,0,0,0.03);
+}
+
+.hero .icon {
+  flex-shrink:0;
+  width:80px;
+  height:80px;
+  border-radius:12px;
+  background: linear-gradient(180deg, rgba(37,99,235,0.1), rgba(217,119,6,0.08));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:36px;
+  color: var(--accent2);
+}
+
+.hero .title h1 {
+  font-family: "Crimson Pro", serif;
+  font-size:1.6rem;
+  margin:0;
+  color: var(--accent);
+}
+
+.hero .title p {
+  margin-top:6px;
+  color: var(--muted);
+}
+
+main {
+  display:grid;
+  grid-template-columns:1fr 280px;
+  gap:24px;
+}
+
+@media(max-width:980px){
+  main{grid-template-columns:1fr;}
+}
+
+.card {
+  background: var(--card);
+  padding:22px;
+  border-radius: var(--radius);
+  box-shadow:0 6px 20px var(--shadow);
+  border:1px solid rgba(15,23,36,0.03);
+  margin-bottom:20px;
+}
+
+h2,h3{
+  font-family: "Crimson Pro", serif;
+  color: var(--accent);
+}
+
+h3{margin-top:16px;color: var(--accent2);}
+
+p{line-height:1.65; margin-bottom:12px;}
+ul{margin-left:20px;}
+li{margin-bottom:8px;}
+
+.toc h3{margin-bottom:12px;}
+.toc a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px;
+  border-radius:10px;
+  color:var(--muted);
+  text-decoration:none;
+}
+.toc a:hover{background: rgba(37,99,235,0.06); color: var(--text);}
+.badge{background:rgba(37,99,235,0.08);color:var(--accent);padding:4px 8px;border-radius:999px;font-size:0.85rem;font-weight:700;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="icon"><i class="fa-solid fa-atom"></i></div>
+  <div class="title">
+    <h1>Elements, Compounds, and Mixtures</h1>
+    <p>Exploring the building blocks of matter and their combinations.</p>
+  </div>
+</header>
+
+<main>
+  <article class="card" role="main">
+    <h2>Overview</h2>
+    <p>Matter is composed of fundamental units that define its properties and behavior. Understanding elements, compounds, and mixtures provides the foundation for chemical analysis and reactions.</p>
+
+    <section id="elements">
+      <h3>Elements</h3>
+      <ul>
+        <li>Pure substances consisting of only one type of atom.</li>
+        <li>Cannot be broken down by chemical means.</li>
+        <li>Each element is defined by its atomic number (number of protons).</li>
+        <li>Examples: Hydrogen (H), Oxygen (O), Gold (Au), Carbon (C).</li>
+      </ul>
+    </section>
+
+    <section id="compounds">
+      <h3>Compounds</h3>
+      <ul>
+        <li>Substances formed when two or more elements chemically combine in fixed ratios.</li>
+        <li>Properties differ from constituent elements.</li>
+        <li>Can be broken down into simpler substances through chemical reactions.</li>
+        <li>Examples: Water (H₂O), Sodium Chloride (NaCl), Carbon Dioxide (CO₂).</li>
+      </ul>
+    </section>
+
+    <section id="mixtures">
+      <h3>Mixtures</h3>
+      <ul>
+        <li>Combination of two or more substances not chemically bonded.</li>
+        <li>Retain individual properties of components.</li>
+        <li>Can be separated by physical methods (filtration, distillation, chromatography).</li>
+        <li>Examples: Air (O₂ + N₂), Saltwater, Trail Mix.</li>
+      </ul>
+    </section>
+
+    <section id="comparison">
+      <h3>Comparison Table</h3>
+      <table style="width:100%;border-collapse:collapse;">
+        <tr style="background:rgba(37,99,235,0.06)">
+          <th style="text-align:left;padding:8px;border:1px solid #ddd;">Feature</th>
+          <th style="text-align:left;padding:8px;border:1px solid #ddd;">Element</th>
+          <th style="text-align:left;padding:8px;border:1px solid #ddd;">Compound</th>
+          <th style="text-align:left;padding:8px;border:1px solid #ddd;">Mixture</th>
+        </tr>
+        <tr>
+          <td style="padding:8px;border:1px solid #ddd;">Composition</td>
+          <td style="padding:8px;border:1px solid #ddd;">Single atom type</td>
+          <td style="padding:8px;border:1px solid #ddd;">Two or more elements chemically combined</td>
+          <td style="padding:8px;border:1px solid #ddd;">Two or more substances physically mixed</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;border:1px solid #ddd;">Separation</td>
+          <td style="padding:8px;border:1px solid #ddd;">Not possible chemically</td>
+          <td style="padding:8px;border:1px solid #ddd;">By chemical reaction</td>
+          <td style="padding:8px;border:1px solid #ddd;">By physical methods</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;border:1px solid #ddd;">Properties</td>
+          <td style="padding:8px;border:1px solid #ddd;">Characteristic of element</td>
+          <td style="padding:8px;border:1px solid #ddd;">Different from constituent elements</td>
+          <td style="padding:8px;border:1px solid #ddd;">Retains properties of components</td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="importance">
+      <h3>Importance</h3>
+      <p>Understanding elements, compounds, and mixtures is vital in chemistry education, laboratory work, and industrial processes. It allows prediction of chemical behavior, correct material usage, and proper experimental techniques.</p>
+    </section>
+  </article>
+
+  <aside class="toc card" aria-label="Table of Contents">
+    <h3>Contents</h3>
+    <a href="#elements"><span class="badge">1</span> Elements</a>
+    <a href="#compounds"><span class="badge">2</span> Compounds</a>
+    <a href="#mixtures"><span class="badge">3</span> Mixtures</a>
+    <a href="#comparison"><span class="badge">4</span> Comparison Table</a>
+    <a href="#importance"><span class="badge">5</span> Importance</a>
+    <a href="chemistry.html" class="section-item"><i class="fa-solid fa-arrow-left"></i> Back to Chemistry Index</a>
+  </aside>
+</main>
+
+<footer style="text-align:center; margin-top:30px; color: var(--muted); font-size:0.9rem;">
+© 2025 Dominex Macedon — Chemistry Knowledge Project
+</footer>
+
+</div>
+</body>
+</html>
