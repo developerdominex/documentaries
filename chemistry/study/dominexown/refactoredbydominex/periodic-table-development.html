@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Periodic Table Development — Chemistry Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f5f6fa;
+  --paper: #ffffff;
+  --ink: #1e293b;
+  --accent: #3b82f6;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-family: "Crimson Pro", serif;
+  text-align: center;
+  color: var(--accent);
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.folder-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.folder {
+  background: var(--paper);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 6px solid var(--accent);
+}
+
+.folder:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.folder-header i {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.folder-header h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  font-family: "Crimson Pro", serif;
+}
+
+.folder-content {
+  display: none;
+  margin-top: 14px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #374151;
+  background: #fefefe;
+  border-left: 4px solid var(--accent);
+  padding: 16px 18px;
+  border-radius: 8px;
+}
+
+.folder.active .folder-content {
+  display: block;
+}
+
+.folder-content h3 {
+  color: var(--accent);
+  font-family: "Crimson Pro", serif;
+  font-size: 1.1rem;
+  margin-top: 1em;
+}
+
+footer {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+</style>
+</head>
+<body>
+
+<h1>🧪 Periodic Table: Development and Evolution</h1>
+
+<div class="folder-container">
+
+  <!-- 1. Early Attempts -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-flask"></i>
+      <h2>Early Attempts at Classification</h2>
+    </div>
+    <div class="folder-content">
+      <p>Before Mendeleev, chemists attempted to organize elements based on atomic mass, chemical properties, and reactivity.</p>
+      <ul>
+        <li>Dmitri Mendeleev (1869) arranged elements by increasing atomic mass and left gaps for undiscovered elements.</li>
+        <li>Lothar Meyer independently noted periodicity of properties but published after Mendeleev.</li>
+        <li>Early systems highlighted the need for a systematic framework in chemistry.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2. Mendeleev’s Table -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-table"></i>
+      <h2>Mendeleev’s Periodic Table</h2>
+    </div>
+    <div class="folder-content">
+      <p>Mendeleev’s periodic table arranged elements by increasing atomic mass, grouping them by similar chemical properties.</p>
+      <h3>Key Features</h3>
+      <ul>
+        <li>Predicted existence and properties of undiscovered elements (e.g., gallium, germanium)</li>
+        <li>Highlighted periodic trends in chemical reactivity and valency</li>
+        <li>Provided a predictive tool that transformed chemistry into a systematic science</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3. Modern Periodic Table -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-atom"></i>
+      <h2>Modern Periodic Table</h2>
+    </div>
+    <div class="folder-content">
+      <p>The modern periodic table is organized by atomic number rather than atomic mass, reflecting the number of protons in each element.</p>
+      <ul>
+        <li>Horizontal rows: periods, vertical columns: groups</li>
+        <li>Elements exhibit periodic recurrence of properties across periods</li>
+        <li>Lanthanides and actinides are displayed separately to maintain table structure</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. Periodic Law -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-recycle"></i>
+      <h2>Periodic Law</h2>
+    </div>
+    <div class="folder-content">
+      <p>The periodic law states that the properties of elements are a periodic function of their atomic numbers.</p>
+      <ul>
+        <li>Explains why elements in the same group exhibit similar chemical behavior</li>
+        <li>Supports the rationale for the structure of the modern periodic table</li>
+        <li>Forms the foundation for predicting element properties and reactions</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. Trends and Applications -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-chart-line"></i>
+      <h2>Periodic Trends and Applications</h2>
+    </div>
+    <div class="folder-content">
+      <p>Periodic trends help predict atomic behavior, reactivity, and chemical bonding:</p>
+      <ul>
+        <li>Atomic radius decreases across periods, increases down groups</li>
+        <li>Ionization energy increases across periods, decreases down groups</li>
+        <li>Electronegativity varies predictably and affects bonding types</li>
+        <li>Useful in predicting chemical reactions, material properties, and electron configurations</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2025 Chemistry Knowledge Project — Dominex Macedon</footer>
+
+<script>
+function toggleFolder(folder) {
+  folder.classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
