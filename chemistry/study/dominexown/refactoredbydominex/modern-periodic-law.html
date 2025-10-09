@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Periodic Law — Chemistry Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f5f7fa;
+  --paper: #ffffff;
+  --ink: #1e293b;
+  --accent: #10b981;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-family: "Crimson Pro", serif;
+  text-align: center;
+  color: var(--accent);
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.folder-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.folder {
+  background: var(--paper);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 6px solid var(--accent);
+}
+
+.folder:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.folder-header i {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.folder-header h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  font-family: "Crimson Pro", serif;
+}
+
+.folder-content {
+  display: none;
+  margin-top: 14px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #374151;
+  background: #fefefe;
+  border-left: 4px solid var(--accent);
+  padding: 16px 18px;
+  border-radius: 8px;
+}
+
+.folder.active .folder-content {
+  display: block;
+}
+
+.folder-content h3 {
+  color: var(--accent);
+  font-family: "Crimson Pro", serif;
+  font-size: 1.1rem;
+  margin-top: 1em;
+}
+
+footer {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+</style>
+</head>
+<body>
+
+<h1>📐 Modern Periodic Law</h1>
+
+<div class="folder-container">
+
+  <!-- 1. Definition -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-book"></i>
+      <h2>Definition of Modern Periodic Law</h2>
+    </div>
+    <div class="folder-content">
+      <p>The modern periodic law states: <b>“The properties of elements are a periodic function of their atomic numbers.”</b></p>
+      <p>This law reflects the underlying quantum mechanics of atoms and corrects anomalies in Mendeleev’s mass-based table.</p>
+    </div>
+  </div>
+
+  <!-- 2. Significance -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-lightbulb"></i>
+      <h2>Significance of Modern Periodic Law</h2>
+    </div>
+    <div class="folder-content">
+      <ul>
+        <li>Resolves inconsistencies in Mendeleev’s table, such as Te and I order by mass.</li>
+        <li>Provides a more accurate framework for predicting element properties and chemical behavior.</li>
+        <li>Connects periodic trends directly to atomic structure and electron configuration.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3. Implications -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-chart-simple"></i>
+      <h2>Implications of the Law</h2>
+    </div>
+    <div class="folder-content">
+      <p>Modern periodic law underpins:</p>
+      <ul>
+        <li>Arrangement of the periodic table by atomic number.</li>
+        <li>Prediction of chemical reactivity, valence, and bonding patterns.</li>
+        <li>Understanding periodic trends: atomic radius, electronegativity, ionization energy.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. Historical Context -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-history"></i>
+      <h2>Historical Context</h2>
+    </div>
+    <div class="folder-content">
+      <p>After Mendeleev, Henry Moseley’s X-ray experiments (1913) showed that atomic number—not mass—determined element properties. This discovery confirmed and modernized the periodic law.</p>
+      <p>The modern table eliminated discrepancies in earlier arrangements and aligned perfectly with the quantum theory of the atom.</p>
+    </div>
+  </div>
+
+  <!-- 5. Applications -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-flask-vial"></i>
+      <h2>Applications of Modern Periodic Law</h2>
+    </div>
+    <div class="folder-content">
+      <ul>
+        <li>Predicting chemical reactivity of unknown elements.</li>
+        <li>Designing materials with targeted electronic, magnetic, and chemical properties.</li>
+        <li>Facilitating the study of transition metals, lanthanides, and actinides.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2025 Chemistry Knowledge Project — Dominex Macedon</footer>
+
+<script>
+function toggleFolder(folder) {
+  folder.classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
