@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electron Configuration — Chemistry Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f5f6fa;
+  --paper: #ffffff;
+  --ink: #1e293b;
+  --accent: #10b981;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-family: "Crimson Pro", serif;
+  text-align: center;
+  color: var(--accent);
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.folder-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.folder {
+  background: var(--paper);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 6px solid var(--accent);
+}
+
+.folder:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.folder-header i {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.folder-header h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  font-family: "Crimson Pro", serif;
+}
+
+.folder-content {
+  display: none;
+  margin-top: 14px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #374151;
+  background: #fefefe;
+  border-left: 4px solid var(--accent);
+  padding: 16px 18px;
+  border-radius: 8px;
+}
+
+.folder.active .folder-content {
+  display: block;
+}
+
+.folder-content h3 {
+  color: var(--accent);
+  font-family: "Crimson Pro", serif;
+  font-size: 1.1rem;
+  margin-top: 1em;
+}
+
+footer {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+</style>
+</head>
+<body>
+
+<h1>⚛️ Electron Configuration of Atoms</h1>
+
+<div class="folder-container">
+
+  <!-- 1. Overview -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-circle-info"></i>
+      <h2>Overview</h2>
+    </div>
+    <div class="folder-content">
+      <p>Electron configuration describes the arrangement of electrons in an atom's orbitals. Understanding it is essential to predict chemical properties, bonding patterns, and reactivity.</p>
+    </div>
+  </div>
+
+  <!-- 2. Aufbau Principle -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-layer-group"></i>
+      <h2>Aufbau Principle</h2>
+    </div>
+    <div class="folder-content">
+      <p>The Aufbau principle states that electrons occupy the lowest energy orbitals first before moving to higher energy orbitals.</p>
+      <ul>
+        <li>Order of filling: 1s → 2s → 2p → 3s → 3p → 4s → 3d → 4p → 5s → 4d → 5p → 6s → 4f → 5d → 6p → 7s → 5f → 6d → 7p</li>
+        <li>Helps predict the electronic arrangement of elements in the periodic table</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3. Pauli Exclusion Principle -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-user-lock"></i>
+      <h2>Pauli Exclusion Principle</h2>
+    </div>
+    <div class="folder-content">
+      <p>No two electrons in an atom can have the same set of four quantum numbers. This ensures that each electron has a unique position in the atom.</p>
+    </div>
+  </div>
+
+  <!-- 4. Hund’s Rule -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-layer-plus"></i>
+      <h2>Hund’s Rule</h2>
+    </div>
+    <div class="folder-content">
+      <p>Electrons fill degenerate orbitals singly first, with parallel spins, before pairing up. This minimizes electron repulsion and stabilizes the atom.</p>
+      <ul>
+        <li>Example: Carbon → 1s² 2s² 2p² → two unpaired electrons in separate p orbitals</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. Notation -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-pencil"></i>
+      <h2>Electron Configuration Notation</h2>
+    </div>
+    <div class="folder-content">
+      <p>Electron configurations can be written in two ways:</p>
+      <ul>
+        <li><b>Full notation:</b> Lists each orbital with electron occupancy (e.g., Oxygen: 1s² 2s² 2p⁴)</li>
+        <li><b>Short-hand / Noble gas notation:</b> Uses previous noble gas to represent filled orbitals (e.g., Oxygen: [He] 2s² 2p⁴)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. Exceptions -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <h2>Exceptions in Electron Configuration</h2>
+    </div>
+    <div class="folder-content">
+      <p>Certain elements (transition metals, lanthanides, and actinides) have electron configurations that differ slightly due to stability of half-filled or filled orbitals.</p>
+      <ul>
+        <li>Example: Chromium → [Ar] 3d⁵ 4s¹ instead of [Ar] 3d⁴ 4s²</li>
+        <li>Example: Copper → [Ar] 3d¹⁰ 4s¹ instead of [Ar] 3d⁹ 4s²</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. Orbital Diagrams -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-diagram-project"></i>
+      <h2>Orbital Diagrams</h2>
+    </div>
+    <div class="folder-content">
+      <p>Orbital diagrams visually represent electron arrangements, showing electrons as arrows in boxes representing orbitals. This makes it easier to apply Hund’s rule and Pauli exclusion principle.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2025 Chemistry Knowledge Project — Dominex Macedon</footer>
+
+<script>
+function toggleFolder(folder) {
+  folder.classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
