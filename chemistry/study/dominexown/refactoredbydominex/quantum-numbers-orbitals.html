@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Numbers and Orbitals — Chemistry Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f5f6fa;
+  --paper: #ffffff;
+  --ink: #1e293b;
+  --accent: #f59e0b;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-family: "Crimson Pro", serif;
+  text-align: center;
+  color: var(--accent);
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.folder-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.folder {
+  background: var(--paper);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 6px solid var(--accent);
+}
+
+.folder:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.folder-header i {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.folder-header h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  font-family: "Crimson Pro", serif;
+}
+
+.folder-content {
+  display: none;
+  margin-top: 14px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #374151;
+  background: #fefefe;
+  border-left: 4px solid var(--accent);
+  padding: 16px 18px;
+  border-radius: 8px;
+}
+
+.folder.active .folder-content {
+  display: block;
+}
+
+.folder-content h3 {
+  color: var(--accent);
+  font-family: "Crimson Pro", serif;
+  font-size: 1.1rem;
+  margin-top: 1em;
+}
+
+footer {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+</style>
+</head>
+<body>
+
+<h1>⚛️ Quantum Numbers and Electron Orbitals</h1>
+
+<div class="folder-container">
+
+  <!-- 1. Overview -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-circle-info"></i>
+      <h2>Overview</h2>
+    </div>
+    <div class="folder-content">
+      <p>Quantum numbers describe the distribution and behavior of electrons in atoms. They are derived from the quantum mechanical model and determine the energy, shape, orientation, and spin of orbitals.</p>
+    </div>
+  </div>
+
+  <!-- 2. Principal Quantum Number -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-layer-group"></i>
+      <h2>Principal Quantum Number (n)</h2>
+    </div>
+    <div class="folder-content">
+      <p>The principal quantum number <b>n</b> indicates the energy level of an electron in an atom. It can take positive integer values (1, 2, 3…).</p>
+      <ul>
+        <li>Determines the size and energy of the orbital</li>
+        <li>Higher <b>n</b> → electrons are further from nucleus → higher energy</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3. Azimuthal Quantum Number -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-vector-square"></i>
+      <h2>Azimuthal Quantum Number (l)</h2>
+    </div>
+    <div class="folder-content">
+      <p>The azimuthal quantum number <b>l</b> determines the shape of the orbital. Its values range from 0 to n-1 for each energy level.</p>
+      <ul>
+        <li>l = 0 → s orbital (spherical)</li>
+        <li>l = 1 → p orbital (dumbbell-shaped)</li>
+        <li>l = 2 → d orbital (cloverleaf)</li>
+        <li>l = 3 → f orbital (complex)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. Magnetic Quantum Number -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-compass"></i>
+      <h2>Magnetic Quantum Number (m<sub>l</sub>)</h2>
+    </div>
+    <div class="folder-content">
+      <p>The magnetic quantum number <b>m<sub>l</sub></b> defines the orientation of the orbital in space. It can take values from -l to +l, including zero.</p>
+    </div>
+  </div>
+
+  <!-- 5. Spin Quantum Number -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-rotate-right"></i>
+      <h2>Spin Quantum Number (m<sub>s</sub>)</h2>
+    </div>
+    <div class="folder-content">
+      <p>The spin quantum number <b>m<sub>s</sub></b> describes the intrinsic spin of an electron. It has only two possible values: +½ or -½.</p>
+      <p>Two electrons in the same orbital must have opposite spins (Pauli Exclusion Principle).</p>
+    </div>
+  </div>
+
+  <!-- 6. Electron Orbitals -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-circle-notch"></i>
+      <h2>Electron Orbitals</h2>
+    </div>
+    <div class="folder-content">
+      <p>Orbitals are regions in an atom where the probability of finding an electron is highest. Their shapes are determined by quantum numbers:</p>
+      <ul>
+        <li><b>s-orbital:</b> spherical, 1 orientation</li>
+        <li><b>p-orbital:</b> dumbbell-shaped, 3 orientations</li>
+        <li><b>d-orbital:</b> clover-shaped, 5 orientations</li>
+        <li><b>f-orbital:</b> complex shape, 7 orientations</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. Electron Configuration -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-diagram-project"></i>
+      <h2>Electron Configuration & Aufbau Principle</h2>
+    </div>
+    <div class="folder-content">
+      <p>Electrons fill orbitals starting from the lowest energy level according to the Aufbau principle, Pauli Exclusion Principle, and Hund’s rule.</p>
+      <ul>
+        <li>Example: Oxygen → 1s² 2s² 2p⁴</li>
+        <li>Orbitals in order of filling: 1s, 2s, 2p, 3s, 3p, 4s, 3d, 4p…</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2025 Chemistry Knowledge Project — Dominex Macedon</footer>
+
+<script>
+function toggleFolder(folder) {
+  folder.classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
