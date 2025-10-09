@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aye Mya Nwe</title>
+<style>
+  :root {
+    --rose1: #fce4ec;
+    --rose2: #f8bbd0;
+    --deep: #ad1457;
+    --dark: #2d1f24;
+    --text: #3e2a32;
+  }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    background: linear-gradient(120deg, var(--rose1), var(--rose2));
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  header {
+    text-align: center;
+    padding: 70px 20px 40px;
+  }
+  header h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+    color: var(--dark);
+  }
+  header p {
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 18px auto 0;
+    line-height: 1.6;
+    color: #5f444c;
+  }
+
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+    padding: 40px 20px 80px;
+  }
+  .photo-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 35px rgba(0,0,0,0.15);
+    overflow: hidden;
+    width: min(90%, 400px);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .photo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  }
+
+  .photo {
+    width: 100%;
+    height: 480px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s ease;
+  }
+  .photo-card:hover .photo {
+    transform: scale(1.05);
+  }
+
+  .caption {
+    padding: 24px;
+    text-align: center;
+  }
+  .caption h2 {
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--deep);
+    margin: 0 0 10px;
+  }
+  .caption p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #60434b;
+    margin: 0;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #7a5761;
+    padding: 40px 20px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1.2s forwards;
+  }
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 2rem; }
+    .photo { height: 320px; }
+  }
+
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+</style>
+</head>
+<body oncontextmenu="return false">
+
+<header class="fade-in">
+  <h1>Aye Mya Nwe</h1>
+  <p>She has a quiet kind of beauty that lingers in every thought, a calm that softens every storm.  
+  When I think of love, it is her name that echoes — gentle, true, and endlessly bright.</p>
+</header>
+
+<main class="gallery fade-in" style="animation-delay:0.3s;">
+  <div class="photo-card">
+    <div class="photo" style="background-image:url('/assets/photo35.jpg');"></div>
+    <div class="caption">
+      <h2>Her Smile</h2>
+      <p>There is something about her smile that can turn silence into music.  
+      It carries warmth, sincerity, and the quiet confidence of someone who loves deeply.</p>
+    </div>
+  </div>
+
+  <div class="photo-card">
+    <div class="photo" style="background-image:url('/assets/photo42.jpg');"></div>
+    <div class="caption">
+      <h2>Her Soul</h2>
+      <p>Her soul is made of patience and light.  
+      Every glance, every word she speaks feels like a small piece of peace finding its way into the world.  
+      Loving her is like finding the calm after the rain.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  This page is for her — the one I love, always.
+</footer>
+
+<script>
+document.addEventListener('keydown', e=>{
+  if(e.key==='PrintScreen'){
+    document.body.style.filter='blur(6px)';
+    setTimeout(()=>{document.body.style.filter='';},600);
+    alert('This page is private.');
+  }
+});
+</script>
+
+</body>
+</html>
