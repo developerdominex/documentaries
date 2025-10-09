@@ -1,67 +1,354 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Love Aye Mya Nwe</title>
-    <style>
-        body {
-            font-family: "Segoe UI", sans-serif;
-            background-color: #fff0f5;
-            color: #333;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            color: #ff1493;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-        .gallery img {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .gallery img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-        }
-        footer {
-            margin-top: 40px;
-            font-size: 1rem;
-            color: #555;
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Aye Mya Nwe — My Love</title>
+<style>
+  :root{
+    --bg:#fff0f6;
+    --card:#fff;
+    --accent:#ff6b81;
+    --muted:#7a5a6a;
+    --glass: rgba(255,255,255,0.6);
+  }
+  html,body{height:100%;margin:0;font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif;background:linear-gradient(135deg,#fff0f6 0%, #fff6e9 100%);color:#3a2b33;}
+  .page {
+    max-width:1100px;
+    margin:36px auto;
+    padding:28px;
+    border-radius:18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.75));
+    box-shadow: 0 10px 30px rgba(170,80,120,0.08);
+    position:relative;
+    overflow:hidden;
+  }
+
+  header { display:flex; align-items:center; gap:18px; }
+  .heart {
+    width:86px; height:86px; border-radius:18px;
+    background: radial-gradient(circle at 30% 30%, #ffd7e1, #ffb3c7 40%, #ff6b81 100%);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 6px 18px rgba(255,107,129,0.15), inset 0 -6px 18px rgba(255,255,255,0.25);
+  }
+  .heart::after{
+    content:"♡"; font-size:44px;color:#fff; text-shadow:0 2px 6px rgba(0,0,0,0.08);
+  }
+  h1 { margin:0; font-size:28px; letter-spacing:0.2px; color:#3a1f2a; }
+  p.sub { margin:4px 0 16px 0; color:var(--muted); }
+
+  .intro {
+    display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  }
+  .intro .text { flex:1; min-width:220px; }
+  .intro .cta { text-align:right; min-width:160px; }
+  .cta .pill { background:linear-gradient(90deg,#ff9db1,#ff6b81); color:white; padding:10px 14px; border-radius:999px; display:inline-block; box-shadow:0 6px 20px rgba(255,107,129,0.14); font-weight:600; }
+
+  /* Gallery grid */
+  .grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+    gap:12px;
+    margin-top:18px;
+  }
+  .thumb {
+    height:120px; border-radius:12px; overflow:hidden;
+    position:relative; cursor:pointer;
+    box-shadow: 0 6px 20px rgba(82,40,60,0.06);
+    transition: transform .22s ease, box-shadow .22s ease;
+    background-size:cover; background-position:center;
+  }
+  .thumb:hover{ transform:translateY(-6px); box-shadow:0 14px 40px rgba(82,40,60,0.12); }
+  .thumb .label {
+    position:absolute; left:8px; bottom:8px;
+    background:linear-gradient(90deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));
+    color:#fff;padding:6px 8px;border-radius:8px;font-size:13px;
+  }
+
+  /* Modal viewer */
+  .modal {
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+    z-index:1000; backdrop-filter: blur(6px);
+  }
+  .modal.open { display:flex; }
+  .viewer {
+    width:min(92vw,1100px); height:min(80vh,760px); border-radius:16px; overflow:hidden;
+    position:relative; background:#000;
+    box-shadow:0 20px 60px rgba(50,10,20,0.5);
+  }
+  .viewer .stage {
+    width:100%; height:100%; background-size:contain; background-repeat:no-repeat; background-position:center center;
+    position:relative;
+  }
+  .viewer .meta {
+    position:absolute; left:20px; top:20px; color:white; text-shadow:0 3px 12px rgba(0,0,0,0.6);
+    display:flex; flex-direction:column;
+  }
+  .viewer .meta h2{ margin:0; font-size:20px; }
+  .viewer .meta p{ margin:4px 0 0 0; opacity:0.9; font-size:13px; color:#ffdfe8; }
+
+  .closeBtn, .navBtn { position:absolute; top:18px; right:18px; background:rgba(255,255,255,0.06); border:none; color:white; width:42px;height:42px;border-radius:10px; cursor:pointer; display:flex;align-items:center;justify-content:center; backdrop-filter:blur(4px); }
+  .navBtn { top:auto; bottom:18px; right:18px; width:44px;height:44px; }
+  .prevBtn { left:18px; right:auto; bottom:18px; top:auto; }
+
+  .controls { position:absolute; right:18px; bottom:18px; display:flex; gap:8px; }
+
+  /* Watermark overlay to deter screenshots */
+  .watermark {
+    position:absolute; inset:0; pointer-events:none; opacity:0.12; mix-blend-mode:overlay;
+    background-image: linear-gradient(0deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.02) 100%), repeating-linear-gradient(-45deg, rgba(255,107,129,0.04) 0 2px, transparent 2px 6px);
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px; color:#ff6b81; font-weight:700; letter-spacing:4px;
+    transform: rotate(-18deg);
+  }
+  .watermark span { display:inline-block; padding:6px 10px;background:rgba(255,255,255,0.02); border-radius:8px; }
+
+  /* Accessibility / disable interactions */
+  * { -webkit-user-drag: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+  img { -webkit-user-drag: none; user-drag: none; }
+
+  /* Footer */
+  footer { margin-top:18px; text-align:center; color:var(--muted); font-size:13px; }
+
+  /* Small screens */
+  @media (max-width:520px){
+    .viewer { width:96vw; height:86vh; border-radius:12px; }
+    .thumb { height:100px; }
+    header { gap:12px; }
+  }
+
+  /* subtle animated hearts floating */
+  .floating-heart {
+    position:absolute; width:14px;height:14px;border-radius:50%;
+    background:linear-gradient(90deg,#ff9db1,#ff6b81); opacity:0.95;
+    box-shadow:0 6px 18px rgba(255,107,129,0.16);
+    animation: floatUp 6s linear infinite;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(0.85); opacity:0.8; }
+    50%{ transform: translateY(-28vh) scale(1.05); opacity:1; }
+    100%{ transform: translateY(-56vh) scale(0.85); opacity:0; }
+  }
+</style>
 </head>
 <body>
-    <h1>For My Love, Aye Mya Nwe 💖</h1>
-    <p>Every photo is a memory, every moment is precious.</p>
 
-    <div class="gallery">
-        <script>
-            const galleryDiv = document.currentScript.parentNode;
-            for (let i = 1; i <= 44; i++) {
-                const img = document.createElement('img');
-                img.src = `assets/photo${i}.jpg`;
-                img.alt = `Photo ${i}`;
-                galleryDiv.appendChild(img);
-            }
-        </script>
+<!--
+  IMPORTANT:
+  This page attempts to discourage right-clicking, dragging, and casual screenshots by:
+  - disabling context menu & drag,
+  - using watermark overlays & CSS tricks,
+  - blurring briefly when PrintScreen is pressed (best-effort).
+  HOWEVER: It is impossible for a webpage to fully prevent OS-level screenshots or a user taking a photo.
+  Treat these measures only as deterrents.
+-->
+
+<div class="page" id="app">
+  <header>
+    <div class="heart" aria-hidden="true"></div>
+    <div>
+      <h1>Aye Mya Nwe</h1>
+      <p class="sub">She is my love — a small gallery of moments, just for her.</p>
+    </div>
+    <div class="cta">
+      <div class="pill">Forever & Always</div>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div class="text">
+      <p>Click any image to view it larger. Right click and dragging are disabled to protect these memories.</p>
+    </div>
+    <div style="min-width:260px;text-align:right">
+      <p style="margin:0;font-weight:600;color:var(--muted)">44 photos</p>
+      <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">Aye Mya Nwe — My heart</p>
+    </div>
+  </section>
+
+  <div class="grid" id="grid">
+    <!-- thumbs injected by JS -->
+  </div>
+
+  <footer>
+    <small>Made with ♥ — A tiny gallery for Aye Mya Nwe</small>
+  </footer>
+</div>
+
+<!-- Modal viewer -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="viewer" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="stage" id="stage"></div>
+
+    <div class="meta">
+      <h2>Aye Mya Nwe</h2>
+      <p>My love — photo <span id="metaIndex">1</span>/44</p>
     </div>
 
-    <footer>
-        Made with love ❤️ for Aye Mya Nwe
-    </footer>
+    <button class="closeBtn" id="closeBtn" title="Close" aria-label="Close">✕</button>
+
+    <div class="controls">
+      <button class="navBtn prevBtn" id="prevBtn" title="Previous">◀</button>
+      <button class="navBtn" id="nextBtn" title="Next">▶</button>
+    </div>
+
+    <div class="watermark"><span>Aye Mya Nwe • My Love</span></div>
+  </div>
+</div>
+
+<!-- Floating hearts (decorative) -->
+<script>
+  // generate a few floating hearts for ambiance:
+  (function addHearts(){
+    const app = document.getElementById('app');
+    for(let i=0;i<7;i++){
+      const el = document.createElement('div');
+      el.className = 'floating-heart';
+      el.style.left = (10 + Math.random()*80) + '%';
+      el.style.bottom = (5 + Math.random()*10) + 'px';
+      el.style.animationDelay = (Math.random()*4) + 's';
+      el.style.transform = 'translateY(0)';
+      app.appendChild(el);
+    }
+  })();
+</script>
+
+<script>
+/* Gallery logic & protections */
+
+const TOTAL = 44;
+const grid = document.getElementById('grid');
+const modal = document.getElementById('modal');
+const stage = document.getElementById('stage');
+const metaIndex = document.getElementById('metaIndex');
+const closeBtn = document.getElementById('closeBtn');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+
+let currentIndex = 1;
+
+// Build grid - use divs with background-image rather than <img> to reduce native context menu interactions
+for(let i=1;i<=TOTAL;i++){
+  const d = document.createElement('div');
+  d.className = 'thumb';
+  const src = `/assets/photo${i}.jpg`;
+  d.style.backgroundImage = `url("${src}")`;
+  d.dataset.index = i;
+  const lbl = document.createElement('div');
+  lbl.className = 'label';
+  lbl.textContent = `Aye Mya Nwe • ${i}`;
+  d.appendChild(lbl);
+  grid.appendChild(d);
+
+  // click to open viewer
+  d.addEventListener('click', (e)=>{
+    openViewer(i);
+  });
+
+  // prevent context menu on the thumbnail
+  d.addEventListener('contextmenu', e=>{
+    e.preventDefault();
+    return false;
+  });
+}
+
+// viewer functions
+function openViewer(idx){
+  currentIndex = Math.max(1, Math.min(TOTAL, idx));
+  updateStage();
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+}
+function closeViewer(){
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+  // remove background to release memory
+  stage.style.backgroundImage = '';
+}
+
+function updateStage(){
+  const src = `/assets/photo${currentIndex}.jpg`;
+  stage.style.backgroundImage = `url("${src}")`;
+  metaIndex.textContent = currentIndex;
+}
+
+// nav
+nextBtn.addEventListener('click', ()=> { currentIndex = currentIndex===TOTAL?1:currentIndex+1; updateStage(); });
+prevBtn.addEventListener('click', ()=> { currentIndex = currentIndex===1?TOTAL:currentIndex-1; updateStage(); });
+closeBtn.addEventListener('click', closeViewer);
+
+// keyboard
+document.addEventListener('keydown', (e)=>{
+  if(modal.classList.contains('open')){
+    if(e.key === 'ArrowRight') { nextBtn.click(); }
+    if(e.key === 'ArrowLeft') { prevBtn.click(); }
+    if(e.key === 'Escape') { closeBtn.click(); }
+  }
+});
+
+// Global protections: disable context menu, dragstart, selection events on the page
+document.addEventListener('contextmenu', function(e){ e.preventDefault(); }, {capture:true});
+document.addEventListener('dragstart', function(e){ e.preventDefault(); }, {capture:true});
+document.addEventListener('selectstart', function(e){ e.preventDefault(); }, {capture:true});
+
+// additionally remove right-click effects on images/backgrounds
+// Also prevent middle-click opening
+document.addEventListener('mousedown', function(e){
+  if(e.button === 1 || e.button === 2){
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+}, {capture:true});
+
+// Best-effort: detect PrintScreen key & flash blur (cannot actually block screenshots)
+(function printscreenDeterrent(){
+  let lastShot = 0;
+  document.addEventListener('keydown', function(e){
+    // "PrintScreen" is the key's code in some browsers; also check key === 'PrintScreen'
+    if(e.key === 'PrintScreen' || e.code === 'PrintScreen'){
+      // Briefly blur and show watermark to make screenshot less clean
+      lastShot = Date.now();
+      document.body.style.filter = 'blur(8px)';
+      setTimeout(()=>{ document.body.style.filter = ''; }, 900);
+      // small visual notice
+      showTempNotice('Screenshot attempt detected — memories are private 💖');
+      e.preventDefault();
+      return false;
+    }
+  }, {capture:true});
+})();
+
+function showTempNotice(msg){
+  const notice = document.createElement('div');
+  notice.textContent = msg;
+  notice.style.position='fixed';
+  notice.style.left='50%';
+  notice.style.top='18px';
+  notice.style.transform='translateX(-50%)';
+  notice.style.padding='10px 16px';
+  notice.style.background='linear-gradient(90deg,#ff9db1,#ff6b81)';
+  notice.style.color='white';
+  notice.style.borderRadius='10px';
+  notice.style.boxShadow='0 10px 26px rgba(255,107,129,0.2)';
+  notice.style.zIndex=2000;
+  notice.style.fontWeight='600';
+  document.body.appendChild(notice);
+  setTimeout(()=>{ notice.remove(); }, 1200);
+}
+
+/* Extra safety: disable saving from developers tools via context in viewer - best-effort only
+   We cannot stop a determined user — this is only to stop casual saves. */
+
+(function noClipboard(){
+  document.addEventListener('copy', function(e){ e.preventDefault(); });
+  document.addEventListener('cut', function(e){ e.preventDefault(); });
+})();
+
+/* Prevent pointer events that could trigger native save on long press on some touch devices */
+modal.addEventListener('touchstart', function(e){ e.preventDefault(); }, {passive:false});
+
+/* NOTE: Nothing above can stop someone photographing the screen or using OS-level screenshot tools.
+   These are only soft deterrents. */
+</script>
 </body>
 </html>
