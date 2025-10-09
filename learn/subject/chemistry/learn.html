@@ -4,249 +4,267 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Learn Chemistry — Dominex Macedon</title>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Crimson+Pro:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 :root {
-  --bg: #f9fafb;
-  --paper: #fff;
-  --accent: #2563eb;
-  --ink: #111827;
+  --bg: #f5f7fa;
+  --paper: #ffffff;
+  --ink: #1e293b;
+  --accent: #3b82f6;
   --shadow: rgba(0,0,0,0.08);
 }
+* { box-sizing: border-box; }
 body {
-  margin:0;
-  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 40px 20px;
   background: var(--bg);
   color: var(--ink);
-  padding: 40px 20px;
+  font-family: "Inter", sans-serif;
 }
 h1 {
-  font-family:"Crimson Pro", serif;
-  text-align:center;
-  font-size:2.5rem;
+  font-family: "Crimson Pro", serif;
+  text-align: center;
   color: var(--accent);
-  margin-bottom:40px;
+  font-size: 2.6rem;
+  margin-bottom: 40px;
 }
-.folder-container {
-  max-width:1200px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:20px;
-}
-.folder {
+.section {
   background: var(--paper);
-  border-radius:12px;
-  box-shadow:0 4px 12px var(--shadow);
-  padding:18px;
-  border-top:6px solid var(--accent);
-  cursor:pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px var(--shadow);
+  margin: 18px auto;
+  max-width: 950px;
+  padding: 24px 30px;
+  transition: all 0.3s ease;
+  border-left: 6px solid var(--accent);
 }
-.folder:hover {
-  transform:translateY(-3px);
-  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+.section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
 }
-.folder-header {
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.folder-header i {
-  font-size:1.5rem;
+.section h2 {
+  font-family: "Crimson Pro", serif;
+  font-size: 1.4rem;
   color: var(--accent);
+  margin-bottom: 10px;
+  cursor: pointer;
 }
-.folder-header h2 {
-  margin:0;
-  font-family:"Crimson Pro", serif;
-  font-size:1.2rem;
+.section ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 20px;
+  display: none;
 }
-.folder-content {
-  display:none;
-  margin-top:12px;
-  padding-left:10px;
+.section.active ul {
+  display: block;
+  margin-top: 12px;
 }
-.folder-content a {
-  display:block;
-  text-decoration:none;
-  color:#111827;
-  margin:6px 0;
+.section ul li {
+  margin: 6px 0;
+}
+.section ul li a {
+  text-decoration: none;
+  color: #334155;
+  font-weight: 500;
   transition: color 0.2s;
 }
-.folder-content a:hover {
+.section ul li a:hover {
   color: var(--accent);
   text-decoration: underline;
 }
 footer {
-  margin-top:60px;
-  text-align:center;
-  font-size:0.9rem;
-  color:#6b7280;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 60px;
+  color: #6b7280;
 }
 </style>
 </head>
 <body>
 
-<h1>📘 Learn Chemistry</h1>
+<h1>Learn Chemistry — Dominex Macedon</h1>
 
-<div class="folder-container">
+<!-- I. Fundamentals of Chemistry -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>I. Fundamentals of Chemistry</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/introduction-to-chemistry.html">Introduction to Chemistry</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/branches-of-chemistry.html">Branches of Chemistry</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/scientific-method-in-chemistry.html">Scientific Method in Chemistry</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/matter-and-properties.html">Matter and Its Properties</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/states-of-matter.html">States of Matter</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/physical-vs-chemical-changes.html">Physical and Chemical Changes</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/elements-compounds-mixtures.html">Elements, Compounds, and Mixtures</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/laws-of-chemical-combination.html">Laws of Chemical Combination</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/atomic-theory-and-structure.html">Atomic Theory and Structure</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/mole-concept-and-avogadros-law.html">Mole Concept and Avogadro’s Law</a></li>
+  </ul>
+</div>
 
-  <!-- I. Fundamentals of Chemistry -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-flask"></i><h2>I. Fundamentals of Chemistry</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/introduction-to-chemistry.html" target="_blank">Introduction to Chemistry</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/branches-of-chemistry.html" target="_blank">Branches of Chemistry</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/scientific-method-in-chemistry.html" target="_blank">Scientific Method in Chemistry</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/matter-and-properties.html" target="_blank">Matter and Its Properties</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/states-of-matter.html" target="_blank">States of Matter</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/physical-vs-chemical-changes.html" target="_blank">Physical & Chemical Changes</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/elements-compounds-mixtures.html" target="_blank">Elements, Compounds & Mixtures</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/laws-of-chemical-combination.html" target="_blank">Laws of Chemical Combination</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/atomic-theory-and-structure.html" target="_blank">Atomic Theory & Structure</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/mole-concept-and-avogadros-law.html" target="_blank">Mole Concept & Avogadro’s Law</a>
-    </div>
-  </div>
+<!-- II. Atomic Structure and Periodicity -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>II. Atomic Structure and Periodicity</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/subatomic-particles.html">Subatomic Particles</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/atomic-models.html">Atomic Models</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/quantum-mechanical-model.html">Quantum Mechanical Model</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/quantum-numbers-orbitals.html">Quantum Numbers and Orbitals</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/electron-configuration.html">Electron Configuration</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/periodic-table-development.html">Periodic Table and Its Development</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/modern-periodic-law.html">Modern Periodic Law</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/periodic-trends.html">Periodic Trends</a></li>
+  </ul>
+</div>
 
-  <!-- II. Atomic Structure and Periodicity -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-atom"></i><h2>II. Atomic Structure & Periodicity</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/subatomic-particles.html" target="_blank">Subatomic Particles</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/atomic-models.html" target="_blank">Atomic Models</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/quantum-mechanical-model.html" target="_blank">Quantum Mechanical Model</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/quantum-numbers-orbitals.html" target="_blank">Quantum Numbers & Orbitals</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/electron-configuration.html" target="_blank">Electron Configuration</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/periodic-table-development.html" target="_blank">Periodic Table & Development</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/modern-periodic-law.html" target="_blank">Modern Periodic Law</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/periodic-trends.html" target="_blank">Periodic Trends</a>
-    </div>
-  </div>
+<!-- III. Chemical Bonding and Molecular Structure -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>III. Chemical Bonding and Molecular Structure</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/ionic-bonding.html">Ionic Bonding</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/covalent-bonding.html">Covalent Bonding</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/metallic-bonding.html">Metallic Bonding</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/coordinate-bond.html">Coordinate Bond</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/vsepr-theory.html">VSEPR Theory</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/valence-bond-theory.html">Valence Bond Theory</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/hybridization.html">Hybridization</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/molecular-orbital-theory.html">Molecular Orbital Theory</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/intermolecular-forces.html">Intermolecular Forces</a></li>
+  </ul>
+</div>
 
-  <!-- III. Chemical Bonding & Molecular Structure -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-link"></i><h2>III. Chemical Bonding & Molecular Structure</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/ionic-bonding.html" target="_blank">Ionic Bonding</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/covalent-bonding.html" target="_blank">Covalent Bonding</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/metallic-bonding.html" target="_blank">Metallic Bonding</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/coordinate-bond.html" target="_blank">Coordinate Bond</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/vsepr-theory.html" target="_blank">VSEPR Theory</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/valence-bond-theory.html" target="_blank">Valence Bond Theory</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/hybridization.html" target="_blank">Hybridization</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/molecular-orbital-theory.html" target="_blank">Molecular Orbital Theory</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/intermolecular-forces.html" target="_blank">Intermolecular Forces</a>
-    </div>
-  </div>
+<!-- IV. Stoichiometry and Chemical Calculations -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>IV. Stoichiometry and Chemical Calculations</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/mole-concept-molar-mass.html">Mole Concept and Molar Mass</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/empirical-molecular-formulas.html">Empirical and Molecular Formulas</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/chemical-equations-balancing.html">Chemical Equations and Balancing</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/limiting-reagent-percent-yield.html">Limiting Reagent and Percent Yield</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/concentration-units.html">Concentration Units</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/stoichiometric-calculations.html">Stoichiometric Calculations</a></li>
+  </ul>
+</div>
 
-  <!-- IV. Stoichiometry & Chemical Calculations -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-calculator"></i><h2>IV. Stoichiometry & Chemical Calculations</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/mole-concept-molar-mass.html" target="_blank">Mole Concept & Molar Mass</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/empirical-molecular-formulas.html" target="_blank">Empirical & Molecular Formulas</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/chemical-equations-balancing.html" target="_blank">Chemical Equations & Balancing</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/limiting-reagent-percent-yield.html" target="_blank">Limiting Reagent & Percent Yield</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/concentration-units.html" target="_blank">Concentration Units</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/stoichiometric-calculations.html" target="_blank">Stoichiometric Calculations</a>
-    </div>
-  </div>
+<!-- V. States of Matter -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>V. States of Matter</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/kinetic-theory-gases.html">Kinetic Theory of Gases</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/gas-laws.html">Gas Laws</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/real-gases.html">Real Gases</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/liquids-properties.html">Liquids — Properties and Surface Tension</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/solids-crystal-lattices.html">Solids — Crystal Lattices and Unit Cells</a></li>
+  </ul>
+</div>
 
-  <!-- V. States of Matter -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-cubes"></i><h2>V. States of Matter</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/kinetic-theory-gases.html" target="_blank">Kinetic Theory of Gases</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/gas-laws.html" target="_blank">Gas Laws</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/real-gases.html" target="_blank">Real Gases</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/liquids-properties.html" target="_blank">Liquids — Properties</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/solids-crystal-lattices.html" target="_blank">Solids — Crystal Lattices</a>
-    </div>
-  </div>
+<!-- VI. Solutions and Their Properties -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>VI. Solutions and Their Properties</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/types-of-solutions.html">Types of Solutions</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/solubility-factors.html">Solubility and Factors Affecting It</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/solution-concentration.html">Concentration of Solutions</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/colligative-properties.html">Colligative Properties</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/raoults-law.html">Raoult’s Law</a></li>
+  </ul>
+</div>
 
-  <!-- VI. Solutions & Their Properties -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-droplet"></i><h2>VI. Solutions & Their Properties</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/types-of-solutions.html" target="_blank">Types of Solutions</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/solubility-factors.html" target="_blank">Solubility & Factors</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/solution-concentration.html" target="_blank">Concentration of Solutions</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/colligative-properties.html" target="_blank">Colligative Properties</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/raoults-law.html" target="_blank">Raoult’s Law</a>
-    </div>
-  </div>
+<!-- VII. Thermodynamics and Energetics -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>VII. Thermodynamics and Energetics</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/basic-energy-work-heat.html">Basic Concepts of Energy, Work, and Heat</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/first-law-thermodynamics.html">First Law of Thermodynamics</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/internal-energy-enthalpy.html">Internal Energy and Enthalpy</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/hess-law.html">Hess’s Law</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/enthalpy-changes.html">Enthalpy Changes</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/second-third-law-thermodynamics.html">Second and Third Laws of Thermodynamics</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/entropy-free-energy.html">Entropy and Free Energy</a></li>
+  </ul>
+</div>
 
-  <!-- VII. Thermodynamics & Energetics -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-fire"></i><h2>VII. Thermodynamics & Energetics</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/basic-energy-work-heat.html" target="_blank">Basic Concepts: Energy, Work & Heat</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/first-law-thermodynamics.html" target="_blank">First Law of Thermodynamics</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/internal-energy-enthalpy.html" target="_blank">Internal Energy & Enthalpy</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/hess-law.html" target="_blank">Hess’s Law</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/enthalpy-changes.html" target="_blank">Enthalpy Changes</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/second-third-law-thermodynamics.html" target="_blank">Second & Third Law of Thermodynamics</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/entropy-free-energy.html" target="_blank">Entropy & Free Energy</a>
-    </div>
-  </div>
+<!-- VIII. Chemical Equilibrium -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>VIII. Chemical Equilibrium</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/reversible-irreversible-reactions.html">Reversible and Irreversible Reactions</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/law-of-mass-action.html">Law of Mass Action</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/le-chateliers-principle.html">Le Chatelier’s Principle</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/equilibrium-constant.html">Equilibrium Constant</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/factors-affecting-equilibrium.html">Factors Affecting Equilibrium</a></li>
+  </ul>
+</div>
 
-  <!-- VIII. Chemical Equilibrium -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-balance-scale"></i><h2>VIII. Chemical Equilibrium</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/reversible-irreversible-reactions.html" target="_blank">Reversible & Irreversible Reactions</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/law-of-mass-action.html" target="_blank">Law of Mass Action</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/le-chateliers-principle.html" target="_blank">Le Chatelier’s Principle</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/equilibrium-constant.html" target="_blank">Equilibrium Constant</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/factors-affecting-equilibrium.html" target="_blank">Factors Affecting Equilibrium</a>
-    </div>
-  </div>
+<!-- IX. Acids, Bases, and Salts -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>IX. Acids, Bases, and Salts</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/acid-base-definitions.html">Definitions of Acids and Bases</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/ph-scale-calculations.html">pH Scale and Calculations</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/strong-weak-acids-bases.html">Strong and Weak Acids/Bases</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/neutralization-salt-formation.html">Neutralization and Salt Formation</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/acid-base-indicators.html">Acid-Base Indicators</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/buffer-solutions.html">Buffer Solutions</a></li>
+  </ul>
+</div>
 
-  <!-- IX. Acids, Bases, and Salts -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-droplet"></i><h2>IX. Acids, Bases & Salts</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/acid-base-definitions.html" target="_blank">Definitions (Arrhenius, Bronsted-Lowry, Lewis)</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/ph-scale-calculations.html" target="_blank">pH Scale & Calculations</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/strong-weak-acids-bases.html" target="_blank">Strong & Weak Acids/Bases</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/neutralization-salt-formation.html" target="_blank">Neutralization & Salt Formation</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/acid-base-indicators.html" target="_blank">Acid-Base Indicators</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/buffer-solutions.html" target="_blank">Buffer Solutions</a>
-    </div>
-  </div>
+<!-- X. Redox Reactions and Electrochemistry -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>X. Redox Reactions and Electrochemistry</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/oxidation-reduction.html">Oxidation and Reduction</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/oxidizing-reducing-agents.html">Oxidizing and Reducing Agents</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/balancing-redox-reactions.html">Balancing Redox Reactions</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/electrochemical-cells.html">Electrochemical Cells</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/standard-electrode-potentials.html">Standard Electrode Potentials</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/corrosion-prevention.html">Corrosion and Its Prevention</a></li>
+  </ul>
+</div>
 
-  <!-- X. Redox Reactions & Electrochemistry -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-bolt"></i><h2>X. Redox Reactions & Electrochemistry</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/oxidation-reduction.html" target="_blank">Oxidation & Reduction</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/oxidizing-reducing-agents.html" target="_blank">Oxidizing & Reducing Agents</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/balancing-redox-reactions.html" target="_blank">Balancing Redox Reactions</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/electrochemical-cells.html" target="_blank">Electrochemical Cells</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/standard-electrode-potentials.html" target="_blank">Standard Electrode Potentials</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/corrosion-prevention.html" target="_blank">Corrosion & Prevention</a>
-    </div>
-  </div>
+<!-- XI. Chemical Kinetics -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>XI. Chemical Kinetics</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/rate-of-reaction.html">Rate of Reaction</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/factors-affecting-rate.html">Factors Affecting Reaction Rate</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/rate-laws-order.html">Rate Laws and Order of Reaction</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/activation-energy-catalysts.html">Activation Energy and Catalysts</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/collision-theory.html">Collision Theory</a></li>
+  </ul>
+</div>
 
-  <!-- XI. Chemical Kinetics -->
-  <div class="folder" onclick="toggleFolder(this)">
-    <div class="folder-header"><i class="fa-solid fa-hourglass-half"></i><h2>XI. Chemical Kinetics</h2></div>
-    <div class="folder-content">
-      <a href="chemistry/study/dominexown/refactoredbydominex/rate-of-reaction.html" target="_blank">Rate of Reaction</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/factors-affecting-rate.html" target="_blank">Factors Affecting Reaction Rate</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/rate-laws-order.html" target="_blank">Rate Laws & Order of Reaction</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/activation-energy-catalysts.html" target="_blank">Activation Energy & Catalysts</a>
-      <a href="chemistry/study/dominexown/refactoredbydominex/collision-theory.html" target="_blank">Collision Theory</a>
-    </div>
-  </div>
+<!-- XII. Organic Chemistry -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>XII. Organic Chemistry</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/introduction-organic-chemistry.html">Introduction to Organic Chemistry</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/hydrocarbons.html">Hydrocarbons</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/functional-groups.html">Functional Groups</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/isomerism.html">Isomerism</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/organic-reactions.html">Organic Reactions and Mechanisms</a></li>
+  </ul>
+</div>
+
+<!-- XIII. Environmental Chemistry -->
+<div class="section" onclick="toggleSection(this)">
+  <h2>XIII. Environmental Chemistry</h2>
+  <ul>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/air-water-pollution.html">Air and Water Pollution</a></li>
+    <li><a href="chemistry/study/dominexown/refactoredbydominex/green-chemistry.html">Green Chemistry</a></li>
+  </ul>
+</div>
+
+<footer>
+  © 2025 Dominex Macedon — Chemistry Education Archive
+</footer>
 
 <script>
-function toggleFolder(folder){
-  folder.classList.toggle('active');
+function toggleSection(el) {
+  el.classList.toggle('active');
 }
 </script>
 
-<footer>© 2025 Dominex Macedon | Chemistry Knowledge Hub</footer>
 </body>
 </html>
