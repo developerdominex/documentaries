@@ -1,1 +1,266 @@
-<h1>Hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Introduction to Chemistry — Fundamentals</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="description" content="Introduction to Chemistry — overview, scope, historical context, scientific method, and learning roadmap for advanced school-level study.">
+<style>
+  :root{
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --muted:#6b7280;
+    --accent:#0ea5a4;
+    --accent-2:#2563eb;
+    --ink:#0f1724;
+    --glass: rgba(255,255,255,0.7);
+    --radius:14px;
+    --max:1100px;
+  }
+
+  html,body{height:100%;margin:0;}
+  body{
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg,#f4f6fa 0%, #eef2f7 100%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:28px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .wrap{max-width:var(--max);width:100%;}
+
+  /* Top navigation / breadcrumbs */
+  .nav {
+    display:flex;align-items:center;gap:12px;margin-bottom:18px;
+  }
+  .crumb {
+    background:var(--card);
+    padding:8px 12px;border-radius:999px;border:1px solid rgba(15,23,36,0.04);
+    color:var(--muted);font-weight:600;font-size:0.95rem;text-decoration:none;display:inline-flex;gap:8px;align-items:center;
+  }
+  .crumb:hover{box-shadow:0 6px 18px rgba(2,6,23,0.04);transform:translateY(-2px)}
+
+  /* Header */
+  header.hero{
+    background:linear-gradient(135deg, rgba(14,165,164,0.06), rgba(37,99,235,0.04));
+    border-radius:var(--radius);
+    padding:26px 28px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+    border:1px solid rgba(15,23,36,0.03);
+  }
+  .hero .left{
+    width:110px;height:110px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg, rgba(14,165,164,0.12), rgba(37,99,235,0.06));
+    flex-shrink:0;border:1px solid rgba(15,23,36,0.02);
+  }
+  .hero .left i{font-size:46px;color:var(--accent-2)}
+  .hero .title h1{font-family:Crimson Pro, serif;margin:0;font-size:1.6rem;color:var(--accent-2)}
+  .hero .title p{margin:6px 0 0;font-size:0.98rem;color:var(--muted);line-height:1.45}
+
+  /* layout */
+  main{display:grid;grid-template-columns: 1fr 320px;gap:22px;margin-top:22px}
+  @media (max-width:980px){ main{grid-template-columns:1fr} .toc{order:2} }
+
+  /* content card */
+  .card{
+    background:var(--card);
+    border-radius:12px;
+    padding:20px 22px;
+    box-shadow:0 8px 30px rgba(2,6,23,0.04);
+    border:1px solid rgba(15,23,36,0.03);
+  }
+
+  /* typographic */
+  h2{font-family:Crimson Pro, serif;color:var(--accent-2);margin:0 0 8px 0}
+  h3{color:var(--accent);margin:18px 0 8px 0}
+  p{color:#374151;margin:0 0 12px 0;line-height:1.65}
+  .lead{font-size:1.05rem;color:#263247}
+
+  /* callout */
+  .callout{
+    background:linear-gradient(90deg, rgba(14,165,164,0.06), rgba(37,99,235,0.04));
+    padding:12px 14px;border-radius:10px;border-left:4px solid var(--accent);
+    margin:12px 0 18px 0;color:#164e63;font-weight:600;
+  }
+
+  /* section anchor list */
+  .section-list{display:flex;flex-direction:column;gap:8px}
+  .section-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;color:var(--muted);text-decoration:none}
+  .section-item:hover{background:rgba(2,6,23,0.02);color:var(--ink);transform:translateX(4px)}
+  .badge{background:rgba(37,99,235,0.08);color:var(--accent-2);padding:6px 10px;border-radius:999px;font-weight:700;font-size:0.85rem}
+
+  /* definition box and formula box */
+  .def{
+    background:#fbfdff;border-radius:10px;padding:14px;border-left:4px solid var(--accent-2);margin:12px 0;
+  }
+  .formula{
+    background:#0f1724;color:#fff;padding:12px;border-radius:10px;font-family:monospace;font-weight:600;margin:12px 0;
+  }
+
+  /* references & footer */
+  .meta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .meta{background:rgba(15,23,36,0.03);padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:600}
+
+  /* small utilities */
+  .toc .search{margin-bottom:12px}
+  .search input{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(15,23,36,0.06);font-size:0.95rem}
+  .toc h3{margin:0 0 12px 0}
+  .quick-links{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  a.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;text-decoration:none;font-weight:700}
+
+  /* print friendly */
+  @media print{
+    body{padding:0}
+    .nav, .toc, footer{display:none}
+    header.hero{border:none;box-shadow:none}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <nav class="nav">
+      <a href="chemistry.html" class="crumb"><i class="fa-solid fa-folder-open"></i> Chemistry Home</a>
+      <a href="introduction-to-chemistry.html" class="crumb" aria-current="page"><i class="fa-solid fa-file-lines"></i> Introduction</a>
+    </nav>
+
+    <header class="hero">
+      <div class="left" aria-hidden="true"><i class="fa-solid fa-flask-vial"></i></div>
+      <div class="title">
+        <h1>Introduction to Chemistry</h1>
+        <p class="lead">A rigorous, research-oriented introduction that prepares advanced secondary-school students for university-level chemistry. This chapter frames the discipline, situates its scope, and provides the conceptual toolkit for all topics that follow.</p>
+      </div>
+    </header>
+
+    <main>
+      <!-- Main content -->
+      <article class="card" role="main" aria-labelledby="overview">
+        <h2 id="overview">Overview</h2>
+        <p class="lead">Chemistry is the scientific study of matter: its composition, structure, properties, and the transformations it undergoes. It is often called the "central science" because it connects physics with biology, geology, materials science, and engineering. This introduction focuses on the conceptual pillars that recur through the subject — from atomic theory to thermodynamics — and sketches the experimental and mathematical methods chemists use to build knowledge.</p>
+
+        <div class="callout">Learning outcomes — after studying this chapter you will be able to:
+          <ul style="margin:8px 0 0 18px;color:#064e3b;font-weight:600">
+            <li>Explain what chemistry studies and why it matters to technology, health, and the environment.</li>
+            <li>Use the mole concept and carry out quantitative calculations.</li>
+            <li>Describe fundamental laboratory techniques and the scientific method in chemical research.</li>
+          </ul>
+        </div>
+
+        <h3>1. What is Chemistry? (Scope and Questions)</h3>
+        <p>Chemistry asks how submicroscopic particles (atoms, ions, molecules) organize to create macroscopic properties: color, phase, solubility, strength, and reactivity. It asks both descriptive and predictive questions: What is the structure of benzene? Why does sodium react explosively with water? How do catalysts accelerate reactions? Practically, chemistry seeks to design molecules and processes — from pharmaceuticals to energy-storage materials — that meet human needs while minimizing harm.</p>
+
+        <h3>2. Historical Context (Concise Research Perspective)</h3>
+        <p>From proto-chemical craft traditions (metallurgy, dyeing) to alchemy’s proto-theories, chemistry matured during the Enlightenment with the quantitative emphasis introduced by Lavoisier, who replaced speculative explanation with mass-balance experiments. Dalton’s atomic hypotheses, Avogadro’s insights, and Mendeleev’s periodic classification represent milestones; 20th-century quantum mechanics and spectroscopy provided predictive explanatory frameworks that transformed chemistry into a laboratory and computation-driven science.</p>
+
+        <h3>3. The Scientific Method in Chemistry</h3>
+        <p>Chemical investigation follows an iterative method: observation → hypothesis → controlled experiment → quantitative analysis → model refinement. High-level chemistry emphasizes reproducibility, uncertainty quantification, and peer review. Modern chemical research frequently couples experiment with computation (quantum chemical calculations, molecular dynamics) and statistical analysis (error propagation, confidence intervals).</p>
+
+        <div class="def">
+          <strong>Methodology highlight:</strong> experiments in chemistry typically report measured values with uncertainty. A single measurement is insufficient; reproducible averaged results with standard deviation and method description are required for publication-grade work.
+        </div>
+
+        <h3>4. Measurement, Units, and Significant Figures</h3>
+        <p>Accuracy and precision are foundational. SI units (mole, kilogram, Kelvin, meter, second, ampere, candela) provide a consistent language. In chemical calculations, significant figures reflect measurement precision; uncertainty propagation (root-sum-square for independent errors) must be applied when combining measurements.</p>
+
+        <h3>5. Matter and Classification</h3>
+        <p>Matter is classified by composition and homogeneity: elements (single type of atom), compounds (chemically bonded elements in fixed stoichiometric ratios), mixtures (physically combined substances). Physical separation (distillation, filtration, chromatography) versus chemical transformation (reaction) is an operational way to distinguish mixtures from compounds.</p>
+
+        <h3>6. States of Matter (Concise Research Notes)</h3>
+        <p>Solids organize into crystalline lattices with repeating unit cells or exist as amorphous networks. Liquids show short-range order and dynamic structure; gases behave according to kinetic theory at low densities. Plasma and Bose–Einstein condensates (BEC) represent extremes of ionization and quantum-statistical behavior; while BECs are rare in chemical contexts, understanding quantum statistics is relevant in low-temperature physical chemistry.</p>
+
+        <h3>7. Chemical vs Physical Change & Conservations</h3>
+        <p>Chemical changes involve bond-breaking/forming and are accompanied by changes in composition; physical changes rearrange matter without altering chemical identity. The Law of Conservation of Mass (mass-energy in relativistic chemistry) and conservation of charge are constraints in reaction stoichiometry and redox accounting. Balancing chemical equations ensures atom-count conservation.</p>
+
+        <h3>8. Atomic Theory: A Working Model</h3>
+        <p>Contemporary atomic theory models the atom as a nucleus of protons and neutrons surrounded by electron probability distributions (orbitals). Key quantum numbers (n, l, m, s) determine electronic structure and chemical periodicity. Electron configuration underpins valency and reactivity; closed-shell configurations confer chemical inertness (noble gases).</p>
+
+        <h3>9. The Mole and Avogadro’s Law — Quantitative Backbone</h3>
+        <p>The mole (Avogadro's constant Nₐ ≈ 6.02214076×10²³) connects microscopic particle counts to macroscopic mass. Stoichiometry uses moles to convert measured mass to particle counts and vice versa, enabling quantitative predictions of product yield, limiting reagents, and concentrations. For research-level problems, molar concentration, molality, and activity coefficients (nonideal solution effects) may be required.</p>
+
+        <div class="formula">n (mol) = mass (g) / molar mass (g·mol⁻¹)</div>
+
+        <h3>10. Laboratory Foundations & Safety</h3>
+        <p>Laboratory practice in research emphasizes documented protocols, calibration, and hazard control. Chemical safety includes understanding Material Safety Data Sheets (MSDS), proper waste segregation, personal protective equipment (PPE), fume hood use, and emergency response. Reproducibility requires meticulous lab notebooks (date, reagent lot, conditions, measurements).</p>
+
+        <h3>11. Mathematical Tools Frequently Used</h3>
+        <p>Chemistry uses algebra, logarithms (pH), calculus (reaction kinetics, thermodynamics), linear algebra (spectral decomposition), and statistics (error analysis, regression). Familiarity with units, dimensional analysis, and approximations is essential for modeling and interpreting results.</p>
+
+        <h3>12. Roadmap for Further Study (How to use this site)</h3>
+        <p>This introduction sets the stage for deeper chapters: atomic structure, bonding, stoichiometry, thermodynamics, kinetics, spectroscopy, organic chemistry, and analytical methods. Each linked chapter provides both conceptual narrative and worked examples, followed by research-appropriate references.</p>
+
+        <div class="meta-row" aria-hidden="true">
+          <div class="meta"><i class="fa-solid fa-calendar"></i> Last updated: 2025</div>
+          <div class="meta"><i class="fa-solid fa-graduation-cap"></i> Level: Advanced secondary / introductory university</div>
+          <div class="meta"><i class="fa-solid fa-book-open"></i> Estimated reading: 20–30 min</div>
+        </div>
+
+        <section style="margin-top:18px">
+          <h3>Further reading & references (suggested)</h3>
+          <p>Classic and modern texts deepen these foundations: foundational treatises on physical chemistry, modern textbooks on quantum chemistry, and review articles in peer-reviewed journals. When preparing experiments, always consult original literature and safety documentation.</p>
+        </section>
+      </article>
+
+      <!-- Sidebar / TOC -->
+      <aside class="toc card" aria-labelledby="tocTitle">
+        <h3 id="tocTitle">Contents — Fundamentals</h3>
+
+        <div class="search">
+          <input type="search" id="searchInput" placeholder="Filter topics (press Esc to clear)">
+        </div>
+
+        <nav class="section-list" id="sectionList" aria-label="Section links">
+          <a class="section-item" href="introduction-to-chemistry.html"><span class="badge">1</span> Introduction to Chemistry</a>
+          <a class="section-item" href="branches-of-chemistry.html"><span class="badge">2</span> Branches of Chemistry</a>
+          <a class="section-item" href="scientific-method-in-chemistry.html"><span class="badge">3</span> Scientific Method in Chemistry</a>
+          <a class="section-item" href="matter-and-properties.html"><span class="badge">4</span> Matter &amp; Properties</a>
+          <a class="section-item" href="states-of-matter.html"><span class="badge">5</span> States of Matter</a>
+          <a class="section-item" href="physical-vs-chemical-changes.html"><span class="badge">6</span> Physical vs Chemical Changes</a>
+          <a class="section-item" href="elements-compounds-mixtures.html"><span class="badge">7</span> Elements, Compounds &amp; Mixtures</a>
+          <a class="section-item" href="laws-of-chemical-combination.html"><span class="badge">8</span> Laws of Chemical Combination</a>
+          <a class="section-item" href="atomic-theory-and-structure.html"><span class="badge">9</span> Atomic Theory &amp; Structure</a>
+          <a class="section-item" href="mole-concept-and-avogadros-law.html"><span class="badge">10</span> Mole Concept &amp; Avogadro</a>
+        </nav>
+
+        <div style="margin-top:16px" class="quick-links">
+          <a href="chemistry.html" class="section-item"><i class="fa-solid fa-arrow-left"></i> Back to Chemistry Index</a>
+          <a href="#" class="btn" onclick="window.print();return false"><i class="fa-solid fa-print"></i> Print Chapter</a>
+        </div>
+      </aside>
+    </main>
+
+    <footer style="margin-top:24px;text-align:center;color:var(--muted);font-size:0.95rem">
+      © 2025 Dominex Macedon · Chemistry Knowledge Project — Use for educational purposes. Cite if reused.
+    </footer>
+  </div>
+
+<script>
+  // small search filter for sidebar
+  const input = document.getElementById('searchInput');
+  const items = Array.from(document.querySelectorAll('#sectionList .section-item'));
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    items.forEach(it => {
+      const txt = it.textContent.toLowerCase();
+      it.style.display = txt.includes(q) ? 'flex' : 'none';
+    });
+  });
+  input.addEventListener('keydown', (e) => { if(e.key==='Escape') { input.value=''; input.dispatchEvent(new Event('input')); } });
+
+  // keyboard accessibility: focus first section link when pressing 's'
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 's' || e.key === 'S'){
+      e.preventDefault();
+      const first = document.querySelector('#sectionList .section-item');
+      if(first) first.focus();
+    }
+  });
+</script>
+</body>
+</html>
