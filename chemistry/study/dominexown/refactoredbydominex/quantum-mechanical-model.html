@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Mechanical Model — Chemistry Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --paper: #ffffff;
+    --ink: #1e293b;
+    --accent: #22b8cf;
+    --shadow: rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-family: "Crimson Pro", serif;
+    text-align: center;
+    color: var(--accent);
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
+
+  .folder-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .folder {
+    background: var(--paper);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow);
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 6px solid var(--accent);
+  }
+
+  .folder:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  }
+
+  .folder-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .folder-header i {
+    font-size: 1.6rem;
+    color: var(--accent);
+  }
+
+  .folder-header h2 {
+    font-size: 1.2rem;
+    margin: 0;
+    font-family: "Crimson Pro", serif;
+  }
+
+  .folder-content {
+    display: none;
+    margin-top: 14px;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #374151;
+    background: #fefefe;
+    border-left: 4px solid var(--accent);
+    padding: 16px 18px;
+    border-radius: 8px;
+  }
+
+  .folder.active .folder-content {
+    display: block;
+  }
+
+  .folder-content h3 {
+    color: var(--accent);
+    font-family: "Crimson Pro", serif;
+    font-size: 1.1rem;
+    margin-top: 1em;
+  }
+
+  footer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+</style>
+</head>
+<body>
+
+<h1>🌀 Quantum Mechanical Model of the Atom</h1>
+
+<div class="folder-container">
+
+  <!-- 1. Introduction -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-atom"></i>
+      <h2>Introduction to Quantum Model</h2>
+    </div>
+    <div class="folder-content">
+      <p>The quantum mechanical model replaces the classical orbits with probabilistic regions called orbitals, where electrons are most likely to be found. Developed from the works of Schrödinger, Heisenberg, and Dirac, it accurately explains atomic structure, chemical bonding, and spectral lines.</p>
+    </div>
+  </div>
+
+  <!-- 2. Wave-Particle Duality -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-wave-square"></i>
+      <h2>Wave-Particle Duality</h2>
+    </div>
+    <div class="folder-content">
+      <p>Electrons exhibit both particle-like and wave-like properties. This duality explains phenomena such as diffraction and interference at the atomic scale.</p>
+      <h3>Key Experiments:</h3>
+      <ul>
+        <li>Double-slit experiment demonstrating electron interference</li>
+        <li>Photoelectric effect showing particle behavior of light</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3. Schrödinger Equation -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-equals"></i>
+      <h2>Schrödinger Equation</h2>
+    </div>
+    <div class="folder-content">
+      <p>The Schrödinger equation describes how the quantum state of a system changes over time. Its solution provides the wavefunction (ψ), which gives the probability density of electrons in space.</p>
+      <h3>Key Points:</h3>
+      <ul>
+        <li>ψ² gives probability of finding an electron in a region</li>
+        <li>Determines allowed energy levels</li>
+        <li>Forms the basis for quantum chemistry</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. Quantum Numbers -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-hashtag"></i>
+      <h2>Quantum Numbers and Orbitals</h2>
+    </div>
+    <div class="folder-content">
+      <p>Quantum numbers define electron properties and orbital shapes.</p>
+      <h3>Four Quantum Numbers:</h3>
+      <ul>
+        <li>Principal (n) — energy level</li>
+        <li>Azimuthal (l) — orbital shape</li>
+        <li>Magnetic (m<sub>l</sub>) — orientation in space</li>
+        <li>Spin (m<sub>s</sub>) — electron spin (+½ or -½)</li>
+      </ul>
+      <p>Orbitals: s (spherical), p (dumbbell), d, f — each can hold specific numbers of electrons.</p>
+    </div>
+  </div>
+
+  <!-- 5. Heisenberg Uncertainty Principle -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-exclamation-triangle"></i>
+      <h2>Heisenberg Uncertainty Principle</h2>
+    </div>
+    <div class="folder-content">
+      <p>The exact position and momentum of an electron cannot be simultaneously known. This principle is fundamental to the probabilistic nature of the quantum model.</p>
+      <h3>Implications:</h3>
+      <ul>
+        <li>Limits classical visualization of electron orbits</li>
+        <li>Explains electron cloud concept</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. Electron Configuration -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-diagram-project"></i>
+      <h2>Electron Configuration</h2>
+    </div>
+    <div class="folder-content">
+      <p>Electron configuration arranges electrons in orbitals according to energy levels and Pauli exclusion principle. The Aufbau principle guides the filling order of orbitals.</p>
+      <h3>Example:</h3>
+      <ul>
+        <li>Hydrogen: 1s¹</li>
+        <li>Oxygen: 1s² 2s² 2p⁴</li>
+        <li>Iron: [Ar] 4s² 3d⁶</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2025 Chemistry Knowledge Project — Dominex Macedon</footer>
+
+<script>
+function toggleFolder(folder) {
+  folder.classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
