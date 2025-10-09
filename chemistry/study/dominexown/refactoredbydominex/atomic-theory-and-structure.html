@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atomic Theory and Structure of Atom — Chemistry Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f5f5f5;
+  --card: #ffffff;
+  --accent: #2563eb;
+  --accent2: #d97706;
+  --text: #111827;
+  --muted: #6b7280;
+  --radius: 14px;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+body {
+  margin:0;
+  padding:30px;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+header.hero {
+  display:flex;
+  gap:20px;
+  align-items:center;
+  background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(217,119,6,0.04));
+  padding:20px;
+  border-radius: var(--radius);
+  margin-bottom: 30px;
+  border:1px solid rgba(0,0,0,0.03);
+}
+
+.hero .icon {
+  flex-shrink:0;
+  width:80px;
+  height:80px;
+  border-radius:12px;
+  background: linear-gradient(180deg, rgba(37,99,235,0.1), rgba(217,119,6,0.08));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:36px;
+  color: var(--accent2);
+}
+
+.hero .title h1 {
+  font-family: "Crimson Pro", serif;
+  font-size:1.6rem;
+  margin:0;
+  color: var(--accent);
+}
+
+.hero .title p {
+  margin-top:6px;
+  color: var(--muted);
+}
+
+main {
+  display:grid;
+  grid-template-columns:1fr 280px;
+  gap:24px;
+}
+
+@media(max-width:980px){
+  main{grid-template-columns:1fr;}
+}
+
+.card {
+  background: var(--card);
+  padding:22px;
+  border-radius: var(--radius);
+  box-shadow:0 6px 20px var(--shadow);
+  border:1px solid rgba(15,23,36,0.03);
+  margin-bottom:20px;
+}
+
+h2,h3{
+  font-family: "Crimson Pro", serif;
+  color: var(--accent);
+}
+
+h3{margin-top:16px;color: var(--accent2);}
+
+p{line-height:1.65; margin-bottom:12px;}
+ul{margin-left:20px;}
+li{margin-bottom:8px;}
+
+.toc h3{margin-bottom:12px;}
+.toc a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px;
+  border-radius:10px;
+  color:var(--muted);
+  text-decoration:none;
+}
+.toc a:hover{background: rgba(37,99,235,0.06); color: var(--text);}
+.badge{background:rgba(37,99,235,0.08);color:var(--accent);padding:4px 8px;border-radius:999px;font-size:0.85rem;font-weight:700;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="icon"><i class="fa-solid fa-atom"></i></div>
+  <div class="title">
+    <h1>Atomic Theory and Structure of Atom</h1>
+    <p>Understanding the building blocks of matter and their internal structure.</p>
+  </div>
+</header>
+
+<main>
+  <article class="card" role="main">
+    <h2>Introduction</h2>
+    <p>Atomic theory explains that all matter is composed of discrete units called atoms. Over centuries, models of the atom have evolved to reflect experimental discoveries and quantum mechanics.</p>
+
+    <section id="dalton-model">
+      <h3>Dalton’s Atomic Model</h3>
+      <p>John Dalton proposed that atoms are indivisible, indestructible, and combine in fixed ratios to form compounds. This model laid the foundation of modern chemistry.</p>
+    </section>
+
+    <section id="thomson-model">
+      <h3>Thomson’s Model (Plum Pudding)</h3>
+      <p>J.J. Thomson discovered the electron, suggesting atoms are spheres of positive charge with embedded electrons.</p>
+    </section>
+
+    <section id="rutherford-model">
+      <h3>Rutherford Model</h3>
+      <p>Ernest Rutherford’s gold foil experiment revealed that atoms have a dense nucleus with positive charge, surrounded by electrons in mostly empty space.</p>
+    </section>
+
+    <section id="bohr-model">
+      <h3>Bohr Model</h3>
+      <p>Niels Bohr introduced quantized electron orbits, explaining hydrogen’s emission spectrum.</p>
+    </section>
+
+    <section id="quantum-mechanics">
+      <h3>Quantum Mechanical Model</h3>
+      <p>Modern atomic theory is based on Schrödinger’s wave equation, describing electron probability clouds. Electrons occupy orbitals (s, p, d, f), with energy levels and shapes determining chemical properties.</p>
+    </section>
+
+    <section id="subatomic-particles">
+      <h3>Subatomic Particles</h3>
+      <ul>
+        <li><b>Protons:</b> Positive charge, in nucleus, determines element identity.</li>
+        <li><b>Neutrons:</b> Neutral, in nucleus, contributes to isotope behavior.</li>
+        <li><b>Electrons:</b> Negative charge, in orbitals, governs chemical reactivity.</li>
+      </ul>
+    </section>
+
+    <section id="atomic-number-mass">
+      <h3>Atomic Number and Mass Number</h3>
+      <p>The atomic number (Z) is the number of protons in the nucleus, defining the element. Mass number (A) is the sum of protons and neutrons. Isotopes have same Z but different A.</p>
+    </section>
+
+    <section id="applications">
+      <h3>Applications</h3>
+      <p>Understanding atomic structure is essential for:</p>
+      <ul>
+        <li>Predicting chemical bonding and reactivity.</li>
+        <li>Nuclear chemistry, radiation studies, and isotopes.</li>
+        <li>Quantum chemistry, spectroscopy, and material science.</li>
+      </ul>
+    </section>
+  </article>
+
+  <aside class="toc card" aria-label="Table of Contents">
+    <h3>Contents</h3>
+    <a href="#dalton-model"><span class="badge">1</span> Dalton’s Atomic Model</a>
+    <a href="#thomson-model"><span class="badge">2</span> Thomson’s Model</a>
+    <a href="#rutherford-model"><span class="badge">3</span> Rutherford Model</a>
+    <a href="#bohr-model"><span class="badge">4</span> Bohr Model</a>
+    <a href="#quantum-mechanics"><span class="badge">5</span> Quantum Mechanical Model</a>
+    <a href="#subatomic-particles"><span class="badge">6</span> Subatomic Particles</a>
+    <a href="#atomic-number-mass"><span class="badge">7</span> Atomic Number & Mass Number</a>
+    <a href="#applications"><span class="badge">8</span> Applications</a>
+    <a href="chemistry.html" class="section-item"><i class="fa-solid fa-arrow-left"></i> Back to Chemistry Index</a>
+  </aside>
+</main>
+
+<footer style="text-align:center; margin-top:30px; color: var(--muted); font-size:0.9rem;">
+© 2025 Dominex Macedon — Chemistry Knowledge Project
+</footer>
+
+</div>
+</body>
+</html>
