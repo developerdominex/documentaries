@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Branches of Chemistry — Survey & Research Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="description" content="Survey of major branches of chemistry with research-level overviews, methods, applications and recommended study directions.">
+<style>
+  :root{
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --muted:#6b7280;
+    --accent:#0ea5a4;
+    --accent-2:#2563eb;
+    --ink:#0f1724;
+    --glass: rgba(255,255,255,0.75);
+    --radius:14px;
+    --max:1100px;
+  }
+
+  html,body{height:100%;margin:0;}
+  body{
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    background:linear-gradient(180deg,#f4f6fa 0%, #eef2f7 100%);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:28px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .wrap{max-width:var(--max);width:100%;}
+
+  /* top nav / breadcrumbs */
+  .nav{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .crumb{
+    background:var(--card);
+    padding:8px 12px;border-radius:999px;border:1px solid rgba(15,23,36,0.04);
+    color:var(--muted);font-weight:600;font-size:0.95rem;text-decoration:none;display:inline-flex;gap:8px;align-items:center;
+  }
+  .crumb:hover{box-shadow:0 6px 18px rgba(2,6,23,0.04);transform:translateY(-2px)}
+
+  header.hero{
+    background:linear-gradient(135deg, rgba(14,165,164,0.06), rgba(37,99,235,0.04));
+    border-radius:var(--radius);
+    padding:22px 24px;
+    display:flex;
+    gap:18px;
+    align-items:center;
+    border:1px solid rgba(15,23,36,0.03);
+  }
+  .hero .left{width:96px;height:96px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg, rgba(14,165,164,0.12), rgba(37,99,235,0.06));flex-shrink:0;border:1px solid rgba(15,23,36,0.02)}
+  .hero .left i{font-size:40px;color:var(--accent-2)}
+  .hero .title h1{font-family:Crimson Pro, serif;margin:0;font-size:1.45rem;color:var(--accent-2)}
+  .hero .title p{margin:6px 0 0;font-size:0.95rem;color:var(--muted);line-height:1.45}
+
+  main{display:grid;grid-template-columns:1fr 320px;gap:22px;margin-top:20px}
+  @media (max-width:980px){ main{grid-template-columns:1fr} .toc{order:2} }
+
+  .card{
+    background:var(--card);
+    border-radius:12px;
+    padding:20px 22px;
+    box-shadow:0 8px 30px rgba(2,6,23,0.04);
+    border:1px solid rgba(15,23,36,0.03);
+  }
+
+  h2{font-family:Crimson Pro, serif;color:var(--accent-2);margin:0 0 12px 0;font-size:1.2rem}
+  h3{color:var(--accent);margin:16px 0 8px 0}
+  p{color:#374151;margin:0 0 12px 0;line-height:1.65}
+  .lead{font-size:1rem;color:#263247}
+
+  .section{
+    margin-top:12px;padding-top:12px;border-top:1px dashed rgba(15,23,36,0.04);
+  }
+
+  .method{background:#fbfdff;border-radius:10px;padding:12px;border-left:4px solid var(--accent-2);margin:12px 0}
+  .examples{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
+  .example{background:linear-gradient(90deg,rgba(37,99,235,0.03), rgba(14,165,164,0.02));padding:10px;border-radius:8px;font-weight:600;color:#0b1220}
+
+  .toc h3{margin:0 0 12px 0}
+  .section-list{display:flex;flex-direction:column;gap:8px}
+  .section-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;color:var(--muted);text-decoration:none}
+  .section-item:hover{background:rgba(2,6,23,0.02);color:var(--ink);transform:translateX(4px)}
+  .badge{background:rgba(37,99,235,0.08);color:var(--accent-2);padding:6px 10px;border-radius:999px;font-weight:700;font-size:0.85rem}
+
+  .search input{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(15,23,36,0.06);font-size:0.95rem}
+
+  .meta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+  .meta{background:rgba(15,23,36,0.03);padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:600}
+
+  .quick-links{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  a.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;text-decoration:none;font-weight:700}
+
+  footer{margin-top:28px;text-align:center;color:var(--muted);font-size:0.95rem}
+
+  /* responsive tables / code */
+  .table{width:100%;border-collapse:collapse;margin-top:10px}
+  .table th,.table td{padding:8px;border:1px solid rgba(15,23,36,0.04);text-align:left}
+  .code{background:#0f1724;color:#fff;padding:10px;border-radius:8px;font-family:monospace}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav">
+      <a href="chemistry.html" class="crumb"><i class="fa-solid fa-folder-open"></i> Chemistry Home</a>
+      <a href="branches-of-chemistry.html" class="crumb" aria-current="page"><i class="fa-solid fa-sitemap"></i> Branches</a>
+    </nav>
+
+    <header class="hero">
+      <div class="left" aria-hidden="true"><i class="fa-solid fa-sitemap"></i></div>
+      <div class="title">
+        <h1>Branches of Chemistry</h1>
+        <p class="lead">Concise research-oriented overviews of the principal branches of chemistry: scope, core methods, applications and recommended directions for further study.</p>
+      </div>
+    </header>
+
+    <main>
+      <!-- MAIN CONTENT -->
+      <article class="card" role="main" aria-labelledby="overview">
+        <h2 id="overview">Survey & Classification</h2>
+        <p class="lead">Chemistry is traditionally partitioned into several overlapping branches. Each branch emphasizes specific classes of substances, methods, theory, or applications. The following sections provide structured, research-ready summaries suitable for advanced secondary-level or introductory university study.</p>
+
+        <!-- 1 Organic Chemistry -->
+        <section class="section" id="organic">
+          <h3>Organic Chemistry</h3>
+          <p>Organic chemistry focuses on carbon-containing compounds: their structure, synthesis, reactivity, and applications. Historically the chemistry of life, the field encompasses small-molecule synthesis, mechanistic studies, stereochemistry, catalysis, and polymerization. Central techniques include NMR spectroscopy, mass spectrometry, chromatography, and modern synthetic methodologies (cross-coupling, C–H activation).</p>
+
+          <div class="method"><strong>Core methods:</strong> retrosynthetic analysis, transition-metal catalysis, stereoselective synthesis, NMR/MS/IR characterization, chromatographic separation.</div>
+
+          <div class="examples">
+            <div class="example">Pharmaceutical synthesis</div>
+            <div class="example">Natural product chemistry</div>
+            <div class="example">Polymer precursors</div>
+            <div class="example">Medicinal chemistry optimization</div>
+          </div>
+        </section>
+
+        <!-- 2 Inorganic Chemistry -->
+        <section class="section" id="inorganic">
+          <h3>Inorganic Chemistry</h3>
+          <p>Inorganic chemistry studies elements and compounds excluding most organic carbon frameworks: metals, minerals, coordination complexes, and solid-state materials. It underpins catalysis (homogeneous/heterogeneous), materials science, and coordination chemistry including ligand field theory and electronic structure of transition metals.</p>
+
+          <div class="method"><strong>Core methods:</strong> X-ray crystallography, electronic spectroscopy, magnetochemistry, electrochemistry, synthesis under inert atmosphere.</div>
+
+          <div class="examples">
+            <div class="example">Catalyst design (industrial & green chemistry)</div>
+            <div class="example">Coordination complex reactivity</div>
+            <div class="example">Solid-state inorganic materials</div>
+          </div>
+        </section>
+
+        <!-- 3 Physical Chemistry -->
+        <section class="section" id="physical">
+          <h3>Physical Chemistry</h3>
+          <p>Physical chemistry connects chemistry to physics: thermodynamics, quantum mechanics, statistical mechanics, and kinetics. It provides the theoretical language for bonding, spectroscopy, reaction rates, energy transfer, and surface phenomena. Modern physical chemistry integrates computational modeling and experimental spectroscopy to explain and predict chemical behavior.</p>
+
+          <div class="method"><strong>Core methods:</strong> calorimetry, spectroscopy (IR, UV–Vis, Raman), quantum chemical calculations, molecular dynamics, kinetic experiments.</div>
+
+          <div class="examples">
+            <div class="example">Reaction mechanism elucidation</div>
+            <div class="example">Spectroscopic characterization</div>
+            <div class="example">Thermodynamics of materials</div>
+          </div>
+        </section>
+
+        <!-- 4 Analytical Chemistry -->
+        <section class="section" id="analytical">
+          <h3>Analytical Chemistry</h3>
+          <p>Analytical chemistry develops and applies methods to identify and quantify chemical species. It spans classical gravimetric/titrimetric techniques to advanced instrumental analysis: chromatography (GC, HPLC), mass spectrometry, atomic absorption/emission, and hyphenated techniques (GC–MS, LC–MS). Analytical chemistry is essential in environmental monitoring, quality control, and clinical assays.</p>
+
+          <div class="method"><strong>Core methods:</strong> calibration, method validation, limit of detection/quantification, sample preparation, chromatographic separations.</div>
+
+          <div class="examples">
+            <div class="example">Trace analysis (environmental)</div>
+            <div class="example">Clinical diagnostics</div>
+            <div class="example">Forensic analysis</div>
+          </div>
+        </section>
+
+        <!-- 5 Biochemistry -->
+        <section class="section" id="biochemistry">
+          <h3>Biochemistry</h3>
+          <p>Biochemistry studies the chemistry of living systems: biomolecules (proteins, nucleic acids, lipids, carbohydrates), metabolism, enzyme kinetics, and signaling. It integrates structural biology, enzymology, and analytical methods to understand cellular processes and to develop therapeutics and diagnostics.</p>
+
+          <div class="method"><strong>Core methods:</strong> enzyme assays, protein purification, mass spectrometry, X-ray/cryo-EM, molecular cloning, metabolomics.</div>
+
+          <div class="examples">
+            <div class="example">Enzyme mechanism studies</div>
+            <div class="example">Drug-target interactions</div>
+            <div class="example">Synthetic biology</div>
+          </div>
+        </section>
+
+        <!-- 6 Theoretical & Computational Chemistry -->
+        <section class="section" id="computational">
+          <h3>Theoretical & Computational Chemistry</h3>
+          <p>This branch applies quantum mechanics and statistical methods to model molecular structure, reaction pathways, and material properties. Methods range from ab initio electronic-structure calculations (DFT, post-Hartree–Fock) to molecular mechanics and coarse-grained simulations. Computational chemistry provides predictive insights and complements experimental work.</p>
+
+          <div class="method"><strong>Core methods:</strong> DFT, coupled-cluster, molecular dynamics, transition-state modeling, solvation models.</div>
+
+          <div class="examples">
+            <div class="example">Catalyst active site modeling</div>
+            <div class="example">Spectral prediction</div>
+            <div class="example">Materials screening</div>
+          </div>
+        </section>
+
+        <!-- 7 Materials & Solid-State Chemistry -->
+        <section class="section" id="materials">
+          <h3>Materials & Solid-State Chemistry</h3>
+          <p>Solid-state chemistry explores crystalline and amorphous materials, electronic, optical and magnetic properties, and defect chemistry. It underlies semiconductors, batteries, superconductors, ceramics, and porous materials (e.g., MOFs). Synthesis, processing and characterization are central to device-level applications.</p>
+
+          <div class="method"><strong>Core methods:</strong> XRD, electron microscopy, impedance spectroscopy, thin-film deposition, solid-state NMR.</div>
+
+          <div class="examples">
+            <div class="example">Battery electrode materials</div>
+            <div class="example">Photovoltaic semiconductors</div>
+            <div class="example">Porous frameworks (MOFs)</div>
+          </div>
+        </section>
+
+        <!-- 8 Environmental & Green Chemistry -->
+        <section class="section" id="environmental">
+          <h3>Environmental & Green Chemistry</h3>
+          <p>Environmental chemistry studies chemical processes in air, water and soil, pollutant fate, and remediation strategies. Green chemistry focuses on design principles to reduce hazardous substances, improve atom economy, and enable sustainable manufacturing. Both emphasize life-cycle analysis and regulatory context.</p>
+
+          <div class="method"><strong>Core methods:</strong> environmental monitoring, speciation analysis, remediation technologies, life-cycle assessment.</div>
+
+          <div class="examples">
+            <div class="example">Catalytic waste minimization</div>
+            <div class="example">Remediation of heavy metals</div>
+            <div class="example">Green solvent design</div>
+          </div>
+        </section>
+
+        <!-- 9 Industrial, Process & Chemical Engineering -->
+        <section class="section" id="industrial">
+          <h3>Industrial Chemistry & Process Engineering</h3>
+          <p>Bridging chemistry and engineering, this area focuses on scale-up, reactor design, separations, process safety, and economic optimization. Key concerns include mass/energy balances, kinetics in flow reactors, catalyst life, and regulatory compliance.</p>
+
+          <div class="method"><strong>Core methods:</strong> process simulation (Aspen), pilot plant testing, scale-up kinetics, hazard & operability (HAZOP).</div>
+
+          <div class="examples">
+            <div class="example">Fertilizer synthesis (Haber–Bosch)</div>
+            <div class="example">Large-scale polymerization</div>
+            <div class="example">Continuous-flow synthesis</div>
+          </div>
+        </section>
+
+        <!-- 10 Medicinal & Pharmaceutical Chemistry -->
+        <section class="section" id="medicinal">
+          <h3>Medicinal & Pharmaceutical Chemistry</h3>
+          <p>This applied branch integrates organic synthesis, medicinal chemistry, pharmacokinetics and structure–activity relationships (SAR) to discover and optimize therapeutic agents. It is highly multidisciplinary—combining biology, computational design, and robust analytical characterization.</p>
+
+          <div class="method"><strong>Core methods:</strong> high-throughput screening, ADMET profiling, SAR analysis, lead optimization, formulation chemistry.</div>
+
+          <div class="examples">
+            <div class="example">Small-molecule drug discovery</div>
+            <div class="example">Prodrug strategies</div>
+            <div class="example">Formulation & delivery</div>
+          </div>
+        </section>
+
+        <!-- 11 Polymer Chemistry -->
+        <section class="section" id="polymer">
+          <h3>Polymer & Macromolecular Chemistry</h3>
+          <p>Polymer chemistry covers synthesis, characterization, and properties of macromolecules. Topics include step-growth and chain-growth polymerization, copolymer design, rheology, and degradation. Polymers are central to materials, coatings, biomedical devices, and sustainable plastics research.</p>
+
+          <div class="method"><strong>Core methods:</strong> GPC (molar mass), DSC/TGA (thermal properties), rheometry, polymerization kinetics.</div>
+
+          <div class="examples">
+            <div class="example">Biodegradable polymers</div>
+            <div class="example">High-performance engineering plastics</div>
+            <div class="example">Polymer composites</div>
+          </div>
+        </section>
+
+        <!-- 12 Electrochemistry & Energy -->
+        <section class="section" id="electrochemistry">
+          <h3>Electrochemistry & Energy Conversion</h3>
+          <p>Electrochemistry is fundamental to batteries, fuel cells, corrosion science, and electrosynthesis. It encompasses electrode kinetics, transport phenomena, and cell engineering. Modern research aims to improve energy density, cycle life, and sustainable electrochemical processes.</p>
+
+          <div class="method"><strong>Core methods:</strong> cyclic voltammetry, impedance spectroscopy, galvanostatic testing, electrode surface characterization.</div>
+
+          <div class="examples">
+            <div class="example">Li-ion / beyond-Li batteries</div>
+            <div class="example">Electrocatalytic CO₂ reduction</div>
+            <div class="example">Electrosynthesis of fine chemicals</div>
+          </div>
+        </section>
+
+        <!-- 13 Nuclear & Radiochemistry -->
+        <section class="section" id="nuclear">
+          <h3>Nuclear & Radiochemistry</h3>
+          <p>Nuclear chemistry studies radioactive elements, decay processes, and applications in energy and medicine (radiopharmaceuticals). It involves radiation detection, dosimetry, and radiochemical separation techniques with strict safety and regulatory practices.</p>
+
+          <div class="method"><strong>Core methods:</strong> gamma spectroscopy, radiotracer techniques, radiochemical separation.</div>
+
+          <div class="examples">
+            <div class="example">Medical isotopes</div>
+            <div class="example">Waste handling</div>
+            <div class="example">Nuclear forensics</div>
+          </div>
+        </section>
+
+        <!-- 14 Surface, Colloid & Supramolecular Chemistry -->
+        <section class="section" id="surface">
+          <h3>Surface, Colloid & Supramolecular Chemistry</h3>
+          <p>These intersecting fields study interfaces, colloidal stability, self-assembly, and noncovalent interactions. They are critical for catalysis, sensors, drug delivery systems, and nanostructured materials.</p>
+
+          <div class="method"><strong>Core methods:</strong> surface tension, zeta potential, AFM/STM, electron microscopy, spectroscopy.</div>
+
+          <div class="examples">
+            <div class="example">Self-assembled monolayers</div>
+            <div class="example">Emulsion stabilization</div>
+            <div class="example">Host–guest chemistry</div>
+          </div>
+        </section>
+
+        <!-- 15 Specialized & Emerging Areas -->
+        <section class="section" id="specialized">
+          <h3>Specialized & Emerging Areas</h3>
+          <p>Contemporary chemistry expands into specialized areas: nanochemistry, computational materials design, photochemistry/photophysics, astrochemistry, forensic chemistry, geochemistry, and chemical biology. These fields combine foundational chemistry with domain-specific questions and high-end instrumentation.</p>
+
+          <div class="examples" style="margin-top:10px">
+            <div class="example">Nanomaterials & surface functionalization</div>
+            <div class="example">Photocatalysis & solar fuels</div>
+            <div class="example">Chemical biology & proteomics</div>
+            <div class="example">Forensic & analytical trace work</div>
+          </div>
+        </section>
+
+        <!-- Closing -->
+        <section class="section" id="final">
+          <h3>Integrative Perspective</h3>
+          <p>Branches of chemistry are porous: techniques and concepts travel between domains. A modern chemist is often interdisciplinary—synthesizing molecules, measuring properties, modeling behavior, and engineering solutions. For study and research, prioritize strong foundations (physical chemistry, analytical methods, and organic/inorganic synthesis) and then specialize with project-based experience.</p>
+
+          <div class="meta-row" aria-hidden="true">
+            <div class="meta"><i class="fa-solid fa-calendar"></i> Last updated: 2025</div>
+            <div class="meta"><i class="fa-solid fa-flask"></i> Level: Advanced secondary / Introductory research</div>
+            <div class="meta"><i class="fa-solid fa-lightbulb"></i> Suggested next step: choose two complementary branches and undertake a literature review</div>
+          </div>
+        </section>
+      </article>
+
+      <!-- SIDEBAR / TOC -->
+      <aside class="toc card" aria-labelledby="tocTitle">
+        <h3 id="tocTitle">Branches Index</h3>
+
+        <div class="search">
+          <input type="search" id="searchInput" placeholder="Filter branches (Esc to clear)">
+        </div>
+
+        <nav class="section-list" id="sectionList" aria-label="Section links">
+          <a class="section-item" href="#organic"><span class="badge">01</span> Organic Chemistry</a>
+          <a class="section-item" href="#inorganic"><span class="badge">02</span> Inorganic Chemistry</a>
+          <a class="section-item" href="#physical"><span class="badge">03</span> Physical Chemistry</a>
+          <a class="section-item" href="#analytical"><span class="badge">04</span> Analytical Chemistry</a>
+          <a class="section-item" href="#biochemistry"><span class="badge">05</span> Biochemistry</a>
+          <a class="section-item" href="#computational"><span class="badge">06</span> Theoretical & Computational</a>
+          <a class="section-item" href="#materials"><span class="badge">07</span> Materials & Solid-State</a>
+          <a class="section-item" href="#environmental"><span class="badge">08</span> Environmental & Green</a>
+          <a class="section-item" href="#industrial"><span class="badge">09</span> Industrial & Process</a>
+          <a class="section-item" href="#medicinal"><span class="badge">10</span> Medicinal & Pharmaceutical</a>
+          <a class="section-item" href="#polymer"><span class="badge">11</span> Polymer Chemistry</a>
+          <a class="section-item" href="#electrochemistry"><span class="badge">12</span> Electrochemistry & Energy</a>
+          <a class="section-item" href="#nuclear"><span class="badge">13</span> Nuclear & Radiochemistry</a>
+          <a class="section-item" href="#surface"><span class="badge">14</span> Surface, Colloid & Supramolecular</a>
+          <a class="section-item" href="#specialized"><span class="badge">15</span> Specialized & Emerging Areas</a>
+        </nav>
+
+        <div style="margin-top:16px" class="quick-links">
+          <a href="chemistry.html" class="section-item"><i class="fa-solid fa-arrow-left"></i> Back to Chemistry Index</a>
+          <a href="#" class="btn" onclick="window.print();return false"><i class="fa-solid fa-print"></i> Print Overview</a>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      © 2025 Dominex Macedon · Chemistry Knowledge Project — Use for educational and research preparation. Cite sources when reusing.
+    </footer>
+  </div>
+
+<script>
+  // sidebar search filter
+  const input = document.getElementById('searchInput');
+  const items = Array.from(document.querySelectorAll('#sectionList .section-item'));
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    items.forEach(it => {
+      const txt = it.textContent.toLowerCase();
+      it.style.display = txt.includes(q) ? 'flex' : 'none';
+    });
+  });
+  input.addEventListener('keydown', (e) => { if(e.key==='Escape'){ input.value=''; input.dispatchEvent(new Event('input')); } });
+
+  // smooth scrolling for section links
+  document.querySelectorAll('.section-item').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      if(a.hash){
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    });
+  });
+
+  // keyboard quick access: press 'b' to focus search
+  document.addEventListener('keydown',(e)=>{
+    if(e.key.toLowerCase()==='b' && document.activeElement.tagName!=='INPUT'){
+      e.preventDefault();
+      input.focus();
+    }
+  });
+</script>
+</body>
+</html>
