@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Covalent Bonding — Chemistry Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f5f7fa;
+  --paper: #ffffff;
+  --ink: #1e293b;
+  --accent: #10b981;
+  --shadow: rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; }
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  padding: 40px 20px;
+}
+h1 {
+  font-family: "Crimson Pro", serif;
+  text-align: center;
+  color: var(--accent);
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+.folder-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+.folder {
+  background: var(--paper);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 6px solid var(--accent);
+}
+.folder:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.folder-header i {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+.folder-header h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  font-family: "Crimson Pro", serif;
+}
+.folder-content {
+  display: none;
+  margin-top: 14px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #374151;
+  background: #fefefe;
+  border-left: 4px solid var(--accent);
+  padding: 16px 18px;
+  border-radius: 8px;
+}
+.folder.active .folder-content {
+  display: block;
+}
+.folder-content h3 {
+  color: var(--accent);
+  font-family: "Crimson Pro", serif;
+  font-size: 1.1rem;
+  margin-top: 1em;
+}
+footer {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+</style>
+</head>
+<body>
+
+<h1>🔗 Covalent Bonding</h1>
+
+<div class="folder-container">
+
+  <!-- Definition -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-circle-plus"></i>
+      <h2>Definition</h2>
+    </div>
+    <div class="folder-content">
+      <p>Covalent bonding is the chemical bond formed when two atoms share one or more pairs of electrons to achieve a stable electronic configuration.</p>
+    </div>
+  </div>
+
+  <!-- Formation -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-flask"></i>
+      <h2>Formation</h2>
+    </div>
+    <div class="folder-content">
+      <p>Non-metal atoms share electrons to fill their outermost shells. The shared electrons count as part of each atom's valence shell, producing a stable molecule.</p>
+    </div>
+  </div>
+
+  <!-- Properties -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-gem"></i>
+      <h2>Properties</h2>
+    </div>
+    <div class="folder-content">
+      <ul>
+        <li>Low to moderate melting and boiling points</li>
+        <li>Non-conductive in solid and liquid states</li>
+        <li>Form discrete molecules or network solids</li>
+        <li>May be polar or nonpolar depending on electronegativity</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Examples -->
+  <div class="folder" onclick="toggleFolder(this)">
+    <div class="folder-header">
+      <i class="fa-solid fa-atom"></i>
+      <h2>Examples</h2>
+    </div>
+    <div class="folder-content">
+      <ul>
+        <li>Water (H₂O)</li>
+        <li>Carbon Dioxide (CO₂)</li>
+        <li>Methane (CH₄)</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2025 Chemistry Knowledge Project — Dominex Macedon</footer>
+
+<script>
+function toggleFolder(folder) {
+  folder.classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
