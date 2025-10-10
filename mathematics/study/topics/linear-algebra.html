@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fefaf6, #e9f7ff);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #2c7da0;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #2c7da0;
+  border-bottom: 2px solid #2c7da0;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #2c7da0;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #2c7da0;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #18566d; }
+.diagram { margin: 20px 0; text-align: center; }
+svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-border-all"></i> Linear Algebra</h1>
+  <p>Vector spaces, matrices, eigenvalues, transformations, and diagonalization</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Linear algebra is the branch of mathematics concerning vector spaces and linear mappings between them. It studies systems of linear equations, matrices, determinants, eigenvalues, and transformations.</p>
+</section>
+
+<section>
+  <h2>Vector Spaces</h2>
+  <ul>
+    <li>A set of vectors with operations of addition and scalar multiplication</li>
+    <li>Closed under addition and scalar multiplication</li>
+    <li>Contains a zero vector \( \mathbf{0} \)</li>
+  </ul>
+  <div class="example">
+    Example: \( \mathbb{R}^3 = \{(x,y,z) | x,y,z \in \mathbb{R}\} \)
+  </div>
+</section>
+
+<section>
+  <h2>Matrices and Determinants</h2>
+  <p>Matrices represent linear transformations. Determinants provide information about invertibility.</p>
+  <div class="example">
+    \( A = \begin{bmatrix}1 & 2\\ 3 & 4\end{bmatrix}, \quad \det(A) = (1)(4) - (2)(3) = -2 \)
+  </div>
+  <div class="diagram">
+    <svg width="250" height="150">
+      <rect x="20" y="20" width="50" height="50" fill="#2c7da0" stroke="#18566d" stroke-width="2"/>
+      <rect x="80" y="20" width="50" height="50" fill="#2c7da0" stroke="#18566d" stroke-width="2"/>
+      <rect x="20" y="80" width="50" height="50" fill="#2c7da0" stroke="#18566d" stroke-width="2"/>
+      <rect x="80" y="80" width="50" height="50" fill="#2c7da0" stroke="#18566d" stroke-width="2"/>
+      <text x="35" y="55" fill="#fff">1</text>
+      <text x="95" y="55" fill="#fff">2</text>
+      <text x="35" y="115" fill="#fff">3</text>
+      <text x="95" y="115" fill="#fff">4</text>
+    </svg>
+    <p>2x2 matrix visualization</p>
+  </div>
+</section>
+
+<section>
+  <h2>Linear Transformations</h2>
+  <p>A linear transformation \( T: V \to W \) preserves addition and scalar multiplication:</p>
+  \[
+  T(\mathbf{u} + \mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v}), \quad T(c\mathbf{u}) = c T(\mathbf{u})
+  \]
+  <div class="example">
+    \( T(x,y) = (2x, 3y) \)
+  </div>
+</section>
+
+<section>
+  <h2>Eigenvalues and Eigenvectors</h2>
+  <p>For a square matrix \( A \), a vector \( v \neq 0 \) is an eigenvector if \( A v = \lambda v \), where \( \lambda \) is the eigenvalue.</p>
+  <div class="example">
+    \( A = \begin{bmatrix}2 & 0 \\ 0 & 3\end{bmatrix} \) → Eigenvalues: \( \lambda_1 = 2, \lambda_2 = 3 \) <br>
+    Eigenvectors: \( v_1 = \begin{bmatrix}1\\0\end{bmatrix}, v_2 = \begin{bmatrix}0\\1\end{bmatrix} \)
+  </div>
+</section>
+
+<section>
+  <h2>Diagonalization</h2>
+  <p>A matrix \( A \) is diagonalizable if there exists an invertible matrix \( P \) such that \( P^{-1}AP = D \), where \( D \) is diagonal with eigenvalues on the diagonal.</p>
+  <div class="example">
+    \( A = \begin{bmatrix}4 & 1 \\ 0 & 2\end{bmatrix} \) → Diagonalizable with eigenvalues 4 and 2
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Computer graphics: transformations, rotations</li>
+    <li>Engineering: systems of linear equations, stress analysis</li>
+    <li>Economics: input-output models, optimization</li>
+    <li>Data science: PCA, dimensionality reduction</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Linear algebra emerged in the 19th century, building on matrix theory by mathematicians like <strong>Arthur Cayley</strong> and <strong>James Joseph Sylvester</strong>. It is fundamental in modern mathematics, physics, and engineering.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
