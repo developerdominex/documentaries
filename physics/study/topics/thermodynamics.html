@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thermodynamics — Physics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin:0;
+  background: #fdf6f0;
+  color: #222;
+  line-height: 1.6;
+}
+header {
+  background: linear-gradient(135deg,#ff5722,#ff9800);
+  color: #fff;
+  text-align: center;
+  padding: 30px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+header h1 { margin: 0; font-size: 2em; }
+header p { margin: 6px 0 0; font-size: 1em; }
+
+.container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+h2 { color: #ff5722; margin-top: 28px; }
+h3 { margin-top: 20px; color:#555; }
+
+.card { background:#fff; padding:18px; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.08); margin-top:20px; }
+ul { margin-left:20px; }
+
+.formula { background: #fff3e0; padding:10px 12px; border-radius:6px; margin:8px 0; font-weight:600; }
+
+.problem { background: #e8f5e9; padding:14px; border-left:4px solid #4caf50; margin-top:12px; border-radius:8px; }
+
+.back { display:inline-block; margin-top:20px; text-decoration:none; color:#ff5722; font-weight:600; }
+.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Thermodynamics</h1>
+  <p>Heat, Work, Energy, and the Laws of Thermodynamics</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+  <h2>1. Zeroth Law of Thermodynamics</h2>
+  <p>If two systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other. Basis for temperature measurement.</p>
+</div>
+
+<div class="card">
+  <h2>2. First Law of Thermodynamics</h2>
+  <p>Conservation of energy in thermodynamic processes:</p>
+  <div class="formula">
+    \\[ \Delta U = Q - W \\]
+  </div>
+  <p>Where:</p>
+  <ul>
+    <li>\\(\\Delta U\\) = change in internal energy</li>
+    <li>\\(Q\\) = heat added to the system</li>
+    <li>\\(W\\) = work done by the system</li>
+  </ul>
+  <div class="problem">
+    A gas absorbs 500 J of heat and does 200 J of work. Find the change in internal energy:  
+    \\( \Delta U = 500 - 200 = 300 \, J \\)
+  </div>
+</div>
+
+<div class="card">
+  <h2>3. Second Law of Thermodynamics</h2>
+  <p>Entropy of an isolated system never decreases. Heat cannot spontaneously flow from cold to hot.</p>
+  <div class="formula">
+    \\[ \Delta S \ge 0 \\]
+  </div>
+  <p>Applications:</p>
+  <ul>
+    <li>Efficiency limits of engines</li>
+    <li>Direction of spontaneous processes</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>4. Third Law of Thermodynamics</h2>
+  <p>As temperature approaches absolute zero, the entropy of a perfect crystal approaches zero.</p>
+  <div class="formula">
+    \\[ \lim_{T \to 0} S = 0 \\]
+  </div>
+</div>
+
+<div class="card">
+  <h2>5. Thermodynamic Processes</h2>
+  <ul>
+    <li><b>Isothermal:</b> \\( \Delta U = 0, Q = W \\)</li>
+    <li><b>Adiabatic:</b> \\( Q = 0, \Delta U = -W \\)</li>
+    <li><b>Isobaric:</b> Constant pressure, \\( W = P \Delta V \\)</li>
+    <li><b>Isochoric:</b> Constant volume, \\( W = 0, \Delta U = Q \\)</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>6. Heat Engines and Efficiency</h2>
+  <p>Efficiency of a heat engine:</p>
+  <div class="formula">
+    \\[ \eta = \frac{W}{Q_H} = 1 - \frac{Q_C}{Q_H} \\]
+  </div>
+  <p>Where \\(Q_H\\) = heat absorbed, \\(Q_C\\) = heat rejected.</p>
+  <div class="problem">
+    A Carnot engine absorbs 1000 J and rejects 400 J. Efficiency: \\( \eta = 1 - 400/1000 = 0.6 = 60\% \\)
+  </div>
+</div>
+
+<div class="card">
+  <h2>7. Applications</h2>
+  <ul>
+    <li>Refrigerators and air conditioners</li>
+    <li>Steam engines and power plants</li>
+    <li>Thermal efficiency optimization</li>
+    <li>Understanding natural phenomena (entropy, heat transfer)</li>
+  </ul>
+</div>
+
+<a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Physics Topics</a>
+
+</div>
+</body>
+</html>
