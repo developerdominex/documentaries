@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magnetism | Physics</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f9fc;
+      color: #222;
+      line-height: 1.7;
+    }
+    header {
+      background: linear-gradient(135deg, #4b6cb7, #182848);
+      color: white;
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    header p {
+      font-size: 1.1rem;
+      color: #dfe6f0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    h2 {
+      color: #182848;
+      border-left: 5px solid #4b6cb7;
+      padding-left: 10px;
+      margin-top: 40px;
+    }
+    .formula {
+      background: #eef2f9;
+      border-left: 4px solid #4b6cb7;
+      padding: 10px 15px;
+      font-family: 'Courier New', monospace;
+      margin: 15px 0;
+      overflow-x: auto;
+    }
+    .example {
+      background: #f3f8ff;
+      border-left: 4px solid #4b6cb7;
+      padding: 10px 15px;
+      margin: 15px 0;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      background: #4b6cb7;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #3555a0;
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #182848;
+      color: white;
+      margin-top: 50px;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <header>
+    <i class="fa-solid fa-magnet fa-3x"></i>
+    <h1>Magnetism</h1>
+    <p>Magnetic fields, Lorentz force, Ampère’s law, and electromagnetic induction.</p>
+  </header>
+
+  <div class="container">
+    <h2>1. Magnetic Field (\( \vec{B} \))</h2>
+    <p>
+      A magnetic field is a vector field that exerts magnetic forces on moving charges and magnetic dipoles.
+      Its SI unit is the <strong>tesla (T)</strong>.
+    </p>
+    <div class="formula">
+      \( \vec{F} = q(\vec{v} \times \vec{B}) \)
+    </div>
+    <p>
+      The direction of the force is given by the <strong>right-hand rule</strong>.
+    </p>
+
+    <h2>2. Biot–Savart Law</h2>
+    <p>
+      The Biot–Savart law gives the magnetic field produced by a small current element:
+    </p>
+    <div class="formula">
+      \( d\vec{B} = \frac{\mu_0}{4\pi} \frac{I\, d\vec{l} \times \hat{r}}{r^2} \)
+    </div>
+    <p>
+      Integrating over a current-carrying wire gives the total field. For a long straight conductor:
+    </p>
+    <div class="formula">
+      \( B = \frac{\mu_0 I}{2\pi r} \)
+    </div>
+
+    <h2>3. Ampère’s Circuital Law</h2>
+    <p>
+      The line integral of the magnetic field around a closed path equals the permeability times the current enclosed:
+    </p>
+    <div class="formula">
+      \( \oint \vec{B} \cdot d\vec{l} = \mu_0 I_{\text{enc}} \)
+    </div>
+    <p>
+      This is a fundamental principle in magnetostatics and forms part of Maxwell’s equations.
+    </p>
+
+    <h2>4. Lorentz Force</h2>
+    <p>
+      A charged particle moving through electric and magnetic fields experiences a combined force:
+    </p>
+    <div class="formula">
+      \( \vec{F} = q(\vec{E} + \vec{v} \times \vec{B}) \)
+    </div>
+    <p>
+      This causes particles to move in circular or helical paths, depending on their velocity relative to \( \vec{B} \).
+    </p>
+
+    <h2>5. Magnetic Force on a Current-Carrying Conductor</h2>
+    <div class="formula">
+      \( \vec{F} = I (\vec{L} \times \vec{B}) \)
+    </div>
+    <p>
+      This principle underlies electric motors, where a current in a magnetic field produces mechanical motion.
+    </p>
+
+    <h2>6. Electromagnetic Induction (Faraday’s Law)</h2>
+    <p>
+      A changing magnetic flux induces an electromotive force (emf):
+    </p>
+    <div class="formula">
+      \( \mathcal{E} = -\frac{d\Phi_B}{dt} \), where \( \Phi_B = \int \vec{B} \cdot d\vec{A} \)
+    </div>
+    <p>
+      The negative sign represents <strong>Lenz’s Law</strong>: the induced current opposes the change in flux.
+    </p>
+
+    <div class="example">
+      <strong>Example:</strong>  
+      A coil of 100 turns encloses a magnetic flux changing at \( 0.01\, \text{Wb/s} \).  
+      Induced emf = \( \mathcal{E} = N \frac{d\Phi}{dt} = 100 \times 0.01 = 1\, \text{V} \).
+    </div>
+
+    <h2>7. Applications of Magnetism</h2>
+    <ul>
+      <li><strong>Electric motors</strong> — convert electrical energy to mechanical motion.</li>
+      <li><strong>Generators</strong> — produce electricity using changing magnetic flux.</li>
+      <li><strong>Magnetic storage</strong> — hard drives and credit cards store data magnetically.</li>
+      <li><strong>Magnetic resonance imaging (MRI)</strong> — uses strong fields for medical imaging.</li>
+      <li><strong>Particle accelerators</strong> — steer charged particles using magnetic fields.</li>
+    </ul>
+
+    <a href="topics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+  </div>
+
+  <footer>
+    © 2025 Physics Encyclopedia | Magnetism Module
+  </footer>
+</body>
+</html>
