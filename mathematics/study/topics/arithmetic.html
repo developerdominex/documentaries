@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arithmetic — Mathematics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f8f9ff;
+  --card: #ffffff;
+  --accent: #3b82f6;
+  --text: #1e293b;
+  --muted: #475569;
+  --border: #e5e7eb;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Inter, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+header {
+  text-align: center;
+  padding: 60px 20px 30px;
+  background: linear-gradient(135deg, var(--accent), #60a5fa);
+  color: white;
+}
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+header p {
+  margin-top: 8px;
+  font-size: 1.1rem;
+}
+main {
+  max-width: 950px;
+  margin: 40px auto;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+h2 {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  margin-top: 32px;
+  padding-bottom: 4px;
+}
+h3 {
+  color: var(--accent);
+  margin-top: 20px;
+}
+p {
+  color: var(--text);
+}
+ul {
+  margin-left: 24px;
+}
+.code {
+  background: #f3f4f6;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: "Consolas", monospace;
+  color: #334155;
+}
+.example {
+  background: #eff6ff;
+  border-left: 4px solid var(--accent);
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 6px;
+}
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 20px;
+  font-size: 0.9rem;
+}
+a.back {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: var(--accent);
+}
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-plus-minus"></i> Arithmetic</h1>
+  <p>The foundation of all mathematics — the science of numbers and operations.</p>
+</header>
+
+<main>
+  <a href="maths.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Mathematics Index</a>
+
+  <h2>1. Introduction</h2>
+  <p>
+    <strong>Arithmetic</strong> is the oldest and most fundamental branch of mathematics,
+    dealing with numbers and the basic operations performed on them: addition, subtraction, multiplication, and division.
+    It forms the core of number theory, algebra, and analysis.
+  </p>
+
+  <h3>Definition</h3>
+  <p>
+    Arithmetic is the study of numbers, properties of numbers, and computations involving them.
+    It includes natural numbers, integers, rational numbers, real numbers, and sometimes complex numbers.
+  </p>
+
+  <h2>2. History of Arithmetic</h2>
+  <p>
+    The history of arithmetic goes back to the dawn of civilization. Early humans used counting stones and tally marks.
+    Around 3000 BCE, the Sumerians and Egyptians developed symbols for numbers.
+    The Babylonians used a base-60 system, and the Greeks later formalized arithmetic as a mathematical discipline.
+  </p>
+  <p>
+    The most important advance came from the <strong>Hindu–Arabic numeral system</strong>, developed in India
+    and transmitted to the Islamic world and Europe. This system (0–9) made modern arithmetic and algorithms possible.
+  </p>
+
+  <h2>3. Number Systems</h2>
+  <ul>
+    <li><strong>Natural Numbers (ℕ)</strong>: 1, 2, 3, 4, 5, …</li>
+    <li><strong>Whole Numbers</strong>: 0, 1, 2, 3, …</li>
+    <li><strong>Integers (ℤ)</strong>: …, -3, -2, -1, 0, 1, 2, 3, …</li>
+    <li><strong>Rational Numbers (ℚ)</strong>: Numbers that can be expressed as p/q.</li>
+    <li><strong>Irrational Numbers</strong>: Cannot be written as fractions (e.g., √2, π).</li>
+    <li><strong>Real Numbers (ℝ)</strong>: All rational and irrational numbers.</li>
+    <li><strong>Complex Numbers (ℂ)</strong>: Numbers of the form a + bi, where i² = -1.</li>
+  </ul>
+
+  <h2>4. Basic Operations</h2>
+  <h3>Addition (+)</h3>
+  <p>
+    Combining two or more quantities.  
+    Example: <span class="code">7 + 5 = 12</span>
+  </p>
+
+  <h3>Subtraction (−)</h3>
+  <p>
+    Finding the difference between two numbers.  
+    Example: <span class="code">9 − 4 = 5</span>
+  </p>
+
+  <h3>Multiplication (×)</h3>
+  <p>
+    Repeated addition.  
+    Example: <span class="code">3 × 4 = 12</span>
+  </p>
+
+  <h3>Division (÷)</h3>
+  <p>
+    Sharing or grouping equally.  
+    Example: <span class="code">20 ÷ 5 = 4</span>
+  </p>
+
+  <h2>5. Properties of Operations</h2>
+  <ul>
+    <li><strong>Commutative Law:</strong> a + b = b + a, a × b = b × a</li>
+    <li><strong>Associative Law:</strong> (a + b) + c = a + (b + c)</li>
+    <li><strong>Distributive Law:</strong> a × (b + c) = a×b + a×c</li>
+    <li><strong>Identity Elements:</strong> a + 0 = a; a × 1 = a</li>
+    <li><strong>Inverse Elements:</strong> a + (−a) = 0; a × (1/a) = 1 (a ≠ 0)</li>
+  </ul>
+
+  <h2>6. Factors, Multiples & Divisibility</h2>
+  <p>
+    - A <strong>factor</strong> of a number divides it exactly.  
+    - A <strong>multiple</strong> is a number obtained by multiplying it by an integer.  
+    - <strong>Divisibility rules</strong> help to check if one number divides another without actual division.
+  </p>
+
+  <div class="example">
+    <p><strong>Examples:</strong></p>
+    <ul>
+      <li>6 is divisible by 2 and 3.</li>
+      <li>Factors of 12: 1, 2, 3, 4, 6, 12.</li>
+      <li>Multiples of 5: 5, 10, 15, 20, …</li>
+    </ul>
+  </div>
+
+  <h2>7. Fractions, Decimals, and Percentages</h2>
+  <h3>Fractions</h3>
+  <p>Part of a whole, expressed as numerator/denominator.</p>
+  <div class="example">
+    <p>Example: ¾ means 3 parts out of 4 equal parts.</p>
+  </div>
+
+  <h3>Decimals</h3>
+  <p>
+    Fractions written using base 10 notation.
+    <span class="code">½ = 0.5</span>
+  </p>
+
+  <h3>Percentages</h3>
+  <p>
+    Percent means "per hundred".
+    <span class="code">25% = 25/100 = 0.25</span>
+  </p>
+
+  <h2>8. Ratios and Proportions</h2>
+  <p>
+    A <strong>ratio</strong> compares two quantities:  
+    <span class="code">Ratio of a to b = a : b</span>
+  </p>
+  <p>
+    A <strong>proportion</strong> states that two ratios are equal:  
+    <span class="code">a/b = c/d</span>
+  </p>
+  <div class="example">
+    <p>Example: If 2 pencils cost $4, then 4 pencils cost $8.  
+    The ratio 2:4 = 4:8 shows a proportion.</p>
+  </div>
+
+  <h2>9. Order of Operations (BODMAS)</h2>
+  <p>
+    The correct order for solving expressions is:  
+    <strong>B</strong>rackets → <strong>O</strong>rders (powers, roots) → <strong>D</strong>ivision → <strong>M</strong>ultiplication → <strong>A</strong>ddition → <strong>S</strong>ubtraction.
+  </p>
+  <div class="example">
+    <p>Example: <span class="code">8 + 2 × (3 + 1)² = 8 + 2 × 16 = 8 + 32 = 40</span></p>
+  </div>
+
+  <h2>10. Real-World Applications</h2>
+  <ul>
+    <li>Finance — interest, profit and loss, tax, discounts</li>
+    <li>Measurements — length, area, volume, time, speed</li>
+    <li>Data — averages, proportions, and scaling</li>
+  </ul>
+
+  <h2>11. Modern Extensions</h2>
+  <p>
+    Arithmetic extends to computational systems, modular arithmetic in cryptography,
+    and algorithms in computer science. It’s the foundation of programming and logical computation.
+  </p>
+
+  <h2>12. Summary</h2>
+  <p>
+    Arithmetic is not merely calculation — it’s a language of quantity and logic.
+    From ancient counting to quantum computing, arithmetic remains the heart of mathematics.
+  </p>
+</main>
+
+<footer>
+  © 2025 Mathematics Project — Arithmetic Section.
+</footer>
+</body>
+</html>
