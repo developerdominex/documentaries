@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electromagnetism | Physics</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9fbff;
+      color: #222;
+      margin: 0;
+      line-height: 1.7;
+    }
+    header {
+      background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    header p { color: #e8f5ff; font-size: 1.1rem; }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    h2 {
+      color: #005fa3;
+      border-left: 5px solid #3a7bd5;
+      padding-left: 10px;
+      margin-top: 40px;
+    }
+    .formula {
+      background: #eef6ff;
+      border-left: 4px solid #3a7bd5;
+      padding: 10px 15px;
+      font-family: 'Courier New', monospace;
+      margin: 15px 0;
+      overflow-x: auto;
+    }
+    .example {
+      background: #f3faff;
+      border-left: 4px solid #3a7bd5;
+      padding: 10px 15px;
+      margin: 15px 0;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      background: #3a7bd5;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      background: #286cb5;
+    }
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #005fa3;
+      color: white;
+      margin-top: 50px;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <header>
+    <i class="fa-solid fa-bolt-lightning fa-3x"></i>
+    <h1>Electromagnetism</h1>
+    <p>Unification of electricity and magnetism through Maxwell’s equations and electromagnetic waves.</p>
+  </header>
+
+  <div class="container">
+    <h2>1. Maxwell’s Equations</h2>
+    <p>James Clerk Maxwell unified electric and magnetic fields into four elegant equations:</p>
+
+    <div class="formula">
+      \( \nabla \cdot \vec{E} = \frac{\rho}{\varepsilon_0} \)  (Gauss’s Law for Electricity)
+    </div>
+    <div class="formula">
+      \( \nabla \cdot \vec{B} = 0 \)  (Gauss’s Law for Magnetism)
+    </div>
+    <div class="formula">
+      \( \nabla \times \vec{E} = -\frac{\partial \vec{B}}{\partial t} \)  (Faraday’s Law of Induction)
+    </div>
+    <div class="formula">
+      \( \nabla \times \vec{B} = \mu_0 \vec{J} + \mu_0 \varepsilon_0 \frac{\partial \vec{E}}{\partial t} \)  (Ampère–Maxwell Law)
+    </div>
+
+    <p>
+      These equations describe how electric and magnetic fields interact and propagate through space as electromagnetic waves.
+    </p>
+
+    <h2>2. Electromagnetic Waves</h2>
+    <p>
+      Maxwell’s equations predict that changing electric and magnetic fields generate waves traveling at the speed of light:
+    </p>
+    <div class="formula">
+      \( c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}} \)
+    </div>
+    <p>
+      These waves are the foundation of light, radio, X-rays, and all electromagnetic radiation.
+    </p>
+
+    <h2>3. Poynting Vector</h2>
+    <p>
+      The Poynting vector represents the power per unit area carried by electromagnetic waves:
+    </p>
+    <div class="formula">
+      \( \vec{S} = \frac{1}{\mu_0} (\vec{E} \times \vec{B}) \)
+    </div>
+
+    <h2>4. Energy Density</h2>
+    <p>The total energy stored in electric and magnetic fields is given by:</p>
+    <div class="formula">
+      \( u = \frac{1}{2}(\varepsilon_0 E^2 + \frac{B^2}{\mu_0}) \)
+    </div>
+
+    <h2>5. Applications</h2>
+    <ul>
+      <li><strong>Wireless communication</strong> (radio, Wi-Fi, mobile networks)</li>
+      <li><strong>Microwave ovens</strong> use electromagnetic waves for heating.</li>
+      <li><strong>Optics and lasers</strong> are based on controlled EM radiation.</li>
+      <li><strong>Transformers and inductors</strong> rely on magnetic induction.</li>
+    </ul>
+
+    <a href="topics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+  </div>
+
+  <footer>© 2025 Physics Encyclopedia | Electromagnetism</footer>
+</body>
+</html>
