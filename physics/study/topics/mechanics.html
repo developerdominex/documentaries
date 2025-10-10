@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mechanics — Physics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin:0;
+  background: #f3f8fb;
+  color: #222;
+  line-height: 1.6;
+}
+header {
+  background: linear-gradient(135deg,#0288d1,#81d4fa);
+  color: #fff;
+  text-align: center;
+  padding: 30px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+header h1 { margin: 0; font-size: 2em; }
+header p { margin: 6px 0 0; font-size: 1em; }
+
+.container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+h2 { color: #0288d1; margin-top: 28px; }
+h3 { margin-top: 20px; color:#555; }
+
+.card { background:#fff; padding:18px; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.08); margin-top:20px; }
+ul { margin-left:20px; }
+
+.problem { background: #e0f7fa; padding:14px; border-left:4px solid #0288d1; margin-top:12px; border-radius:8px; }
+
+.formula { background: #fff3e0; padding:10px 12px; border-radius:6px; margin:8px 0; font-weight:600; }
+
+.back { display:inline-block; margin-top:20px; text-decoration:none; color:#0288d1; font-weight:600; }
+.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Mechanics</h1>
+  <p>Motion, Forces, Newton's Laws, Work, Energy, Momentum</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+  <h2>1. Motion</h2>
+  <p>Mechanics begins with the study of motion of objects.</p>
+  <ul>
+    <li><strong>Displacement:</strong> Change in position, <span>\\( s = s_2 - s_1 \\)</span></li>
+    <li><strong>Velocity:</strong> Rate of change of displacement, <span>\\( v = \\frac{ds}{dt} \\)</span></li>
+    <li><strong>Acceleration:</strong> Rate of change of velocity, <span>\\( a = \\frac{dv}{dt} \\)</span></li>
+  </ul>
+
+  <div class="formula">
+    Equations of motion for constant acceleration:
+    <br>
+    \\[
+      v = u + at, \quad s = ut + \\frac{1}{2} a t^2, \quad v^2 = u^2 + 2as
+    \\]
+  </div>
+
+  <div class="problem">
+    <strong>Example:</strong> A car starts from rest and accelerates at \\( 2 \, m/s^2 \\). Find the velocity after 5 s.
+    <br>
+    <strong>Solution:</strong> \\( v = u + at = 0 + 2 \cdot 5 = 10 \, m/s \\)
+  </div>
+</div>
+
+<div class="card">
+  <h2>2. Forces and Newton's Laws</h2>
+  <p>Forces cause motion, described by Newton's Laws:</p>
+  <ul>
+    <li><strong>First Law:</strong> Inertia: an object remains at rest or moves uniformly unless acted upon by a force.</li>
+    <li><strong>Second Law:</strong> \\( F = ma \\)</li>
+    <li><strong>Third Law:</strong> Action and reaction are equal and opposite.</li>
+  </ul>
+
+  <div class="problem">
+    <strong>Example:</strong> A 5 kg object is pushed with a force of 20 N. Find acceleration.
+    <br>
+    <strong>Solution:</strong> \\( a = F/m = 20/5 = 4 \, m/s^2 \\)
+  </div>
+</div>
+
+<div class="card">
+  <h2>3. Work, Energy, and Power</h2>
+  <ul>
+    <li><strong>Work:</strong> \\( W = F \cdot d \cdot \cos\theta \\)</li>
+    <li><strong>Kinetic Energy:</strong> \\( KE = \\frac12 mv^2 \\)</li>
+    <li><strong>Potential Energy:</strong> \\( PE = mgh \\)</li>
+    <li><strong>Power:</strong> \\( P = \\frac{dW}{dt} \\)</li>
+  </ul>
+
+  <div class="problem">
+    <strong>Example:</strong> A 10 kg object is lifted 5 m vertically. Find work done and potential energy.
+    <br>
+    \\( W = PE = mgh = 10 \cdot 9.8 \cdot 5 = 490 \, J \\)
+  </div>
+</div>
+
+<div class="card">
+  <h2>4. Momentum and Impulse</h2>
+  <ul>
+    <li><strong>Momentum:</strong> \\( p = mv \\)</li>
+    <li><strong>Impulse:</strong> \\( J = F \Delta t = \Delta p \\)</li>
+    <li><strong>Conservation of Momentum:</strong> Total momentum before collision = total momentum after.</li>
+  </ul>
+
+  <div class="problem">
+    <strong>Example:</strong> Two balls of masses 2 kg and 3 kg move towards each other at 5 m/s and 2 m/s. Find final velocities after elastic collision.
+    <br>
+    <em>(Solution requires solving using conservation laws.)</em>
+  </div>
+</div>
+
+<div class="card">
+  <h2>5. Applications</h2>
+  <ul>
+    <li>Engineering: Designing machines, vehicles, bridges.</li>
+    <li>Aerospace: Rocket motion, satellite trajectories.</li>
+    <li>Sports: Analysis of motion and forces in athletics.</li>
+    <li>Daily life: Lifting, driving, riding, and impact calculations.</li>
+  </ul>
+</div>
+
+<a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Physics Topics</a>
+
+</div>
+
+</body>
+</html>
