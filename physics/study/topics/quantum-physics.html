@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Physics | Physics Encyclopedia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5faff;
+      color: #222;
+      margin: 0;
+      line-height: 1.7;
+    }
+    header {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    header h1 { font-size: 2.5rem; margin: 0; }
+    header p { color: #d8e2ef; }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    h2 {
+      color: #143b5b;
+      border-left: 5px solid #2c5364;
+      padding-left: 10px;
+      margin-top: 40px;
+    }
+    .formula {
+      background: #eef5fa;
+      border-left: 4px solid #2c5364;
+      padding: 10px 15px;
+      font-family: 'Courier New', monospace;
+      margin: 15px 0;
+      overflow-x: auto;
+    }
+    .example {
+      background: #f3faff;
+      border-left: 4px solid #2c5364;
+      padding: 10px 15px;
+      margin: 15px 0;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      background: #2c5364;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .back-btn:hover { background: #183a4a; }
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #0f2027;
+      color: white;
+      margin-top: 50px;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header>
+    <i class="fa-solid fa-atom fa-3x"></i>
+    <h1>Quantum Physics</h1>
+    <p>Exploring the behavior of matter and energy at the smallest scales of nature.</p>
+  </header>
+
+  <div class="container">
+    <h2>1. Wave–Particle Duality</h2>
+    <p>
+      Light and matter exhibit both wave-like and particle-like properties.
+      Electrons can show interference patterns, while photons can eject electrons from metals.
+    </p>
+    <div class="formula">
+      \( E = hf \) &nbsp;&nbsp;&nbsp; (Planck’s Relation)
+    </div>
+    <div class="formula">
+      \( \lambda = \frac{h}{p} \) &nbsp;&nbsp;&nbsp; (de Broglie Wavelength)
+    </div>
+    <p>
+      Here, \( h \) is Planck’s constant, \( f \) is frequency, and \( p \) is momentum.
+    </p>
+
+    <h2>2. The Schrödinger Equation</h2>
+    <p>The fundamental equation governing quantum systems:</p>
+    <div class="formula">
+      \( i\hbar \frac{\partial \Psi}{\partial t} = \hat{H}\Psi \)
+    </div>
+    <p>
+      It describes how the quantum state \( \Psi \) evolves over time.
+      The square of the wave function’s magnitude, \( |\Psi|^2 \), gives the probability density.
+    </p>
+
+    <h2>3. Heisenberg Uncertainty Principle</h2>
+    <p>
+      The more precisely we know a particle’s position, the less precisely we can know its momentum:
+    </p>
+    <div class="formula">
+      \( \Delta x \, \Delta p \geq \frac{\hbar}{2} \)
+    </div>
+
+    <h2>4. Quantum Tunneling</h2>
+    <p>
+      Particles can pass through potential barriers that they classically shouldn’t overcome,
+      a phenomenon used in diodes and nuclear fusion.
+    </p>
+
+    <h2>5. Applications</h2>
+    <ul>
+      <li><strong>Quantum computing</strong> — uses qubits for immense computational power.</li>
+      <li><strong>Semiconductors</strong> — based on quantum mechanics of electrons in solids.</li>
+      <li><strong>Lasers</strong> — rely on stimulated emission and quantum transitions.</li>
+      <li><strong>Quantum cryptography</strong> — secure communication using entanglement.</li>
+    </ul>
+
+    <a href="topics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+  </div>
+
+  <footer>© 2025 Physics Encyclopedia | Quantum Physics</footer>
+</body>
+</html>
