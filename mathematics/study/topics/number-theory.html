@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Theory</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fffbe6, #e0f7fa);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #ff9800;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #ff9800;
+  border-bottom: 2px solid #ff9800;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #ff9800;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #ff9800;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #f57c00; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-hashtag"></i> Number Theory</h1>
+  <p>Primes, modular arithmetic, and Diophantine equations</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Number theory is the branch of mathematics concerned with properties and relationships of integers. It includes the study of prime numbers, divisibility, modular arithmetic, and solutions to equations with integer solutions.</p>
+</section>
+
+<section>
+  <h2>Prime Numbers</h2>
+  <p>A <strong>prime number</strong> is an integer greater than 1 that has no positive divisors other than 1 and itself.</p>
+  <div class="example">
+    Examples: 2, 3, 5, 7, 11, 13, 17...
+  </div>
+  <p>Fundamental theorem of arithmetic: Every integer greater than 1 is either prime or can be uniquely factored into primes.</p>
+</section>
+
+<section>
+  <h2>Modular Arithmetic</h2>
+  <p>Modular arithmetic deals with integers modulo n. Two integers a and b are congruent modulo n if n divides (a-b):</p>
+  <p><code>a ≡ b (mod n)</code></p>
+  <div class="example">
+    Example: 17 ≡ 5 (mod 12), because 12 divides (17-5)=12
+  </div>
+  <p>Applications include cryptography (RSA), cyclic patterns, and solving congruences.</p>
+</section>
+
+<section>
+  <h2>Diophantine Equations</h2>
+  <p>Diophantine equations are polynomial equations with integer solutions.</p>
+  <div class="example">
+    Example: Find integers x, y such that 3x + 4y = 10. Solution: x=2, y=1
+  </div>
+  <p>Famous problems: Fermat’s Last Theorem, Pell’s equation, and linear Diophantine equations.</p>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Cryptography: RSA, Diffie-Hellman key exchange</li>
+    <li>Computer science: hashing, pseudorandom number generation</li>
+    <li>Pure mathematics: integer sequences, algebraic structures</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Number theory dates back to ancient civilizations. <strong>Euclid</strong> studied prime numbers, <strong>Diophantus</strong> studied integer solutions to equations. Modern developments include contributions from <strong>Euler</strong>, <strong>Gauss</strong>, and <strong>Riemann</strong>.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
