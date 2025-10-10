@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set Theory</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fff7e6, #f0f8ff);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #ff7043;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #ff7043;
+  border-bottom: 2px solid #ff7043;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #ffe0b2;
+  border-left: 4px solid #ff7043;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #ff7043;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #e64a19; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fa-solid fa-layer-group"></i> Set Theory</h1>
+  <p>Axioms, ordinals, cardinals, and continuum hypothesis</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Set theory is the foundation of modern mathematics. It studies collections of objects, called <strong>sets</strong>, and their relationships. Set theory provides the language for nearly all mathematical concepts.</p>
+</section>
+
+<section>
+  <h2>Basic Concepts</h2>
+  <ul>
+    <li><strong>Set:</strong> A collection of distinct objects, e.g., A = {1,2,3}</li>
+    <li><strong>Element:</strong> An object inside a set, e.g., 2 ∈ A</li>
+    <li><strong>Subset:</strong> B ⊆ A if every element of B is in A</li>
+    <li><strong>Union:</strong> A ∪ B, elements in A or B</li>
+    <li><strong>Intersection:</strong> A ∩ B, elements in both A and B</li>
+    <li><strong>Complement:</strong> A', elements not in A</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Axiomatic Set Theory</h2>
+  <p>To avoid paradoxes, modern set theory uses axioms (Zermelo-Fraenkel set theory with Choice, ZFC):</p>
+  <ul>
+    <li>Axiom of Extensionality</li>
+    <li>Axiom of Pairing</li>
+    <li>Axiom of Union</li>
+    <li>Axiom of Infinity</li>
+    <li>Axiom of Power Set</li>
+    <li>Axiom of Choice (AC)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ordinals</h2>
+  <p>Ordinals extend natural numbers to describe the order type of sets:</p>
+  <div class="example">
+    0, 1, 2, …, ω (first infinite ordinal), ω+1, ω+2, …  
+    Ordinals describe position in well-ordered sets.
+  </div>
+</section>
+
+<section>
+  <h2>Cardinals</h2>
+  <p>Cardinals measure the size of sets, ignoring order:</p>
+  <div class="example">
+    Finite sets: |{1,2,3}| = 3<br>
+    Infinite sets: |ℕ| = ℵ₀ (aleph-null), |ℝ| = 2^ℵ₀ (cardinality of continuum)
+  </div>
+</section>
+
+<section>
+  <h2>Continuum Hypothesis</h2>
+  <p>The Continuum Hypothesis (CH) asks: Is there a set whose cardinality is strictly between |ℕ| and |ℝ|?</p>
+  <div class="example">
+    Proven to be independent of ZFC: cannot be proven or disproven using standard axioms.
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Foundations of mathematics</li>
+    <li>Logic and model theory</li>
+    <li>Computer science: data structures, formal languages</li>
+    <li>Analysis and topology: definitions of functions, sequences, and spaces</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Developed by <strong>Georg Cantor</strong> in the late 19th century, set theory revolutionized mathematics and introduced concepts of infinity rigorously.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
