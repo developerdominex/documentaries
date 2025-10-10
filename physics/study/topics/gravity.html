@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gravitation — Physics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin:0;
+  background: #f3f8fb;
+  color: #222;
+  line-height: 1.6;
+}
+header {
+  background: linear-gradient(135deg,#4a148c,#ab47bc);
+  color: #fff;
+  text-align: center;
+  padding: 30px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+header h1 { margin: 0; font-size: 2em; }
+header p { margin: 6px 0 0; font-size: 1em; }
+
+.container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+h2 { color: #4a148c; margin-top: 28px; }
+h3 { margin-top: 20px; color:#555; }
+
+.card { background:#fff; padding:18px; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.08); margin-top:20px; }
+ul { margin-left:20px; }
+
+.problem { background: #e8eaf6; padding:14px; border-left:4px solid #4a148c; margin-top:12px; border-radius:8px; }
+
+.formula { background: #fff3e0; padding:10px 12px; border-radius:6px; margin:8px 0; font-weight:600; }
+
+.back { display:inline-block; margin-top:20px; text-decoration:none; color:#4a148c; font-weight:600; }
+.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Gravitation</h1>
+  <p>Universal Law, Planetary Motion, and Escape Velocity</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+  <h2>1. Newton's Law of Universal Gravitation</h2>
+  <p>Every point mass attracts every other point mass with a force proportional to the product of their masses and inversely proportional to the square of their separation:</p>
+  <div class="formula">
+    \\[ F = G \frac{m_1 m_2}{r^2} \\]
+  </div>
+  <p>Where:</p>
+  <ul>
+    <li>\\(F\\) = gravitational force</li>
+    <li>\\(G = 6.674 \times 10^{-11} \, N \cdot m^2 / kg^2\\)</li>
+    <li>\\(m_1, m_2\\) = masses of the objects</li>
+    <li>\\(r\\) = distance between their centers</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>2. Acceleration Due to Gravity</h2>
+  <p>For an object near the Earth's surface:</p>
+  <div class="formula">
+    \\[ g = \frac{GM}{R^2} \\]
+  </div>
+  <p>Where:</p>
+  <ul>
+    <li>\\(M\\) = mass of the Earth</li>
+    <li>\\(R\\) = radius of the Earth</li>
+    <li>\\(g \approx 9.8 \, m/s^2\\)</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>3. Planetary Motion</h2>
+  <p>Newton’s laws explain Kepler’s laws:</p>
+  <ul>
+    <li>Orbital velocity: \\( v = \sqrt{\frac{GM}{r}} \\)</li>
+    <li>Period of orbit: \\( T = 2\pi \sqrt{\frac{r^3}{GM}} \\)</li>
+    <li>Elliptical motion: planets move in ellipses with the sun at one focus</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>4. Escape Velocity</h2>
+  <p>The minimum velocity needed to escape the gravitational field of a planet:</p>
+  <div class="formula">
+    \\[ v_{esc} = \sqrt{\frac{2GM}{R}} \\]
+  </div>
+  <p>Example:</p>
+  <div class="problem">
+    Earth: \\( M = 5.972 \times 10^{24} kg, R = 6.371 \times 10^6 m \\)  
+    \\( v_{esc} = \sqrt{\frac{2 \cdot 6.674 \times 10^{-11} \cdot 5.972 \times 10^{24}}{6.371 \times 10^6}} \approx 11.2 \, km/s \\)
+  </div>
+</div>
+
+<div class="card">
+  <h2>5. Applications</h2>
+  <ul>
+    <li>Satellite orbits and launching spacecraft</li>
+    <li>Tidal phenomena on Earth and other celestial bodies</li>
+    <li>Predicting planetary positions</li>
+    <li>Space missions: escape velocity calculations</li>
+  </ul>
+</div>
+
+<a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Physics Topics</a>
+
+</div>
+</body>
+</html>
