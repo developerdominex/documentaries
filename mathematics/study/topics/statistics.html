@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(120deg, #eef2f3, #8e9eab);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #2b5876;
+  color: #fff;
+  text-align: center;
+  padding: 30px 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+header h1 {
+  margin: 0;
+  font-size: 2.2em;
+}
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #2b5876;
+  border-bottom: 2px solid #8e9eab;
+  padding-bottom: 5px;
+}
+section {
+  margin-bottom: 30px;
+}
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+  height: 180px;
+  margin: 25px 0;
+  justify-content: center;
+}
+.bar {
+  width: 40px;
+  background: #2b5876;
+  border-radius: 6px 6px 0 0;
+  text-align: center;
+  color: #fff;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-weight: bold;
+}
+.bar:nth-child(odd) { background: #4e4376; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #2b5876;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+footer {
+  text-align: center;
+  margin-top: 40px;
+}
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #2b5876;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #4e4376; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-chart-bar"></i> Statistics</h1>
+  <p>Understanding data through collection, organization, analysis, and interpretation.</p>
+</header>
+
+<div class="container">
+  <section>
+    <h2>Introduction to Statistics</h2>
+    <p>Statistics is the branch of mathematics that deals with data collection, organization, analysis, interpretation, and presentation. It helps in making informed decisions using numerical evidence.</p>
+    <p>It is widely used in fields like economics, science, education, and business for making predictions and understanding trends.</p>
+  </section>
+
+  <section>
+    <h2>Measures of Central Tendency</h2>
+    <p>These are values that represent the center or average of a data set.</p>
+    <ul>
+      <li><strong>Mean:</strong> The sum of all observations divided by the number of observations.</li>
+      <li><strong>Median:</strong> The middle value when all data are arranged in order.</li>
+      <li><strong>Mode:</strong> The most frequently occurring value in a dataset.</li>
+    </ul>
+    <div class="example">
+      <strong>Example:</strong> For data <code>2, 4, 6, 8, 10</code>:<br>
+      Mean = (2+4+6+8+10)/5 = 6<br>
+      Median = 6 (middle value)<br>
+      Mode = None (no repetition)
+    </div>
+  </section>
+
+  <section>
+    <h2>Measures of Dispersion</h2>
+    <p>These indicate how spread out the data values are.</p>
+    <ul>
+      <li><strong>Range:</strong> Difference between the highest and lowest values.</li>
+      <li><strong>Variance:</strong> The average of the squared deviations from the mean.</li>
+      <li><strong>Standard Deviation:</strong> The square root of variance.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Graphical Representation of Data</h2>
+    <p>Data can be represented visually using bar graphs, pie charts, or histograms. Here’s a simple bar chart using CSS:</p>
+    <div class="chart">
+      <div class="bar" style="height:80px;">8</div>
+      <div class="bar" style="height:120px;">12</div>
+      <div class="bar" style="height:150px;">15</div>
+      <div class="bar" style="height:100px;">10</div>
+      <div class="bar" style="height:60px;">6</div>
+    </div>
+    <p style="text-align:center;">Sample Bar Graph Showing Data Distribution</p>
+  </section>
+
+  <section>
+    <h2>Probability Basics</h2>
+    <p>Probability is the measure of how likely an event is to occur, ranging from 0 (impossible) to 1 (certain).</p>
+    <div class="example">
+      <strong>Example:</strong> The probability of getting a head when tossing a fair coin is 1/2.
+    </div>
+  </section>
+
+  <section>
+    <h2>Applications of Statistics</h2>
+    <ul>
+      <li>Predicting economic trends</li>
+      <li>Analyzing scientific data</li>
+      <li>Quality control in industries</li>
+      <li>Public health and education planning</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Conclusion</h2>
+    <p>Statistics allows us to summarize large amounts of data, identify patterns, and make reasoned decisions. It is a foundational tool in modern scientific, social, and business research.</p>
+  </section>
+
+  <footer>
+    <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+  </footer>
+</div>
+
+</body>
+</html>
