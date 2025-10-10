@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinetic Theory & Gases — Physics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body { font-family:"Segoe UI",sans-serif; margin:0; background:#f3f7fb; color:#222; line-height:1.6; }
+header { background: linear-gradient(135deg,#42a5f5,#1e88e5); color:#fff; text-align:center; padding:30px 20px; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+header h1 { margin:0; font-size:2em; }
+header p { margin:6px 0 0; font-size:1em; }
+
+.container { max-width:1000px; margin:30px auto; padding:0 20px; }
+h2 { color:#1e88e5; margin-top:28px; }
+h3 { margin-top:20px; color:#555; }
+
+.card { background:#fff; padding:18px; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.08); margin-top:20px; }
+ul { margin-left:20px; }
+
+.formula { background:#e3f2fd; padding:10px 12px; border-radius:6px; margin:8px 0; font-weight:600; }
+.problem { background:#e8f5e9; padding:14px; border-left:4px solid #4caf50; margin-top:12px; border-radius:8px; }
+
+.back { display:inline-block; margin-top:20px; text-decoration:none; color:#1e88e5; font-weight:600; }
+.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Kinetic Theory & Gases</h1>
+  <p>Ideal gases, molecular motion, distribution of speeds, and real gases.</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+  <h2>1. Basic Assumptions</h2>
+  <ul>
+    <li>Gases consist of a large number of tiny particles (molecules) in random motion.</li>
+    <li>The volume of molecules is negligible compared to the container volume.</li>
+    <li>No intermolecular forces except during collisions.</li>
+    <li>Collisions are perfectly elastic.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>2. Ideal Gas Law</h2>
+  <p>Relationship between pressure, volume, temperature, and number of moles:</p>
+  <div class="formula">
+    \\[ PV = nRT \\]
+  </div>
+  <p>Where:</p>
+  <ul>
+    <li>\\(P\\) = pressure</li>
+    <li>\\(V\\) = volume</li>
+    <li>\\(n\\) = number of moles</li>
+    <li>\\(R = 8.314 \, \mathrm{J/mol \cdot K}\\) (universal gas constant)</li>
+    <li>\\(T\\) = temperature in Kelvin</li>
+  </ul>
+  <div class="problem">
+    2 moles of gas occupy 10 L at 300 K. Find pressure:  
+    \\( P = \frac{nRT}{V} = \frac{2 \cdot 8.314 \cdot 300}{0.01} = 498840 \, \mathrm{Pa} \\)
+  </div>
+</div>
+
+<div class="card">
+  <h2>3. Kinetic Energy of Gas Molecules</h2>
+  <p>The average translational kinetic energy per molecule:</p>
+  <div class="formula">
+    \\[ \langle E_k \rangle = \frac{3}{2} k_B T \\]
+  </div>
+  <p>Where \\(k_B = 1.38 \times 10^{-23} \mathrm{J/K}\\) is Boltzmann constant.</p>
+  <p>For n moles:</p>
+  <div class="formula">
+    \\[ E_\text{total} = \frac{3}{2} n R T \\]
+  </div>
+</div>
+
+<div class="card">
+  <h2>4. Root Mean Square Speed</h2>
+  <div class="formula">
+    \\[ v_\text{rms} = \sqrt{\frac{3RT}{M}} \\]
+  </div>
+  <p>Where \\(M\\) is molar mass (kg/mol). Example: Oxygen at 300K:</p>
+  <div class="problem">
+    \\( M = 0.032 \, \mathrm{kg/mol}, \quad v_\text{rms} = \sqrt{\frac{3 \cdot 8.314 \cdot 300}{0.032}} \approx 517 \, \mathrm{m/s} \\)
+  </div>
+</div>
+
+<div class="card">
+  <h2>5. Maxwell-Boltzmann Distribution</h2>
+  <p>Describes the distribution of molecular speeds in a gas:</p>
+  <div class="formula">
+    \\[ f(v) = 4\pi \left( \frac{M}{2\pi RT} \right)^{3/2} v^2 e^{-\frac{Mv^2}{2RT}} \\]
+  </div>
+  <p>Shows most probable, mean, and RMS speeds.</p>
+</div>
+
+<div class="card">
+  <h2>6. Real Gases</h2>
+  <p>Deviations from ideal behavior at high pressures and low temperatures. Van der Waals equation:</p>
+  <div class="formula">
+    \\[ \left( P + \frac{an^2}{V^2} \right)(V - nb) = nRT \\]
+  </div>
+  <p>a = intermolecular attraction constant, b = molecular volume correction.</p>
+</div>
+
+<div class="card">
+  <h2>7. Applications</h2>
+  <ul>
+    <li>Understanding gas behavior in engines and atmosphere</li>
+    <li>Calculating molecular speeds and effusion rates</li>
+    <li>Thermodynamic properties of gases in chemical reactions</li>
+  </ul>
+</div>
+
+<a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Physics Topics</a>
+
+</div>
+</body>
+</html>
