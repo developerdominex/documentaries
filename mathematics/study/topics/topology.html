@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topology</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #fff5f0);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #009688;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #009688;
+  border-bottom: 2px solid #009688;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #009688;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #009688;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #00796b; }
+.diagram { margin: 20px 0; text-align: center; }
+svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-atom"></i> Topology</h1>
+  <p>Open sets, continuity, homotopy, and fundamental groups</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Topology is the study of geometric properties preserved under continuous deformations, such as stretching or bending, but not tearing or gluing. It generalizes concepts of geometry to more abstract spaces.</p>
+</section>
+
+<section>
+  <h2>Open Sets and Topologies</h2>
+  <p>A <strong>topology</strong> on a set X is a collection of subsets (called open sets) that satisfies:</p>
+  <ul>
+    <li>The empty set ∅ and X are open</li>
+    <li>Arbitrary unions of open sets are open</li>
+    <li>Finite intersections of open sets are open</li>
+  </ul>
+  <div class="example">
+    Example: In ℝ, open intervals (a,b) form the standard topology.
+  </div>
+</section>
+
+<section>
+  <h2>Continuity</h2>
+  <p>A function \( f: X \to Y \) between topological spaces is <strong>continuous</strong> if the preimage of every open set in Y is open in X.</p>
+  <div class="example">
+    Continuous functions in ℝ correspond to the usual ε-δ definition from calculus.
+  </div>
+</section>
+
+<section>
+  <h2>Homeomorphisms</h2>
+  <p>A <strong>homeomorphism</strong> is a bijective continuous function with a continuous inverse. Two spaces are topologically equivalent if there exists a homeomorphism between them.</p>
+  <div class="diagram">
+    <svg width="250" height="150">
+      <circle cx="50" cy="75" r="40" fill="none" stroke="#009688" stroke-width="3"/>
+      <circle cx="200" cy="75" r="40" fill="none" stroke="#009688" stroke-width="3"/>
+      <path d="M90 75 Q125 20 160 75" stroke="#ff5722" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#ff5722" />
+        </marker>
+      </defs>
+    </svg>
+    <p>Homeomorphic transformation between two shapes</p>
+  </div>
+</section>
+
+<section>
+  <h2>Homotopy</h2>
+  <p>Two continuous functions f, g: X → Y are <strong>homotopic</strong> if one can be continuously deformed into the other.</p>
+  <div class="example">
+    Example: A circle can be continuously deformed into a square in the plane.
+  </div>
+</section>
+
+<section>
+  <h2>Fundamental Group</h2>
+  <p>The <strong>fundamental group</strong> π₁(X, x₀) captures information about loops in space X based at point x₀.</p>
+  <ul>
+    <li>Loop: path starting and ending at x₀</li>
+    <li>Two loops are equivalent if one can be continuously deformed into the other (homotopy)</li>
+    <li>Group operation: concatenation of loops</li>
+  </ul>
+  <div class="example">
+    Example: π₁(S¹) ≅ ℤ, the integers under addition (number of times a loop winds around the circle)
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Analysis of shapes in mathematics and computer graphics</li>
+    <li>Network topology in computer science</li>
+    <li>Algebraic topology for classifying surfaces</li>
+    <li>Robotics and motion planning</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Topology emerged in the 19th century with contributions from <strong>Euler</strong> (bridges of Königsberg), <strong>Riemann</strong>, <strong>Poincaré</strong>, and others. Modern algebraic topology was formalized in the early 20th century.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
