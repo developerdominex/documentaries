@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathematical Logic</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #f0f8ff, #fffaf0);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #00796b;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #00796b;
+  border-bottom: 2px solid #00796b;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #e0f2f1;
+  border-left: 4px solid #00796b;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #00796b;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #004d40; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fa-solid fa-code"></i> Mathematical Logic</h1>
+  <p>Formal systems, model theory, and Gödel’s theorems</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Mathematical logic studies formal reasoning, proofs, and the foundations of mathematics. It provides tools to analyze the consistency, completeness, and computability of mathematical systems.</p>
+</section>
+
+<section>
+  <h2>Formal Systems</h2>
+  <p>A formal system consists of a set of symbols, formation rules, axioms, and inference rules to derive theorems.</p>
+  <div class="example">
+    Example: Propositional logic with symbols {¬, ∧, ∨, →}, axioms, and modus ponens inference rule.
+  </div>
+</section>
+
+<section>
+  <h2>Model Theory</h2>
+  <p>Model theory studies the interpretation of formal systems. A model assigns meaning to symbols and satisfies all axioms of the system.</p>
+  <div class="example">
+    Example: For group theory, a model is any set with an operation satisfying the group axioms (closure, identity, inverses, associativity).
+  </div>
+</section>
+
+<section>
+  <h2>Gödel’s Incompleteness Theorems</h2>
+  <ul>
+    <li><strong>First theorem:</strong> Any consistent, sufficiently expressive formal system cannot prove all true statements within itself.</li>
+    <li><strong>Second theorem:</strong> No consistent system can prove its own consistency.</li>
+  </ul>
+  <div class="example">
+    Example: In arithmetic, there exist true statements (Gödel sentences) that are unprovable within Peano Arithmetic.
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Foundations of mathematics and proof theory</li>
+    <li>Computer science: logic programming, automated theorem proving</li>
+    <li>Philosophy: understanding limits of formal reasoning</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Mathematical logic developed from the works of <strong>Boole</strong>, <strong>Frege</strong>, <strong>Hilbert</strong>, and <strong>Gödel</strong>. It formalized the study of proofs and provided rigorous foundations for mathematics.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
