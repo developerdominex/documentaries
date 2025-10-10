@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Functions & Graphs</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(120deg, #f0f2f0, #000c40);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #000c40;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+header h1 {
+  margin: 0;
+  font-size: 2.3em;
+}
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #000c40;
+  border-bottom: 2px solid #000c40;
+  padding-bottom: 5px;
+}
+section {
+  margin-bottom: 35px;
+}
+.graph-container {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  background: linear-gradient(180deg, #f8f9fa, #e3e9f0);
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+.axis {
+  position: absolute;
+  background: #000;
+}
+.axis.x { bottom: 50%; left: 0; height: 2px; width: 100%; }
+.axis.y { left: 50%; top: 0; width: 2px; height: 100%; }
+.curve {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 100%;
+  height: 100%;
+}
+.curve::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: -50%;
+  top: 50%;
+  border: 2px solid #000c40;
+  border-radius: 50%;
+  transform: scale(0.5, 0.2);
+}
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #000c40;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+footer {
+  text-align: center;
+  margin-top: 40px;
+}
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #000c40;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #1a1a80; }
+ul { line-height: 1.7; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-diagram-project"></i> Functions & Graphs</h1>
+  <p>Understanding relationships between variables through equations and visual graphs.</p>
+</header>
+
+<div class="container">
+  <section>
+    <h2>What is a Function?</h2>
+    <p>A <strong>function</strong> is a special relationship where each input has exactly one output. It’s like a machine: you put in an input (x), and it gives one output (y).</p>
+    <div class="example">
+      <strong>Example:</strong>  
+      f(x) = 2x + 3  
+      <br>Input x = 2 → Output f(2) = 2×2 + 3 = 7
+    </div>
+  </section>
+
+  <section>
+    <h2>Domain and Range</h2>
+    <ul>
+      <li><strong>Domain:</strong> All possible input values (x-values) that can go into the function.</li>
+      <li><strong>Range:</strong> All possible output values (y-values) that come out of the function.</li>
+    </ul>
+    <div class="example">
+      For f(x) = √x → Domain = x ≥ 0, Range = y ≥ 0
+    </div>
+  </section>
+
+  <section>
+    <h2>Graph of a Function</h2>
+    <p>The graph of a function is a visual representation of all (x, y) pairs. It helps to understand how outputs change with inputs.</p>
+    <div class="graph-container">
+      <div class="axis x"></div>
+      <div class="axis y"></div>
+      <div class="curve"></div>
+    </div>
+    <p style="text-align:center; font-size:0.9em; color:#555;">Example: Graph of a Quadratic Function (y = x²)</p>
+  </section>
+
+  <section>
+    <h2>Types of Functions</h2>
+    <ul>
+      <li><strong>Linear Function:</strong> f(x) = mx + c (straight line)</li>
+      <li><strong>Quadratic Function:</strong> f(x) = ax² + bx + c (parabola)</li>
+      <li><strong>Cubic Function:</strong> f(x) = ax³ + bx² + cx + d</li>
+      <li><strong>Exponential Function:</strong> f(x) = aᵡ</li>
+      <li><strong>Trigonometric Function:</strong> f(x) = sin x, cos x, tan x</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Transformations of Graphs</h2>
+    <ul>
+      <li><strong>Translation:</strong> Moves graph up, down, left, or right.</li>
+      <li><strong>Reflection:</strong> Flips graph over an axis.</li>
+      <li><strong>Stretch/Compression:</strong> Changes the shape by scaling vertically or horizontally.</li>
+    </ul>
+    <div class="example">
+      <strong>Example:</strong>  
+      y = (x - 2)² moves 2 units to the right.  
+      y = -x² reflects the parabola in the x-axis.
+    </div>
+  </section>
+
+  <section>
+    <h2>Composition of Functions</h2>
+    <p>If you have two functions f(x) and g(x), the composition f(g(x)) means “apply g first, then f.”</p>
+    <div class="example">
+      <strong>Example:</strong><br>
+      f(x) = 2x, g(x) = x + 3  
+      → f(g(x)) = 2(x + 3) = 2x + 6
+    </div>
+  </section>
+
+  <section>
+    <h2>Inverse of a Function</h2>
+    <p>The inverse function reverses the operation of the original function. If f(x) = 2x + 3, then its inverse is f⁻¹(x) = (x - 3)/2.</p>
+  </section>
+
+  <footer>
+    <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+  </footer>
+</div>
+
+</body>
+</html>
