@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partial Differential Equations</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #fff3e0);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #0288d1;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #0288d1;
+  border-bottom: 2px solid #0288d1;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #b3e5fc;
+  border-left: 4px solid #0288d1;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #0288d1;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #01579b; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fa-solid fa-water"></i> Partial Differential Equations</h1>
+  <p>Wave, heat, and Navier–Stokes equations</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Partial Differential Equations (PDEs) involve functions of multiple variables and their partial derivatives. They describe many physical phenomena such as heat conduction, waves, and fluid flow.</p>
+</section>
+
+<section>
+  <h2>Common Types of PDEs</h2>
+  <ul>
+    <li><strong>Heat Equation:</strong> Describes diffusion of heat or other substances.<br> <code>u_t = α ∇²u</code></li>
+    <li><strong>Wave Equation:</strong> Describes vibrations and wave propagation.<br> <code>u_tt = c² ∇²u</code></li>
+    <li><strong>Laplace Equation:</strong> Steady-state solutions, potential theory.<br> <code>∇²u = 0</code></li>
+    <li><strong>Poisson Equation:</strong> Generalization of Laplace equation.<br> <code>∇²u = f(x,y,...)</code></li>
+    <li><strong>Navier–Stokes Equations:</strong> Fluid motion and dynamics.<br> <code>ρ(∂v/∂t + v·∇v) = -∇p + μ∇²v + f</code></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Methods of Solution</h2>
+  <ul>
+    <li>Separation of variables</li>
+    <li>Fourier series and transforms</li>
+    <li>Laplace transforms</li>
+    <li>Green’s functions</li>
+    <li>Numerical methods: Finite difference, Finite element, Spectral methods</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Examples</h2>
+  <div class="example">
+    Solve the 1D heat equation <code>u_t = α u_xx</code> on a rod of length L with boundary conditions u(0,t)=0, u(L,t)=0.<br>
+    Solution using separation of variables: <code>u(x,t) = Σ B_n sin(nπx/L) e^(-α(nπ/L)² t)</code>
+  </div>
+  <div class="example">
+    Wave equation example: <code>u_tt = c² u_xx</code> with fixed ends u(0,t)=u(L,t)=0.<br>
+    Solution: <code>u(x,t) = Σ (A_n cos(nπct/L) + B_n sin(nπct/L)) sin(nπx/L)</code>
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Physics: heat conduction, wave propagation, quantum mechanics</li>
+    <li>Engineering: structural analysis, fluid dynamics, aerodynamics</li>
+    <li>Finance: Black–Scholes equation for option pricing</li>
+    <li>Biology: population models and diffusion processes</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>PDEs have been studied since the 18th century, with contributions by Euler, Lagrange, Fourier, and Navier. They remain central to applied mathematics and scientific modeling.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
