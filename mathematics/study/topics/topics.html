@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mathematics — Topics Index</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f8f9ff;
+  --card: #fff;
+  --border: #e4e6ef;
+  --accent: #3b82f6;
+  --text: #1e293b;
+  --muted: #64748b;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Inter, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+header {
+  text-align: center;
+  padding: 36px 20px 16px;
+}
+header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: var(--accent);
+}
+header p {
+  color: var(--muted);
+  margin: 8px 0 0;
+}
+.section {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+h2 {
+  margin-top: 42px;
+  font-size: 1.5rem;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  padding-bottom: 6px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: var(--text);
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(59,130,246,0.12);
+}
+.card i {
+  font-size: 1.6rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.card div {
+  flex: 1;
+}
+.card h3 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+}
+.card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Mathematics — Topics Index</h1>
+  <p>From the foundations to the frontiers of modern mathematics</p>
+</header>
+
+<div class="section">
+  <h2>Basic & School Level</h2>
+  <div class="grid">
+    <a href="arithmetic.html" class="card"><i class="fa-solid fa-plus-minus"></i><div><h3>Arithmetic</h3><p>Numbers, operations, fractions, ratios, and percentages.</p></div></a>
+    <a href="basic-algebra.html" class="card"><i class="fa-solid fa-square-root-variable"></i><div><h3>Basic Algebra</h3><p>Equations, inequalities, linear and quadratic functions.</p></div></a>
+    <a href="geometry.html" class="card"><i class="fa-solid fa-shapes"></i><div><h3>Geometry</h3><p>Lines, angles, polygons, circles, and 3D solids.</p></div></a>
+    <a href="trigonometry.html" class="card"><i class="fa-solid fa-wave-square"></i><div><h3>Trigonometry</h3><p>Sine, cosine, tangent, identities, and unit circle.</p></div></a>
+    <a href="mensuration.html" class="card"><i class="fa-solid fa-ruler-combined"></i><div><h3>Mensuration</h3><p>Perimeter, area, surface area, and volume calculations.</p></div></a>
+    <a href="statistics.html" class="card"><i class="fa-solid fa-chart-bar"></i><div><h3>Statistics</h3><p>Mean, median, mode, probability basics, and data handling.</p></div></a>
+  </div>
+
+  <h2>Intermediate & College Level</h2>
+  <div class="grid">
+    <a href="functions.html" class="card"><i class="fa-solid fa-diagram-project"></i><div><h3>Functions & Graphs</h3><p>Domain, range, transformations, and composition.</p></div></a>
+    <a href="complex-numbers.html" class="card"><i class="fa-solid fa-infinity"></i><div><h3>Complex Numbers</h3><p>Imaginary numbers, polar form, Euler’s formula, and roots of unity.</p></div></a>
+    <a href="matrices.html" class="card"><i class="fa-solid fa-table-cells-large"></i><div><h3>Matrices & Determinants</h3><p>Matrix operations, inverses, determinants, and applications.</p></div></a>
+    <a href="vectors.html" class="card"><i class="fa-solid fa-location-arrow"></i><div><h3>Vectors</h3><p>Vector algebra, dot and cross product, 3D geometry.</p></div></a>
+    <a href="differentiation.html" class="card"><i class="fa-solid fa-chart-line"></i><div><h3>Differentiation</h3><p>Derivatives, limits, continuity, and tangent slopes.</p></div></a>
+    <a href="integration.html" class="card"><i class="fa-solid fa-waveform"></i><div><h3>Integration</h3><p>Integrals, area under curves, substitution, and parts.</p></div></a>
+    <a href="differential-equations.html" class="card"><i class="fa-solid fa-dna"></i><div><h3>Differential Equations</h3><p>Ordinary and partial differential equations, modeling change.</p></div></a>
+  </div>
+
+  <h2>Advanced & University Level</h2>
+  <div class="grid">
+    <a href="linear-algebra.html" class="card"><i class="fa-solid fa-border-all"></i><div><h3>Linear Algebra</h3><p>Vector spaces, eigenvalues, transformations, and diagonalization.</p></div></a>
+    <a href="real-analysis.html" class="card"><i class="fa-solid fa-wave-square"></i><div><h3>Real Analysis</h3><p>Limits, continuity, series, measure, and integration theory.</p></div></a>
+    <a href="complex-analysis.html" class="card"><i class="fa-solid fa-circle-notch"></i><div><h3>Complex Analysis</h3><p>Analytic functions, Cauchy’s theorem, and contour integration.</p></div></a>
+    <a href="abstract-algebra.html" class="card"><i class="fa-solid fa-cubes"></i><div><h3>Abstract Algebra</h3><p>Groups, rings, fields, and Galois theory.</p></div></a>
+    <a href="topology.html" class="card"><i class="fa-solid fa-atom"></i><div><h3>Topology</h3><p>Open sets, continuity, homotopy, and fundamental groups.</p></div></a>
+    <a href="differential-geometry.html" class="card"><i class="fa-solid fa-globe"></i><div><h3>Differential Geometry</h3><p>Curves, surfaces, curvature, and manifolds.</p></div></a>
+    <a href="number-theory.html" class="card"><i class="fa-solid fa-hashtag"></i><div><h3>Number Theory</h3><p>Primes, modular arithmetic, and Diophantine equations.</p></div></a>
+    <a href="probability.html" class="card"><i class="fa-solid fa-dice"></i><div><h3>Probability & Statistics</h3><p>Random variables, distributions, and stochastic processes.</p></div></a>
+  </div>
+
+  <h2>Research & Frontier Mathematics</h2>
+  <div class="grid">
+    <a href="functional-analysis.html" class="card"><i class="fa-solid fa-chart-area"></i><div><h3>Functional Analysis</h3><p>Banach and Hilbert spaces, operators, and spectral theory.</p></div></a>
+    <a href="algebraic-geometry.html" class="card"><i class="fa-solid fa-gem"></i><div><h3>Algebraic Geometry</h3><p>Varieties, schemes, and connections to number theory.</p></div></a>
+    <a href="category-theory.html" class="card"><i class="fa-solid fa-diagram-predecessor"></i><div><h3>Category Theory</h3><p>Functors, natural transformations, and abstract structures.</p></div></a>
+    <a href="mathematical-logic.html" class="card"><i class="fa-solid fa-code"></i><div><h3>Mathematical Logic</h3><p>Formal systems, model theory, and Gödel’s theorems.</p></div></a>
+    <a href="set-theory.html" class="card"><i class="fa-solid fa-layer-group"></i><div><h3>Set Theory</h3><p>Axioms, ordinals, cardinals, and continuum hypothesis.</p></div></a>
+    <a href="pde.html" class="card"><i class="fa-solid fa-water"></i><div><h3>Partial Differential Equations</h3><p>Wave, heat, and Navier–Stokes equations.</p></div></a>
+    <a href="quantum-math.html" class="card"><i class="fa-solid fa-atom"></i><div><h3>Quantum Mathematics</h3><p>Operator algebras, Hilbert spaces, and quantum fields.</p></div></a>
+    <a href="unsolved-problems.html" class="card"><i class="fa-solid fa-question"></i><div><h3>Unsolved Problems</h3><p>Riemann Hypothesis, P vs NP, and other Millennium Problems.</p></div></a>
+  </div>
+</div>
+
+<footer>
+  © 2025 Mathematics Topics Index — Designed for learners and dreamers.
+</footer>
+</body>
+</html>
