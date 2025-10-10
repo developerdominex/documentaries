@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Differential Geometry</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #f0f9ff, #fff5f0);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #3f51b5;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #3f51b5;
+  border-bottom: 2px solid #3f51b5;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #3f51b5;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #3f51b5;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #303f9f; }
+.diagram { margin: 20px 0; text-align: center; }
+svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-globe"></i> Differential Geometry</h1>
+  <p>Curves, surfaces, curvature, and manifolds</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Differential geometry studies curves, surfaces, and higher-dimensional manifolds using techniques of calculus and linear algebra. It connects geometry with analysis and has applications in physics, engineering, and computer graphics.</p>
+</section>
+
+<section>
+  <h2>Curves</h2>
+  <p>A <strong>curve</strong> in space can be represented parametrically as \( \mathbf{r}(t) = (x(t), y(t), z(t)) \). Key concepts:</p>
+  <ul>
+    <li>Tangent vector: \( \mathbf{T} = \frac{d\mathbf{r}}{dt} / \|\frac{d\mathbf{r}}{dt}\| \)</li>
+    <li>Curvature: \( \kappa = \|\mathbf{T}'(s)\| \), measures bending</li>
+    <li>Torsion: \( \tau \), measures twisting of the curve</li>
+  </ul>
+  <div class="example">
+    Example: Circle of radius R: \( \mathbf{r}(t) = (R\cos t, R\sin t) \), curvature \( \kappa = 1/R \)
+  </div>
+</section>
+
+<section>
+  <h2>Surfaces</h2>
+  <p>A <strong>surface</strong> can be parametrized as \( \mathbf{X}(u,v) = (x(u,v), y(u,v), z(u,v)) \). Key quantities:</p>
+  <ul>
+    <li>First fundamental form: \( E = \mathbf{X}_u \cdot \mathbf{X}_u, F = \mathbf{X}_u \cdot \mathbf{X}_v, G = \mathbf{X}_v \cdot \mathbf{X}_v \)</li>
+    <li>Second fundamental form: measures curvature of the surface</li>
+    <li>Gaussian curvature \( K = \frac{LN - M^2}{EG - F^2} \)</li>
+  </ul>
+  <div class="diagram">
+    <svg width="250" height="150">
+      <ellipse cx="125" cy="75" rx="100" ry="50" fill="none" stroke="#3f51b5" stroke-width="3"/>
+      <line x1="125" y1="75" x2="125" y2="25" stroke="#ff5722" stroke-width="2"/>
+      <line x1="125" y1="75" x2="200" y2="75" stroke="#ff5722" stroke-width="2"/>
+      <text x="130" y="20" fill="#ff5722" font-size="14">Curvature direction</text>
+    </svg>
+    <p>Example surface with tangent directions</p>
+  </div>
+</section>
+
+<section>
+  <h2>Manifolds</h2>
+  <p>A <strong>manifold</strong> is a topological space that locally resembles Euclidean space. Examples include curves, surfaces, and higher-dimensional spaces.</p>
+  <div class="example">
+    Example: The surface of a sphere \( S^2 \) is a 2-dimensional manifold.
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>General Relativity: spacetime as a 4D manifold with curvature</li>
+    <li>Computer graphics: modeling curves and surfaces</li>
+    <li>Robotics: path planning on manifolds</li>
+    <li>Engineering: stress analysis on curved surfaces</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Differential geometry developed in the 18th and 19th centuries with contributions from <strong>Gauss</strong>, <strong>Riemann</strong>, <strong>Frenet</strong>, and <strong>Cartan</strong>. It bridges classical geometry and modern physics.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
