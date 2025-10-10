@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Mathematics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #e8eaf6, #f3e5f5);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #673ab7;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #673ab7;
+  border-bottom: 2px solid #673ab7;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #d1c4e9;
+  border-left: 4px solid #673ab7;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #673ab7;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #4527a0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fa-solid fa-atom"></i> Quantum Mathematics</h1>
+  <p>Operator algebras, Hilbert spaces, and quantum fields</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Quantum Mathematics is the branch of mathematics that underpins quantum mechanics and quantum field theory. It studies the mathematical structures that describe quantum phenomena.</p>
+</section>
+
+<section>
+  <h2>Hilbert Spaces</h2>
+  <p>A Hilbert space is a complete vector space with an inner product. It provides the framework for quantum states:</p>
+  <div class="example">
+    State vectors: <code>|ψ⟩ ∈ H</code><br>
+    Inner product: <code>⟨φ|ψ⟩</code><br>
+    Norm: <code>||ψ||² = ⟨ψ|ψ⟩</code>
+  </div>
+</section>
+
+<section>
+  <h2>Operator Algebras</h2>
+  <p>Observables in quantum mechanics are represented by linear operators on Hilbert spaces:</p>
+  <ul>
+    <li>Hermitian operators: <code>A = A†</code>, represent measurable quantities</li>
+    <li>Unitary operators: <code>U†U = I</code>, represent evolution and symmetry transformations</li>
+    <li>Commutators: <code>[A,B] = AB - BA</code>, quantify uncertainty</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Quantum Fields</h2>
+  <p>Quantum field theory generalizes quantum mechanics to systems with infinitely many degrees of freedom:</p>
+  <ul>
+    <li>Fields as operator-valued distributions</li>
+    <li>Creation and annihilation operators</li>
+    <li>Fock space: describes states with varying particle number</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Examples</h2>
+  <div class="example">
+    Quantum harmonic oscillator: <code>H = ħω(a†a + 1/2)</code>, with eigenstates <code>|n⟩</code>
+  </div>
+  <div class="example">
+    Spin-1/2 system: Pauli matrices <code>σx, σy, σz</code> as observables in <code>ℂ²</code>
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Quantum computing and information theory</li>
+    <li>Particle physics and quantum field simulations</li>
+    <li>Mathematical foundations of quantum mechanics</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>The mathematical formalism of quantum mechanics was developed in the 20th century by Dirac, von Neumann, Heisenberg, and Schrödinger, establishing rigorous frameworks using Hilbert spaces and operator algebras.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
