@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Functional Analysis</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fff3e0, #e3f2fd);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #2196f3;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #2196f3;
+  border-bottom: 2px solid #2196f3;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #2196f3;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #2196f3;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #1565c0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fa-solid fa-chart-area"></i> Functional Analysis</h1>
+  <p>Banach and Hilbert spaces, operators, and spectral theory</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Functional Analysis is the study of vector spaces with limit-related structures (like norms and inner products) and the linear operators acting on them. It provides the foundation for modern analysis, quantum mechanics, and PDE theory.</p>
+</section>
+
+<section>
+  <h2>Banach Spaces</h2>
+  <p>A Banach space is a complete normed vector space. Completeness means every Cauchy sequence converges within the space.</p>
+  <div class="example">
+    Example: The space of continuous functions C([0,1]) with the sup norm ||f||∞ = max |f(x)| is a Banach space.
+  </div>
+</section>
+
+<section>
+  <h2>Hilbert Spaces</h2>
+  <p>A Hilbert space is a complete inner product space. The inner product allows definitions of length and angles.</p>
+  <div class="example">
+    Example: L²([0,1]) = {f : ∫₀¹ |f(x)|² dx < ∞} with ⟨f,g⟩ = ∫₀¹ f(x)g(x) dx is a Hilbert space.
+  </div>
+</section>
+
+<section>
+  <h2>Linear Operators</h2>
+  <p>Linear operators map elements of a vector space to another (or the same) vector space while preserving addition and scalar multiplication.</p>
+  <div class="example">
+    Example: T: L²([0,1]) → L²([0,1]), Tf(x) = ∫₀ˣ f(t) dt
+  </div>
+</section>
+
+<section>
+  <h2>Spectral Theory</h2>
+  <p>Spectral theory studies eigenvalues and eigenvectors of linear operators, particularly on infinite-dimensional spaces.</p>
+  <div class="example">
+    Example: For compact operator T on Hilbert space H, spectrum σ(T) consists of eigenvalues λ with T(v)=λv.
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Quantum mechanics: Hilbert spaces for wavefunctions</li>
+    <li>Partial differential equations: operator theory for solution analysis</li>
+    <li>Signal processing: Fourier and functional transforms</li>
+    <li>Numerical analysis: stability and convergence of algorithms</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Functional analysis emerged in the early 20th century from the work of <strong>Fréchet</strong>, <strong>Banach</strong>, and <strong>Hilbert</strong>. It formalized the study of infinite-dimensional spaces and became central in modern analysis.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
