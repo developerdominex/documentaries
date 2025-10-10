@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometry — Mathematics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --accent: #0ea5e9;
+  --text: #1e293b;
+  --muted: #475569;
+  --border: #e2e8f0;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Inter, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+header {
+  text-align: center;
+  padding: 60px 20px 30px;
+  background: linear-gradient(135deg, var(--accent), #38bdf8);
+  color: white;
+}
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+header p {
+  margin-top: 8px;
+  font-size: 1.1rem;
+}
+main {
+  max-width: 950px;
+  margin: 40px auto;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+h2 {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  margin-top: 32px;
+  padding-bottom: 4px;
+}
+h3 {
+  color: var(--accent);
+  margin-top: 20px;
+}
+p {
+  color: var(--text);
+}
+ul {
+  margin-left: 24px;
+}
+.code {
+  background: #f3f4f6;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: "Consolas", monospace;
+  color: #334155;
+}
+.example {
+  background: #e0f2fe;
+  border-left: 4px solid var(--accent);
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 6px;
+}
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 20px;
+  font-size: 0.9rem;
+}
+a.back {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-shapes"></i> Geometry</h1>
+  <p>The study of shapes, sizes, positions, and dimensions of figures and spaces.</p>
+</header>
+
+<main>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+
+  <h2>1. Introduction</h2>
+  <p>
+    <strong>Geometry</strong> is the branch of mathematics that deals with the properties and relationships of points, lines, surfaces, and solids.
+    It provides a way to measure, design, and understand space and form — both abstractly and in the physical world.
+  </p>
+
+  <h3>Historical Background</h3>
+  <p>
+    Geometry originated in ancient Egypt and Babylon for land measurement and construction.  
+    The Greek mathematician <strong>Euclid</strong> (c. 300 BCE) organized known geometric facts into a logical system, resulting in his famous book,
+    <em>Elements</em> — a foundation of mathematics for over 2,000 years.
+  </p>
+
+  <h2>2. Basic Elements</h2>
+  <ul>
+    <li><strong>Point:</strong> A location with no size or dimension.</li>
+    <li><strong>Line:</strong> A straight path extending infinitely in both directions.</li>
+    <li><strong>Line Segment:</strong> A part of a line with two endpoints.</li>
+    <li><strong>Ray:</strong> A part of a line that starts at one point and extends infinitely in one direction.</li>
+    <li><strong>Plane:</strong> A flat surface extending infinitely in all directions.</li>
+  </ul>
+
+  <h2>3. Angles</h2>
+  <p>An <strong>angle</strong> is formed when two rays share a common endpoint (called the vertex).</p>
+  <ul>
+    <li>Acute Angle — less than 90°</li>
+    <li>Right Angle — exactly 90°</li>
+    <li>Obtuse Angle — between 90° and 180°</li>
+    <li>Straight Angle — exactly 180°</li>
+    <li>Reflex Angle — between 180° and 360°</li>
+  </ul>
+  <div class="example">
+    <p><strong>Example:</strong> If two lines intersect forming one 90° angle, all four angles are right angles.</p>
+  </div>
+
+  <h2>4. Triangles</h2>
+  <p>Triangles are polygons with three sides. They are classified by sides and angles:</p>
+  <h3>By Sides:</h3>
+  <ul>
+    <li>Equilateral — all sides equal</li>
+    <li>Isosceles — two sides equal</li>
+    <li>Scalene — no sides equal</li>
+  </ul>
+  <h3>By Angles:</h3>
+  <ul>
+    <li>Acute Triangle — all angles < 90°</li>
+    <li>Right Triangle — one 90° angle</li>
+    <li>Obtuse Triangle — one angle > 90°</li>
+  </ul>
+
+  <h3>Triangle Properties</h3>
+  <ul>
+    <li>Sum of interior angles = 180°</li>
+    <li>Pythagoras’ Theorem (Right Triangle): a² + b² = c²</li>
+    <li>Area = ½ × base × height</li>
+    <li>Perimeter = sum of all sides</li>
+  </ul>
+  <div class="example">
+    <p><strong>Example:</strong> A right triangle with sides 3 and 4 → hypotenuse = √(3² + 4²) = 5.</p>
+  </div>
+
+  <h2>5. Quadrilaterals</h2>
+  <ul>
+    <li>Square — all sides equal, all angles 90°</li>
+    <li>Rectangle — opposite sides equal, all angles 90°</li>
+    <li>Parallelogram — opposite sides and angles equal</li>
+    <li>Rhombus — all sides equal, opposite angles equal</li>
+    <li>Trapezium — one pair of parallel sides</li>
+  </ul>
+  <div class="example">
+    <p><strong>Example:</strong> Area of rectangle = length × width</p>
+  </div>
+
+  <h2>6. Circles</h2>
+  <ul>
+    <li><strong>Radius (r):</strong> Distance from center to any point on the circle</li>
+    <li><strong>Diameter (d):</strong> 2 × radius</li>
+    <li><strong>Circumference (C):</strong> 2πr</li>
+    <li><strong>Area (A):</strong> πr²</li>
+  </ul>
+  <div class="example">
+    <p><strong>Example:</strong> A circle with radius 7 cm → Area = π(7²) = 49π ≈ 153.94 cm²</p>
+  </div>
+
+  <h2>7. Polygons</h2>
+  <p>Polygons are closed figures with three or more straight sides.</p>
+  <ul>
+    <li>Triangle — 3 sides</li>
+    <li>Quadrilateral — 4 sides</li>
+    <li>Pentagon — 5 sides</li>
+    <li>Hexagon — 6 sides</li>
+    <li>Heptagon — 7 sides</li>
+    <li>Octagon — 8 sides</li>
+  </ul>
+  <p><strong>Sum of interior angles</strong> = (n − 2) × 180°</p>
+  <p><strong>Each interior angle (regular polygon)</strong> = [(n − 2) × 180°] / n</p>
+
+  <h2>8. Coordinate Geometry</h2>
+  <p>
+    Coordinate geometry combines algebra and geometry. Points are represented by ordered pairs (x, y) on a Cartesian plane.
+  </p>
+  <div class="example">
+    <p><strong>Distance between points (x₁, y₁) and (x₂, y₂):</strong></p>
+    <p class="code">√[(x₂ − x₁)² + (y₂ − y₁)²]</p>
+    <p><strong>Midpoint:</strong> ((x₁ + x₂)/2, (y₁ + y₂)/2)</p>
+  </div>
+
+  <h2>9. Solid Geometry</h2>
+  <p>
+    Solid geometry studies 3D shapes — objects having length, breadth, and height.
+  </p>
+  <ul>
+    <li>Cube — Volume = a³; Surface Area = 6a²</li>
+    <li>Cuboid — Volume = l × b × h</li>
+    <li>Cylinder — Volume = πr²h; Surface Area = 2πr(h + r)</li>
+    <li>Cone — Volume = (1/3)πr²h</li>
+    <li>Sphere — Volume = (4/3)πr³; Surface Area = 4πr²</li>
+  </ul>
+
+  <h2>10. Theorems & Proofs</h2>
+  <ul>
+    <li>Angles on a straight line = 180°</li>
+    <li>Angles at a point = 360°</li>
+    <li>Opposite angles of a parallelogram are equal</li>
+    <li>Base angles of an isosceles triangle are equal</li>
+    <li>Sum of interior angles of any triangle = 180°</li>
+  </ul>
+
+  <h2>11. Modern Applications</h2>
+  <ul>
+    <li>Architecture and Engineering design</li>
+    <li>Computer graphics and 3D modeling</li>
+    <li>Navigation and GPS systems</li>
+    <li>Physics, Astronomy, Robotics</li>
+  </ul>
+
+  <h2>12. Summary</h2>
+  <p>
+    Geometry builds spatial reasoning and problem-solving skills.  
+    It connects visual thinking to logic — forming the bridge between mathematics and the physical world.
+  </p>
+</main>
+
+<footer>
+  © 2025 Mathematics Project — Geometry Section.
+</footer>
+</body>
+</html>
