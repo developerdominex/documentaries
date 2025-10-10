@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistical Physics | Physics Encyclopedia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fffaf5;
+      margin: 0;
+      line-height: 1.7;
+      color: #1a1a1a;
+    }
+    header {
+      background: linear-gradient(135deg, #f12711, #f5af19);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    header h1 { font-size: 2.5rem; margin: 0; }
+    header p { color: #fff4de; }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    h2 {
+      color: #a84a00;
+      border-left: 5px solid #f5af19;
+      padding-left: 10px;
+      margin-top: 40px;
+    }
+    .formula {
+      background: #fff4e0;
+      border-left: 4px solid #f5af19;
+      padding: 10px 15px;
+      font-family: 'Courier New', monospace;
+      margin: 15px 0;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      background: #f5af19;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .back-btn:hover { background: #d98e00; }
+    footer {
+      text-align: center;
+      background: #f12711;
+      color: white;
+      padding: 25px;
+      margin-top: 50px;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header>
+    <i class="fa-solid fa-chart-line fa-3x"></i>
+    <h1>Statistical Physics</h1>
+    <p>Connecting microscopic states to macroscopic thermodynamics through probability.</p>
+  </header>
+
+  <div class="container">
+    <h2>1. Microstates and Macrostates</h2>
+    <p>
+      A system’s <strong>microstate</strong> is its exact microscopic configuration.
+      A <strong>macrostate</strong> describes the observable quantities like pressure or temperature.
+    </p>
+    <div class="formula">
+      \( \Omega = \text{number of microstates corresponding to a macrostate} \)
+    </div>
+
+    <h2>2. Entropy</h2>
+    <p>
+      Entropy measures the disorder or multiplicity of a system:
+    </p>
+    <div class="formula">
+      \( S = k_B \ln \Omega \)
+    </div>
+
+    <h2>3. Ensembles</h2>
+    <ul>
+      <li><strong>Microcanonical:</strong> fixed energy, volume, and particle number.</li>
+      <li><strong>Canonical:</strong> fixed temperature and volume.</li>
+      <li><strong>Grand Canonical:</strong> fixed temperature and chemical potential.</li>
+    </ul>
+
+    <h2>4. Partition Function</h2>
+    <div class="formula">
+      \( Z = \sum_i e^{-E_i / k_B T} \)
+    </div>
+    <p>
+      The partition function links microscopic energy levels \( E_i \) to macroscopic quantities:
+    </p>
+    <div class="formula">
+      \( F = -k_B T \ln Z \quad \text{and} \quad U = -\frac{\partial \ln Z}{\partial \beta} \)
+    </div>
+
+    <h2>5. Boltzmann Distribution</h2>
+    <div class="formula">
+      \( P(E) = \frac{e^{-E / k_B T}}{Z} \)
+    </div>
+    <p>
+      This gives the probability that a system occupies a state with energy \( E \).
+    </p>
+
+    <h2>6. Applications</h2>
+    <ul>
+      <li>Understanding phase transitions and heat capacities.</li>
+      <li>Modeling gases, magnets, and quantum systems.</li>
+      <li>Foundation for quantum statistical mechanics.</li>
+    </ul>
+
+    <a href="topics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+  </div>
+
+  <footer>© 2025 Physics Encyclopedia | Statistical Physics</footer>
+</body>
+</html>
