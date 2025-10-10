@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Differentiation</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fdfaf6, #e6f2ff);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #1e5fa1;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 {
+  margin: 0;
+  font-size: 2.2em;
+}
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #1e5fa1;
+  border-bottom: 2px solid #1e5fa1;
+  padding-bottom: 5px;
+}
+section {
+  margin-bottom: 35px;
+}
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #1e5fa1;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer {
+  text-align: center;
+  margin-top: 40px;
+}
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #1e5fa1;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #144271; }
+
+/* Simple diagrams */
+.diagram {
+  margin: 15px 0;
+  text-align: center;
+}
+.diagram svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-chart-line"></i> Differentiation</h1>
+  <p>Derivatives, limits, continuity, tangent slopes, and applications.</p>
+</header>
+
+<div class="container">
+
+  <section>
+    <h2>Introduction to Differentiation</h2>
+    <p>Differentiation is the process of finding the <strong>derivative</strong> of a function, which measures how the function changes as its input changes. Geometrically, the derivative represents the slope of the tangent to the curve at a point.</p>
+    <div class="example">
+      <strong>Example:</strong> f(x) = x² → f'(x) = 2x
+    </div>
+  </section>
+
+  <section>
+    <h2>Limits</h2>
+    <p>The derivative is defined using limits:</p>
+    <code>f'(x) = lim(h→0) [f(x+h) - f(x)] / h</code>
+    <div class="example">
+      f(x) = x² → f'(x) = lim(h→0) [(x+h)² - x²]/h = lim(h→0) [2xh + h²]/h = 2x
+    </div>
+  </section>
+
+  <section>
+    <h2>Continuity</h2>
+    <p>A function must be continuous at a point to be differentiable there. Continuous means no jumps, breaks, or holes in the function.</p>
+    <div class="example">
+      f(x) = |x| → Not differentiable at x = 0 (corner)
+    </div>
+  </section>
+
+  <section>
+    <h2>Rules of Differentiation</h2>
+    <ul>
+      <li>Constant rule: (c)' = 0</li>
+      <li>Power rule: (xⁿ)' = n·xⁿ⁻¹</li>
+      <li>Sum/Difference: (f ± g)' = f' ± g'</li>
+      <li>Product rule: (fg)' = f'g + fg'</li>
+      <li>Quotient rule: (f/g)' = (f'g - fg')/g²</li>
+      <li>Chain rule: (f(g(x)))' = f'(g(x)) · g'(x)</li>
+    </ul>
+    <div class="example">
+      f(x) = x²·sin(x) → f'(x) = 2x·sin(x) + x²·cos(x) (Product rule)
+    </div>
+  </section>
+
+  <section>
+    <h2>Higher-Order Derivatives</h2>
+    <p>Second derivative f''(x) measures the curvature of the graph. Higher derivatives are obtained by differentiating repeatedly.</p>
+    <div class="example">
+      f(x) = x³ → f'(x) = 3x², f''(x) = 6x, f'''(x) = 6
+    </div>
+  </section>
+
+  <section>
+    <h2>Tangent & Normal</h2>
+    <p>The slope of tangent at x = a is f'(a). Normal is perpendicular to tangent.</p>
+    <div class="diagram">
+      <svg width="250" height="200">
+        <line x1="30" y1="150" x2="220" y2="50" stroke="#1e5fa1" stroke-width="3"/>
+        <line x1="30" y1="150" x2="220" y2="150" stroke="#e94e77" stroke-width="2" stroke-dasharray="5,5"/>
+        <circle cx="150" cy="90" r="3" fill="#222"/>
+        <text x="160" y="90" fill="#222">P(a, f(a))</text>
+        <text x="30" y="140" fill="#222">x-axis</text>
+        <text x="180" y="40" fill="#1e5fa1">Tangent</text>
+      </svg>
+    </div>
+  </section>
+
+  <section>
+    <h2>Applications</h2>
+    <ul>
+      <li>Finding maxima and minima of functions</li>
+      <li>Velocity and acceleration in physics</li>
+      <li>Approximation of functions (linearization)</li>
+      <li>Engineering optimization problems</li>
+      <li>Curve sketching and analysis</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>History</h2>
+    <p>Differentiation as a systematic study began in the 17th century with Isaac Newton and Gottfried Wilhelm Leibniz. Newton focused on rates of change, while Leibniz developed the symbolic notation that we use today.</p>
+  </section>
+
+  <footer>
+    <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+  </footer>
+
+</div>
+</body>
+</html>
