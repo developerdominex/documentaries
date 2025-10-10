@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integration</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fffaf0, #e3f2f9);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #2c6fae;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #2c6fae;
+  border-bottom: 2px solid #2c6fae;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #2c6fae;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #2c6fae;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #184770; }
+.diagram { margin: 20px 0; text-align: center; }
+svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-waveform"></i> Integration</h1>
+  <p>Integrals, area under curves, substitution, parts, and applications.</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction to Integration</h2>
+  <p>Integration is the reverse process of differentiation. It is used to find the <strong>area under a curve</strong>, accumulated quantities, or to reconstruct a function from its derivative.</p>
+  <div class="example">
+    <strong>Example:</strong> If \( f(x) = 2x \), then the integral is
+    \[
+    \int 2x \, dx = x^2 + C
+    \]
+    where \(C\) is the constant of integration.
+  </div>
+</section>
+
+<section>
+  <h2>Indefinite Integrals</h2>
+  <ul>
+    <li>Power rule: \(\int x^n \, dx = \frac{x^{n+1}}{n+1} + C, n \neq -1\)</li>
+    <li>Exponential: \(\int e^x \, dx = e^x + C\)</li>
+    <li>Trigonometric: \(\int \sin x \, dx = -\cos x + C\), \(\int \cos x \, dx = \sin x + C\)</li>
+    <li>Sum/difference: \(\int (f \pm g) dx = \int f dx \pm \int g dx\)</li>
+  </ul>
+  <div class="example">
+    \(\int (3x^2 + 4) dx = x^3 + 4x + C\)
+  </div>
+</section>
+
+<section>
+  <h2>Definite Integrals</h2>
+  <p>Definite integrals compute the area under a curve from \(a\) to \(b\):</p>
+  \[
+  \int_a^b f(x) dx = F(b) - F(a)
+  \]
+  <div class="example">
+    \(\int_0^2 x^2 dx = \left[\frac{x^3}{3}\right]_0^2 = \frac{8}{3}\)
+  </div>
+</section>
+
+<section>
+  <h2>Techniques of Integration</h2>
+  <ul>
+    <li><strong>Substitution:</strong> Let \( u = g(x) \), then \(\int f(g(x)) g'(x) dx = \int f(u) du\)</li>
+    <li><strong>Integration by Parts:</strong> \(\int u dv = uv - \int v du\)</li>
+    <li><strong>Partial Fractions:</strong> Decompose rational functions into simpler fractions for integration</li>
+    <li><strong>Trigonometric Integrals:</strong> Use trig identities to simplify integrals</li>
+  </ul>
+  <div class="example">
+    \(\int x e^x dx = x e^x - \int e^x dx = x e^x - e^x + C\)
+  </div>
+</section>
+
+<section>
+  <h2>Applications of Integration</h2>
+  <ul>
+    <li>Area under curves</li>
+    <li>Volume of solids of revolution</li>
+    <li>Work done by a variable force</li>
+    <li>Center of mass and moments</li>
+    <li>Probability and statistics (continuous distributions)</li>
+  </ul>
+  <div class="diagram">
+    <svg width="250" height="150">
+      <path d="M20,130 Q100,20 220,130" stroke="#2c6fae" stroke-width="3" fill="none"/>
+      <line x1="20" y1="130" x2="220" y2="130" stroke="#e94e77" stroke-width="2"/>
+      <text x="100" y="20" fill="#222">y = f(x)</text>
+      <text x="230" y="135" fill="#222">x-axis</text>
+    </svg>
+  </div>
+</section>
+
+<section>
+  <h2>Definite Integral Example with Area</h2>
+  <div class="example">
+    Find the area under \( y = x^2 \) from \( x = 0 \) to \( x = 3 \):
+    \[
+    \int_0^3 x^2 dx = \left[ \frac{x^3}{3} \right]_0^3 = \frac{27}{3} - 0 = 9
+    \]
+  </div>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Integration as a concept was developed alongside calculus in the 17th century by <strong>Newton</strong> and <strong>Leibniz</strong>. Leibniz introduced the integral symbol ∫ and the notation used today.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
