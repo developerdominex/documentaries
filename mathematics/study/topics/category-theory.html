@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Category Theory</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #f0f4ff, #fff0f5);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #673ab7;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #673ab7;
+  border-bottom: 2px solid #673ab7;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f3e5f5;
+  border-left: 4px solid #673ab7;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #673ab7;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #4527a0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fa-solid fa-diagram-predecessor"></i> Category Theory</h1>
+  <p>Functors, natural transformations, and abstract structures</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Category theory studies mathematical structures and relationships abstractly. It emphasizes **morphisms** (arrows) between objects rather than the internal structure of objects themselves. It is a unifying language across mathematics, computer science, and logic.</p>
+</section>
+
+<section>
+  <h2>Categories</h2>
+  <p>A <strong>category</strong> consists of objects and morphisms (arrows) that satisfy:</p>
+  <ul>
+    <li>Composition: For morphisms f: A → B and g: B → C, there exists g∘f: A → C</li>
+    <li>Identity: For each object X, there is an identity morphism id_X: X → X</li>
+    <li>Associativity: h∘(g∘f) = (h∘g)∘f for all composable morphisms</li>
+  </ul>
+  <div class="example">
+    Example: <br>
+    Objects: Sets<br>
+    Morphisms: Functions between sets
+  </div>
+</section>
+
+<section>
+  <h2>Functors</h2>
+  <p>A functor maps objects and morphisms from one category to another while preserving structure (composition and identities).</p>
+  <div class="example">
+    Example: The functor F: Set → Set that assigns to each set X its power set P(X) and to each function f: X→Y the function F(f): P(X) → P(Y), F(f)(S) = f(S).
+  </div>
+</section>
+
+<section>
+  <h2>Natural Transformations</h2>
+  <p>A natural transformation provides a "morphism of functors", giving a systematic way to transform one functor into another while respecting the category structure.</p>
+  <div class="example">
+    Example: For functors F, G: C → D, a natural transformation η: F ⇒ G assigns each object X in C a morphism η_X: F(X) → G(X) in D such that for any f: X→Y in C, G(f)∘η_X = η_Y∘F(f)
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Abstract algebra: unify groups, rings, modules</li>
+    <li>Topology: study homotopy and homology functors</li>
+    <li>Computer science: functional programming, type theory</li>
+    <li>Logic: categorical semantics of mathematical theories</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Category theory was introduced by <strong>Eilenberg</strong> and <strong>Mac Lane</strong> in 1945. It has grown into a central framework for modern mathematics and theoretical computer science, providing a universal language for structure and abstraction.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
