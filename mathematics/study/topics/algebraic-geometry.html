@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algebraic Geometry</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fff0f5, #e0f7fa);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #9c27b0;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #9c27b0;
+  border-bottom: 2px solid #9c27b0;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f5f0fa;
+  border-left: 4px solid #9c27b0;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #9c27b0;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #6a1b9a; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><i class="fa-solid fa-gem"></i> Algebraic Geometry</h1>
+  <p>Varieties, schemes, and connections to number theory</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Algebraic Geometry studies the solutions of polynomial equations using geometric methods. It connects algebraic concepts with geometric structures, and has deep connections with number theory, topology, and complex analysis.</p>
+</section>
+
+<section>
+  <h2>Affine and Projective Varieties</h2>
+  <p>A <strong>variety</strong> is a set of solutions to one or more polynomial equations:</p>
+  <div class="example">
+    Example: The circle x² + y² - 1 = 0 is an affine variety in ℝ².<br>
+    Projective varieties extend this idea to projective space for handling points at infinity.
+  </div>
+</section>
+
+<section>
+  <h2>Schemes</h2>
+  <p>Schemes generalize varieties and allow working over arbitrary rings instead of fields. They form the modern foundation of algebraic geometry.</p>
+  <div class="example">
+    Example: Spec(Z) represents prime numbers geometrically as points in a scheme.
+  </div>
+</section>
+
+<section>
+  <h2>Morphisms and Maps</h2>
+  <p>Morphisms are structure-preserving maps between varieties or schemes. They generalize functions and allow studying geometric properties algebraically.</p>
+  <ul>
+    <li>Example: f: ℝ² → ℝ, f(x,y)=x²+y² maps points to their squared distance from origin.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Applications and Connections</h2>
+  <ul>
+    <li><strong>Number theory:</strong> Diophantine equations and elliptic curves</li>
+    <li><strong>Complex geometry:</strong> Study of complex manifolds</li>
+    <li><strong>Cryptography:</strong> Elliptic curve cryptography</li>
+    <li><strong>Topology:</strong> Intersection theory and cohomology</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Algebraic Geometry developed from studying solutions of polynomial equations by mathematicians such as <strong>Descartes</strong>, <strong>Hilbert</strong>, <strong>Weil</strong>, and <strong>Grothendieck</strong>. Modern algebraic geometry uses schemes, cohomology, and category theory as central tools.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
