@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abstract Algebra</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fff5eb, #eaf6ff);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #ff4500;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #ff4500;
+  border-bottom: 2px solid #ff4500;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #ff4500;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #ff4500;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #cc3700; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-cubes"></i> Abstract Algebra</h1>
+  <p>Groups, rings, fields, and Galois theory</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Abstract algebra studies algebraic structures such as groups, rings, fields, and their generalizations. It provides a framework for understanding symmetry, number systems, and mathematical operations at a structural level.</p>
+</section>
+
+<section>
+  <h2>Groups</h2>
+  <p>A group \( (G, *) \) is a set with a binary operation satisfying:</p>
+  <ul>
+    <li>Closure: \( a*b \in G \)</li>
+    <li>Associativity: \( (a*b)*c = a*(b*c) \)</li>
+    <li>Identity: \( \exists e \in G: e*a = a*e = a \)</li>
+    <li>Inverse: \( \forall a \in G, \exists a^{-1}: a*a^{-1} = e \)</li>
+  </ul>
+  <div class="example">
+    Example: Integers under addition \( (\mathbb{Z}, +) \) form a group.
+  </div>
+</section>
+
+<section>
+  <h2>Rings</h2>
+  <p>A ring \( (R, +, \cdot) \) is a set with two operations: addition (forming an abelian group) and multiplication (associative), with distributive laws:</p>
+  \[
+  a(b+c) = ab + ac, \quad (a+b)c = ac + bc
+  \]
+  <div class="example">
+    Example: Integers \( (\mathbb{Z}, +, \cdot) \) form a ring.
+  </div>
+</section>
+
+<section>
+  <h2>Fields</h2>
+  <p>A field \( (F, +, \cdot) \) is a ring where every nonzero element has a multiplicative inverse, and multiplication is commutative.</p>
+  <div class="example">
+    Example: Rational numbers \( (\mathbb{Q}, +, \cdot) \), real numbers \( (\mathbb{R}, +, \cdot) \)
+  </div>
+</section>
+
+<section>
+  <h2>Subgroups and Homomorphisms</h2>
+  <ul>
+    <li>Subgroup: a subset \( H \subset G \) that forms a group under the same operation</li>
+    <li>Homomorphism: a map \( f: G \to H \) such that \( f(a*b) = f(a)*f(b) \)</li>
+    <li>Isomorphism: bijective homomorphism, indicates structural similarity</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Galois Theory</h2>
+  <p>Galois theory connects field theory and group theory to study solvability of polynomials. Key ideas:</p>
+  <ul>
+    <li>Galois group: automorphisms of a field extension preserving base field</li>
+    <li>Solvable groups correspond to solvable polynomials by radicals</li>
+    <li>Fundamental theorem of Galois theory: bijection between subgroups of Galois group and intermediate fields</li>
+  </ul>
+  <div class="example">
+    Example: The polynomial \( x^5 - x - 1 = 0 \) is not solvable by radicals because its Galois group is not solvable.
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Cryptography (RSA, ECC)</li>
+    <li>Coding theory</li>
+    <li>Symmetry in chemistry and physics</li>
+    <li>Solving polynomial equations and advanced algebra</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Abstract algebra developed in the 19th century by mathematicians like <strong>Évariste Galois</strong>, <strong>Cayley</strong>, and <strong>Hamilton</strong>. It forms the foundation of modern algebra and number theory.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
