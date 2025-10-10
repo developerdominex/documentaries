@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basic Algebra — Mathematics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --accent: #9333ea;
+  --text: #1e293b;
+  --muted: #475569;
+  --border: #e2e8f0;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Inter, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+header {
+  text-align: center;
+  padding: 60px 20px 30px;
+  background: linear-gradient(135deg, var(--accent), #a855f7);
+  color: white;
+}
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+header p {
+  margin-top: 8px;
+  font-size: 1.1rem;
+}
+main {
+  max-width: 950px;
+  margin: 40px auto;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+h2 {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+  margin-top: 32px;
+  padding-bottom: 4px;
+}
+h3 {
+  color: var(--accent);
+  margin-top: 20px;
+}
+p {
+  color: var(--text);
+}
+ul {
+  margin-left: 24px;
+}
+.code {
+  background: #f3f4f6;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: "Consolas", monospace;
+  color: #334155;
+}
+.example {
+  background: #f3e8ff;
+  border-left: 4px solid var(--accent);
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 6px;
+}
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 20px;
+  font-size: 0.9rem;
+}
+a.back {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-square-root-variable"></i> Basic Algebra</h1>
+  <p>The language of mathematics — exploring variables, equations, and relationships.</p>
+</header>
+
+<main>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+
+  <h2>1. Introduction</h2>
+  <p>
+    <strong>Algebra</strong> is a branch of mathematics that uses symbols (usually letters) to represent numbers and express general relationships.
+    It allows us to describe patterns, solve problems, and express mathematical rules in a universal form.
+  </p>
+
+  <h3>Historical Background</h3>
+  <p>
+    Algebra originated in ancient Babylon, where equations were solved using geometric methods.
+    The word “algebra” comes from the Arabic <em>al-jabr</em>, from a 9th-century book by <strong>Al-Khwarizmi</strong> titled
+    <em>Al-Kitab al-Mukhtasar fi Hisab al-Jabr wal-Muqabala</em> (“The Compendious Book on Calculation by Completion and Balancing”).
+  </p>
+
+  <h2>2. Key Concepts</h2>
+  <ul>
+    <li><strong>Variables:</strong> Letters that represent unknown or changeable quantities (e.g., x, y, z).</li>
+    <li><strong>Constants:</strong> Fixed values (e.g., 2, −5, π).</li>
+    <li><strong>Expressions:</strong> Combinations of numbers, variables, and operations (e.g., 2x + 3).</li>
+    <li><strong>Equations:</strong> Statements that two expressions are equal (e.g., 2x + 3 = 7).</li>
+    <li><strong>Inequalities:</strong> Statements comparing two expressions (e.g., x + 5 > 8).</li>
+  </ul>
+
+  <h2>3. Basic Operations in Algebra</h2>
+  <p>
+    Algebra follows the same arithmetic operations but uses variables.
+  </p>
+
+  <div class="example">
+    <p><strong>Examples:</strong></p>
+    <ul>
+      <li>Addition: (3x + 2) + (2x − 5) = 5x − 3</li>
+      <li>Subtraction: (6x − 4) − (2x + 1) = 4x − 5</li>
+      <li>Multiplication: 3x × 2x = 6x²</li>
+      <li>Division: 6x² ÷ 3x = 2x</li>
+    </ul>
+  </div>
+
+  <h2>4. Laws and Properties</h2>
+  <ul>
+    <li><strong>Commutative:</strong> a + b = b + a; a × b = b × a</li>
+    <li><strong>Associative:</strong> (a + b) + c = a + (b + c)</li>
+    <li><strong>Distributive:</strong> a(b + c) = ab + ac</li>
+    <li><strong>Identity:</strong> a + 0 = a; a × 1 = a</li>
+  </ul>
+
+  <h2>5. Solving Linear Equations</h2>
+  <p>
+    A <strong>linear equation</strong> has the form ax + b = c, where a, b, and c are constants.
+    Solving means finding the value of x that makes the equation true.
+  </p>
+
+  <div class="example">
+    <p><strong>Example:</strong></p>
+    <p>2x + 3 = 7</p>
+    <p>Subtract 3 from both sides → 2x = 4</p>
+    <p>Divide by 2 → x = 2</p>
+  </div>
+
+  <h2>6. Quadratic Equations</h2>
+  <p>
+    A <strong>quadratic equation</strong> is of the form ax² + bx + c = 0.
+  </p>
+  <p>
+    Solutions (roots) are given by the <strong>quadratic formula</strong>:
+  </p>
+  <div class="code">
+    x = (-b ± √(b² − 4ac)) / (2a)
+  </div>
+  <div class="example">
+    <p><strong>Example:</strong> x² − 5x + 6 = 0 → x = 2 or 3</p>
+  </div>
+
+  <h2>7. Inequalities</h2>
+  <p>
+    Inequalities express relationships like greater than or less than.  
+    Example: 3x + 2 > 8 → 3x > 6 → x > 2.
+  </p>
+  <p>
+    Note that when you multiply or divide both sides by a negative number, the inequality sign reverses.
+  </p>
+
+  <h2>8. Graphs and Functions</h2>
+  <p>
+    A <strong>function</strong> expresses a relationship between input (x) and output (y).
+    Example: y = 2x + 3 is a linear function, producing a straight line on the graph.
+  </p>
+  <div class="example">
+    <p>
+      If x = 0 → y = 3;  
+      If x = 1 → y = 5;  
+      If x = 2 → y = 7.
+    </p>
+  </div>
+
+  <h2>9. Simplifying and Factorization</h2>
+  <p>
+    Simplify by combining like terms and using algebraic rules.
+  </p>
+  <div class="example">
+    <p>Example: 3x + 5x − 2 = 8x − 2</p>
+  </div>
+  <p>
+    Factorization means expressing an expression as a product of simpler terms.
+  </p>
+  <div class="example">
+    <p>Example: x² − 9 = (x + 3)(x − 3)</p>
+  </div>
+
+  <h2>10. Word Problems</h2>
+  <p>
+    Algebra translates real-world problems into equations.
+  </p>
+  <div class="example">
+    <p>Example: A number increased by 7 equals 15. Find the number.</p>
+    <p>Let the number = x.</p>
+    <p>x + 7 = 15 → x = 8</p>
+  </div>
+
+  <h2>11. Modern Applications</h2>
+  <ul>
+    <li>Computer algorithms and programming logic</li>
+    <li>Economics and finance modeling</li>
+    <li>Physics equations and motion problems</li>
+    <li>Engineering design and optimization</li>
+  </ul>
+
+  <h2>12. Summary</h2>
+  <p>
+    Algebra transforms arithmetic into a symbolic language that expresses patterns and rules.
+    It forms the foundation for all higher mathematics — from geometry to calculus and beyond.
+  </p>
+</main>
+
+<footer>
+  © 2025 Mathematics Project — Basic Algebra Section.
+</footer>
+</body>
+</html>
