@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complex Numbers</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(120deg, #f5f7fa, #c3cfe2);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #3a6073;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+header h1 {
+  margin: 0;
+  font-size: 2.2em;
+}
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #3a6073;
+  border-bottom: 2px solid #3a6073;
+  padding-bottom: 5px;
+}
+section {
+  margin-bottom: 30px;
+}
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #3a6073;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+footer {
+  text-align: center;
+  margin-top: 40px;
+}
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #3a6073;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #2c4a58; }
+code { background: #eef2f8; padding: 2px 6px; border-radius: 4px; }
+.diagram {
+  margin-top: 15px;
+  padding: 15px;
+  background: #eef2f8;
+  border-radius: 8px;
+  text-align: center;
+}
+.diagram span {
+  display: inline-block;
+  margin: 0 6px;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-infinity"></i> Complex Numbers</h1>
+  <p>Imaginary numbers, polar form, Euler’s formula, and roots of unity.</p>
+</header>
+
+<div class="container">
+  <section>
+    <h2>Introduction</h2>
+    <p>Complex numbers are numbers that include the imaginary unit <code>i</code>, where <code>i² = -1</code>. They are written in the form <code>z = a + bi</code>, where <code>a</code> is the real part and <code>b</code> is the imaginary part.</p>
+    <div class="example">
+      <strong>Example:</strong> <br>
+      z = 3 + 4i → Real part = 3, Imaginary part = 4
+    </div>
+  </section>
+
+  <section>
+    <h2>Operations with Complex Numbers</h2>
+    <ul>
+      <li><strong>Addition:</strong> (a+bi) + (c+di) = (a+c) + (b+d)i</li>
+      <li><strong>Subtraction:</strong> (a+bi) - (c+di) = (a-c) + (b-d)i</li>
+      <li><strong>Multiplication:</strong> (a+bi)(c+di) = (ac - bd) + (ad + bc)i</li>
+      <li><strong>Division:</strong> (a+bi)/(c+di) = [(ac + bd) + (bc - ad)i]/(c² + d²)</li>
+    </ul>
+    <div class="example">
+      (2 + 3i) + (4 - i) = 6 + 2i <br>
+      (1 + 2i)(3 + 4i) = 3 + 4i + 6i + 8i² = -5 + 10i
+    </div>
+  </section>
+
+  <section>
+    <h2>Polar Form</h2>
+    <p>A complex number can also be expressed in polar form: <code>z = r(cosθ + i sinθ)</code>, where <code>r = |z| = √(a² + b²)</code> is the magnitude and <code>θ = arctan(b/a)</code> is the argument (angle).</p>
+    <div class="diagram">
+      Magnitude: r = √(a² + b²) <br>
+      Angle: θ = arctan(b/a)
+    </div>
+    <div class="example">
+      z = 1 + i → r = √2, θ = 45°
+    </div>
+  </section>
+
+  <section>
+    <h2>Euler’s Formula</h2>
+    <p>Euler’s formula links complex numbers and exponential functions:</p>
+    <p style="text-align:center;"><code>e^(iθ) = cosθ + i sinθ</code></p>
+    <div class="example">
+      z = r e^(iθ) → Equivalent to z = r(cosθ + i sinθ)
+    </div>
+  </section>
+
+  <section>
+    <h2>Roots of Unity</h2>
+    <p>Roots of unity are solutions to the equation <code>zⁿ = 1</code>. They are equally spaced points on the unit circle in the complex plane.</p>
+    <div class="diagram">
+      1 → 0° <br>
+      i → 90° <br>
+      -1 → 180° <br>
+      -i → 270°
+    </div>
+    <div class="example">
+      4th roots of unity: 1, i, -1, -i
+    </div>
+  </section>
+
+  <section>
+    <h2>Applications</h2>
+    <ul>
+      <li>Electrical engineering (AC circuits)</li>
+      <li>Quantum mechanics</li>
+      <li>Signal processing</li>
+      <li>Fractals and geometry</li>
+    </ul>
+  </section>
+
+  <footer>
+    <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+  </footer>
+</div>
+</body>
+</html>
