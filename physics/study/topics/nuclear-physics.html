@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuclear Physics | Physics Encyclopedia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff9f8;
+      color: #222;
+      margin: 0;
+      line-height: 1.7;
+    }
+    header {
+      background: linear-gradient(135deg, #8e0e00, #1f1c18);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    header h1 { font-size: 2.5rem; margin: 0; }
+    header p { color: #f0d4d0; }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    h2 {
+      color: #8e0e00;
+      border-left: 5px solid #8e0e00;
+      padding-left: 10px;
+      margin-top: 40px;
+    }
+    .formula {
+      background: #fff4f2;
+      border-left: 4px solid #8e0e00;
+      padding: 10px 15px;
+      font-family: 'Courier New', monospace;
+      margin: 15px 0;
+    }
+    .example {
+      background: #fff6f4;
+      border-left: 4px solid #8e0e00;
+      padding: 10px 15px;
+      margin: 15px 0;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      background: #8e0e00;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .back-btn:hover { background: #5f0900; }
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #5f0900;
+      color: white;
+      margin-top: 50px;
+    }
+  </style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header>
+    <i class="fa-solid fa-radiation fa-3x"></i>
+    <h1>Nuclear Physics</h1>
+    <p>Exploring the structure, forces, and reactions within atomic nuclei.</p>
+  </header>
+
+  <div class="container">
+    <h2>1. Nuclear Composition</h2>
+    <p>
+      A nucleus is composed of protons and neutrons bound by the strong nuclear force.
+      Its stability depends on the balance between attractive nuclear and repulsive Coulomb forces.
+    </p>
+
+    <h2>2. Radioactive Decay</h2>
+    <p>
+      Unstable nuclei transform into more stable ones by emitting particles or radiation.
+    </p>
+    <ul>
+      <li><strong>Alpha decay:</strong> \( ^A_ZX \rightarrow ^{A-4}_{Z-2}Y + ^4_2He \)</li>
+      <li><strong>Beta decay:</strong> \( n \rightarrow p + e^- + \bar{\nu}_e \)</li>
+      <li><strong>Gamma decay:</strong> \( ^A_ZX^* \rightarrow ^A_ZX + \gamma \)</li>
+    </ul>
+
+    <h2>3. Half-Life</h2>
+    <div class="formula">
+      \( N = N_0 e^{-\lambda t} \)
+    </div>
+    <p>Where \( N_0 \) is the initial number of nuclei and \( \lambda \) is the decay constant.</p>
+
+    <h2>4. Nuclear Reactions</h2>
+    <p><strong>Fission:</strong> A heavy nucleus splits into smaller nuclei, releasing energy.</p>
+    <p><strong>Fusion:</strong> Light nuclei combine to form heavier nuclei, releasing even more energy.</p>
+    <div class="formula">
+      \( E = \Delta m c^2 \)
+    </div>
+
+    <h2>5. Applications</h2>
+    <ul>
+      <li><strong>Nuclear power</strong> — fission reactors generate electricity.</li>
+      <li><strong>Medical imaging</strong> — PET and MRI use nuclear principles.</li>
+      <li><strong>Radiocarbon dating</strong> — estimates age of ancient materials.</li>
+      <li><strong>Fusion research</strong> — aims to produce clean, limitless energy.</li>
+    </ul>
+
+    <a href="topics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+  </div>
+
+  <footer>© 2025 Physics Encyclopedia | Nuclear Physics</footer>
+</body>
+</html>
