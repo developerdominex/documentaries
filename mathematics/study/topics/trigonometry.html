@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Trigonometry — Mathematics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --accent:#ef4444; 
+  --muted:#475569;
+  --text:#1f2937;
+  --border:#e6eef6;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: "Segoe UI", Inter, Roboto, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+}
+header{
+  text-align:center;
+  padding:56px 20px 28px;
+  background:linear-gradient(135deg,var(--accent),#fb7185);
+  color:white;
+}
+header h1{margin:0;font-size:2.4rem}
+header p{margin-top:8px;color:rgba(255,255,255,0.92)}
+
+.container{
+  max-width:980px;
+  margin:32px auto;
+  padding:28px;
+  background:var(--card);
+  border-radius:12px;
+  box-shadow:0 8px 30px rgba(29,78,216,0.06);
+  border:1px solid rgba(0,0,0,0.03);
+}
+
+a.back{display:inline-block;margin-bottom:18px;color:var(--accent);text-decoration:none;font-weight:600}
+
+h2{color:var(--accent);border-bottom:2px solid var(--accent);display:inline-block;padding-bottom:6px;margin-top:22px}
+h3{color:var(--accent);margin-top:16px}
+
+.section-row{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+.col{flex:1;min-width:260px}
+
+.card{
+  background:#fff;border-radius:10px;padding:12px;border:1px solid var(--border);
+  box-shadow:0 6px 18px rgba(16,24,40,0.03);
+}
+
+.code{background:#f3f4f6;padding:8px 12px;border-radius:6px;font-family:Consolas,monospace;color:#334155}
+.example{background:#fff7f7;border-left:4px solid var(--accent);padding:12px;border-radius:6px;margin:12px 0}
+
+.figure{display:block;margin:12px auto;max-width:100%}
+
+.unit-wrap{display:flex;gap:18px;flex-wrap:wrap;align-items:center;justify-content:center;padding:18px}
+.unit-svg{width:320px;max-width:100%;height:auto;display:block}
+
+.tri-diag{width:100%;height:auto;max-width:360px}
+
+.wave {
+  width:100%;
+  height:110px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.6));
+  border-radius:8px;
+  overflow:hidden;
+  display:block;
+}
+.wave svg{width:100%;height:100%;display:block}
+
+.formula-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:10px}
+.formula{background:#f8fafc;padding:10px;border-radius:8px;border:1px solid var(--border);font-family:Consolas,monospace}
+
+@media (max-width:720px){
+  .section-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-wave-square"></i> Trigonometry</h1>
+  <p>Angles, triangles, periodic functions — connections between geometry and waves.</p>
+</header>
+
+<div class="container">
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+
+  <h2>1. Overview</h2>
+  <p>
+    Trigonometry studies relationships between angles and side lengths in triangles and the properties of trigonometric functions
+    such as sine, cosine and tangent. It is essential in geometry, physics, engineering, signal processing, and more.
+  </p>
+
+  <div class="section-row">
+    <div class="col">
+      <h3>Basic Definitions</h3>
+      <p>
+        Consider a right triangle with acute angle θ. The three primary trigonometric ratios are:
+      </p>
+      <ul>
+        <li><strong>sin θ</strong> = opposite / hypotenuse</li>
+        <li><strong>cos θ</strong> = adjacent / hypotenuse</li>
+        <li><strong>tan θ</strong> = opposite / adjacent = sin θ / cos θ</li>
+      </ul>
+
+      <div class="example">
+        <strong>Example:</strong> In a right triangle with sides 3 (opposite), 4 (adjacent), 5 (hypotenuse):  
+        sin θ = 3/5 = 0.6; cos θ = 4/5 = 0.8; tan θ = 3/4 = 0.75.
+      </div>
+
+      <h3>Reciprocal Functions</h3>
+      <ul>
+        <li>csc θ = 1 / sin θ</li>
+        <li>sec θ = 1 / cos θ</li>
+        <li>cot θ = 1 / tan θ</li>
+      </ul>
+    </div>
+
+    <div class="col card">
+      <h3>Right triangle diagram</h3>
+      <svg class="tri-diag" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+       
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1">
+            <stop offset="0" stop-color="#fff0f6"/>
+            <stop offset="1" stop-color="#ffccd8"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="320" height="200" rx="10" fill="#fff" />
+        <g transform="translate(24,22)">
+          <polygon points="60,120 220,120 220,30" fill="url(#g1)" stroke="#ff6b81" stroke-width="2"/>
+          
+          <text x="140" y="96" font-family="Segoe UI" font-size="14" fill="#7a4a56">adjacent</text>
+          <text x="40" y="82" font-family="Segoe UI" font-size="14" fill="#7a4a56">opposite</text>
+          <text x="200" y="28" font-family="Segoe UI" font-size="14" fill="#7a4a56">hypotenuse</text>
+
+          <rect x="208" y="102" width="12" height="12" fill="#fff0f6" stroke="#ff6b81" stroke-width="1.5"/>
+          
+          <path d="M220 120 A 40 40 0 0 0 190 90" fill="none" stroke="#ff6b81" stroke-width="2"/>
+          <text x="195" y="118" font-family="Segoe UI" font-size="13" fill="#9a3a4a">θ</text>
+        </g>
+      </svg>
+
+      <p style="margin-top:8px;color:var(--muted)">
+        The diagram shows a right triangle with angle θ at the top-right. Use the ratio definitions to compute sin, cos, and tan.
+      </p>
+    </div>
+  </div>
+
+  <h2>2. Unit Circle (Core Concept)</h2>
+  <p>
+    The unit circle is the circle of radius 1 centered at the origin in the Cartesian plane. It links angles (measured from the positive x-axis)
+    to coordinates: a point at angle θ on the unit circle has coordinates (cos θ, sin θ).
+  </p>
+
+  <div class="unit-wrap card">
+    <svg class="unit-svg" viewBox="-160 -160 320 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="uc" x1="0" x2="1">
+          <stop offset="0" stop-color="#fff0f6"/>
+          <stop offset="1" stop-color="#ffd7e1"/>
+        </linearGradient>
+      </defs>
+
+      <line x1="-140" y1="0" x2="140" y2="0" stroke="#e6eef6" stroke-width="2"/>
+      <line x1="0" y1="-140" x2="0" y2="140" stroke="#e6eef6" stroke-width="2"/>
+
+      <circle cx="0" cy="0" r="100" fill="url(#uc)" stroke="#ff6b81" stroke-width="2"/>
+
+      <circle cx="100" cy="0" r="4" fill="#c0265b"/>
+      <text x="110" y="6" font-family="Segoe UI" font-size="12" fill="#7a4a56">0° (1,0)</text>
+
+      <circle cx="0" cy="-100" r="4" fill="#c0265b"/>
+      <text x="6" y="-106" font-family="Segoe UI" font-size="12" fill="#7a4a56">90° (0,1)</text>
+
+      <circle cx="-100" cy="0" r="4" fill="#c0265b"/>
+      <text x="-170" y="6" font-family="Segoe UI" font-size="12" fill="#7a4a56">180° (−1,0)</text>
+
+      <circle cx="0" cy="100" r="4" fill="#c0265b"/>
+      <text x="8" y="116" font-family="Segoe UI" font-size="12" fill="#7a4a56">270° (0,−1)</text>
+
+      <g>
+        
+        <line x1="0" y1="0" x2="86.6" y2="-50" stroke="#7c2a45" stroke-width="2"/>
+       
+        <line x1="86.6" y1="-50" x2="86.6" y2="0" stroke="#ffb3c1" stroke-width="1" stroke-dasharray="4 4"/>
+       
+        <line x1="86.6" y1="-50" x2="0" y2="-50" stroke="#ffb3c1" stroke-width="1" stroke-dasharray="4 4"/>
+     
+        <circle cx="86.6" cy="-50" r="4" fill="#7c2a45"/>
+        <text x="92" y="-48" font-family="Segoe UI" font-size="12" fill="#7a4a56">θ = 30°</text>
+        <text x="90" y="12" font-family="Segoe UI" font-size="12" fill="#7a4a56">cosθ = 0.866</text>
+        <text x="6" y="-54" font-family="Segoe UI" font-size="12" fill="#7a4a56">sinθ = 0.5</text>
+      </g>
+    </svg>
+
+    <div style="max-width:320px">
+      <p style="margin:0 0 8px 0;color:var(--muted)">On the unit circle: angle → coordinates. For θ = 30°, cos θ = √3/2 ≈ 0.866, sin θ = 1/2 = 0.5.</p>
+      <p style="margin:0;color:var(--muted)">Use the unit circle to define trig functions for all real angles and to understand sign changes by quadrant.</p>
+    </div>
+  </div>
+
+  <h2>3. Trigonometric Identities (Important)</h2>
+  <p>Basic identities you should know:</p>
+  <div class="formula-list">
+    <div class="formula card"><strong>Pythagorean:</strong><div class="code">sin²θ + cos²θ = 1</div></div>
+    <div class="formula card"><strong>Angle addition:</strong><div class="code">sin(a±b)=sin a cos b ± cos a sin b</div></div>
+    <div class="formula card"><strong>Angle addition:</strong><div class="code">cos(a±b)=cos a cos b ∓ sin a sin b</div></div>
+    <div class="formula card"><strong>Double-angle:</strong><div class="code">sin 2a = 2 sin a cos a</div></div>
+    <div class="formula card"><strong>Double-angle:</strong><div class="code">cos 2a = cos²a − sin²a = 2cos²a − 1 = 1 − 2sin²a</div></div>
+    <div class="formula card"><strong>Tangent:</strong><div class="code">tan(a±b) = (tan a ± tan b)/(1 ∓ tan a tan b)</div></div>
+  </div>
+
+  <h3>Derived identities</h3>
+  <p>From sin²θ + cos²θ = 1, divide by cos²θ to get 1 + tan²θ = sec²θ. Divide by sin²θ to get cot²θ + 1 = csc²θ.</p>
+
+  <h2>4. Graphs of Trig Functions</h2>
+  <p>Trigonometric functions are periodic. Below are schematic graphs (one period shown).</p>
+
+  <div class="card" style="padding:14px;margin-top:12px">
+    <h3>sin(x)</h3>
+    <div class="wave" aria-hidden="true">
+      <svg viewBox="0 0 1000 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 100 Q125 10 250 100 T500 100 T750 100 T1000 100" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+        
+        <line x1="0" y1="100" x2="1000" y2="100" stroke="#e6eef6" stroke-width="2"/>
+      </svg>
+    </div>
+    <p style="margin-top:8px;color:var(--muted)">sin(x) oscillates between −1 and 1 with period 2π.</p>
+  </div>
+
+  <div class="card" style="padding:14px;margin-top:12px">
+    <h3>cos(x)</h3>
+    <div class="wave" aria-hidden="true">
+      <svg viewBox="0 0 1000 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 100 Q125 10 250 100 T500 100 T750 100 T1000 100" fill="none" stroke="#3b82f6" stroke-width="4" stroke-linecap="round" transform="translate(250,0)"/>
+        <line x1="0" y1="100" x2="1000" y2="100" stroke="#e6eef6" stroke-width="2"/>
+      </svg>
+    </div>
+    <p style="margin-top:8px;color:var(--muted)">cos(x) is the sine wave shifted left by π/2 (or equivalently cos(x)=sin(x+π/2)).</p>
+  </div>
+
+  <h2>5. Solving Trigonometric Equations</h2>
+  <p>Equations like sin x = 0.5 have infinitely many solutions. Use general solutions:</p>
+  <div class="example">
+    <p>Example: Solve sin x = 1/2.</p>
+    <p>Primary solutions: x = π/6 + 2kπ and x = 5π/6 + 2kπ for any integer k.</p>
+  </div>
+
+  <h2>6. Inverse Trigonometric Functions</h2>
+  <p>Arcsin, arccos, arctan give principal values (inverse functions on restricted domains):</p>
+  <ul>
+    <li>arcsin : [−1,1] → [−π/2, π/2]</li>
+    <li>arccos : [−1,1] → [0, π]</li>
+    <li>arctan : ℝ → (−π/2, π/2)</li>
+  </ul>
+
+  <h2>7. Identities & Useful Formulas (Quick Reference)</h2>
+  <div class="formula-list" style="margin-top:12px">
+    <div class="formula card"><div class="code">sin(−θ) = −sin θ</div></div>
+    <div class="formula card"><div class="code">cos(−θ) = cos θ</div></div>
+    <div class="formula card"><div class="code">tan(−θ) = −tan θ</div></div>
+    <div class="formula card"><div class="code">sin(π/2 − θ) = cos θ</div></div>
+    <div class="formula card"><div class="code">cos(π/2 − θ) = sin θ</div></div>
+    <div class="formula card"><div class="code">sin(a)cos(b) = ½[sin(a+b)+sin(a−b)]</div></div>
+  </div>
+
+  <h2>8. Applications</h2>
+  <ul>
+    <li>Navigation: bearings and triangulation</li>
+    <li>Signal processing: representing waves and Fourier analysis</li>
+    <li>Engineering: oscillations, AC circuits, mechanical waves</li>
+    <li>Computer graphics: rotations and transformations</li>
+  </ul>
+
+  <h2>9. Examples & Exercises</h2>
+  <div class="example">
+    <p><strong>1)</strong> Compute sin 45°, cos 45°, tan 45°.</p>
+    <p>Since a 45°-45°-90° triangle has legs equal, sin45° = cos45° = √2/2 ≈ 0.707; tan45° = 1.</p>
+  </div>
+
+  <div class="example">
+    <p><strong>2)</strong> Prove: sin²θ = (1 − cos 2θ)/2.</p>
+    <p>Use cos 2θ = 1 − 2sin²θ ⇒ rearrange to get sin²θ = (1 − cos 2θ)/2.</p>
+  </div>
+
+  <div class="example">
+    <p><strong>3)</strong> Given triangle with sides 7 (adjacent), 24 (opposite), find angle θ and hypotenuse.</p>
+    <p>Hypotenuse = √(7² + 24²) = √(49 + 576) = √625 = 25. sin θ = 24/25; θ ≈ arcsin(24/25) ≈ 73.74°.</p>
+  </div>
+
+  <h2>10. Historical Notes</h2>
+  <p>
+    Trigonometry developed from astronomy and geometry in ancient civilizations. Egyptians and Babylonians used early trig ideas.
+    Hellenistic mathematicians established chord tables; Indian and Islamic mathematicians later developed sine and cosine.
+    The modern symbolic trigonometry system was assembled between the medieval Islamic period and Renaissance Europe.
+  </p>
+
+  <h2>11. Further Reading</h2>
+  <p>
+    For in-depth study: textbooks on trigonometry, precalculus, and analytic geometry. For connections to waves and signals, study Fourier series and transforms.
+  </p>
+
+  <footer style="margin-top:18px;color:var(--muted);text-align:center">© 2025 Mathematics Project — Trigonometry Section</footer>
+</div>
+
+</body>
+</html>
