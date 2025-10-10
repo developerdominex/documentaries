@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waves — Physics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body { font-family:"Segoe UI",sans-serif; margin:0; background:#f3f7fb; color:#222; line-height:1.6; }
+header { background: linear-gradient(135deg,#4fc3f7,#0288d1); color:#fff; text-align:center; padding:30px 20px; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
+header h1 { margin:0; font-size:2em; }
+header p { margin:6px 0 0; font-size:1em; }
+
+.container { max-width:1000px; margin:30px auto; padding:0 20px; }
+h2 { color:#0288d1; margin-top:28px; }
+h3 { margin-top:20px; color:#555; }
+
+.card { background:#fff; padding:18px; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.08); margin-top:20px; }
+ul { margin-left:20px; }
+
+.formula { background:#e1f5fe; padding:10px 12px; border-radius:6px; margin:8px 0; font-weight:600; }
+.problem { background:#e8f5e9; padding:14px; border-left:4px solid #4caf50; margin-top:12px; border-radius:8px; }
+
+.back { display:inline-block; margin-top:20px; text-decoration:none; color:#0288d1; font-weight:600; }
+.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Waves</h1>
+  <p>Wave types, superposition, interference, standing waves, Doppler effect.</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+  <h2>1. Types of Waves</h2>
+  <ul>
+    <li><strong>Mechanical Waves:</strong> Require a medium, e.g., sound, water waves.</li>
+    <li><strong>Electromagnetic Waves:</strong> No medium needed, e.g., light, radio.</li>
+    <li><strong>Transverse Waves:</strong> Particles move perpendicular to wave propagation.</li>
+    <li><strong>Longitudinal Waves:</strong> Particles move parallel to wave propagation.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>2. Wave Equation</h2>
+  <p>Relationship between speed, frequency, and wavelength:</p>
+  <div class="formula">
+    \\[ v = f \lambda \\]
+  </div>
+  <p>Where \\(v\\) is wave speed, \\(f\\) is frequency, \\(\\lambda\\) is wavelength.</p>
+  <div class="problem">
+    Example: A wave with frequency 500 Hz and wavelength 0.6 m:  
+    \\( v = f \\lambda = 500 \\cdot 0.6 = 300 \\, \\mathrm{m/s} \\)
+  </div>
+</div>
+
+<div class="card">
+  <h2>3. Superposition Principle</h2>
+  <p>When two or more waves meet, the resultant displacement is the sum of individual displacements:</p>
+  <div class="formula">
+    \\[ y_\text{res} = y_1 + y_2 + \\dots \\]
+  </div>
+</div>
+
+<div class="card">
+  <h2>4. Interference</h2>
+  <ul>
+    <li><strong>Constructive:</strong> Waves in phase, amplitudes add.</li>
+    <li><strong>Destructive:</strong> Waves out of phase, amplitudes subtract.</li>
+  </ul>
+  <p>Path difference \\(\\Delta L\\) for constructive interference: </p>
+  <div class="formula">
+    \\[ \\Delta L = n\\lambda, \\quad n = 0,1,2,... \\]
+  </div>
+  <p>Path difference for destructive interference: </p>
+  <div class="formula">
+    \\[ \\Delta L = \\left(n + \\frac{1}{2}\\right)\\lambda \\]
+  </div>
+</div>
+
+<div class="card">
+  <h2>5. Standing Waves</h2>
+  <p>Formed by the superposition of two waves traveling in opposite directions:</p>
+  <div class="formula">
+    \\[ y(x,t) = 2A \\sin(kx) \\cos(\\omega t) \\]
+  </div>
+  <p>Nodes: Points with zero displacement; Antinodes: Points with maximum displacement.</p>
+  <p>Frequency of nth harmonic on a string of length L:</p>
+  <div class="formula">
+    \\[ f_n = \\frac{n v}{2 L}, \\quad n = 1,2,3,... \\]
+  </div>
+</div>
+
+<div class="card">
+  <h2>6. Doppler Effect</h2>
+  <p>Change in observed frequency due to relative motion between source and observer:</p>
+  <div class="formula">
+    \\[ f' = \\frac{v + v_o}{v - v_s} f \\]
+  </div>
+  <p>Where \\(f'\\) = observed frequency, \\(v\\) = wave speed, \\(v_o\\) = observer speed, \\(v_s\\) = source speed.</p>
+</div>
+
+<div class="card">
+  <h2>7. Applications</h2>
+  <ul>
+    <li>Musical instruments and sound waves</li>
+    <li>Seismology: detecting earthquakes using wave propagation</li>
+    <li>Doppler radar for weather and speed detection</li>
+    <li>Optics and interference patterns</li>
+  </ul>
+</div>
+
+<a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Physics Topics</a>
+
+</div>
+</body>
+</html>
