@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Philosophers — From Ancient to Today</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa5b1; --accent:#6ee7b7; --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.03);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071028 0%, #081224 60%);color:#e6eef3}
+    .wrap{max-width:1150px;margin:36px auto;padding:28px}
+    header{display:flex;align-items:center;gap:18px}
+    .logo{width:68px;height:68px;border-radius:12px;background:linear-gradient(135deg,#1e3a8a,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:white;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    h1{margin:0;font-size:28px}
+    p.lead{margin:4px 0 0;color:var(--muted)}
+
+    .controls{display:flex;gap:12px;align-items:center;margin:22px 0}
+    .search{flex:1;display:flex;align-items:center;background:var(--glass);padding:10px 12px;border-radius:10px;border:1px solid var(--glass-2)}
+    .search input{flex:1;background:transparent;border:0;color:inherit;font-size:15px;outline:none}
+    select, button{background:var(--card);border:1px solid var(--glass-2);color:inherit;padding:9px 12px;border-radius:10px}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
+
+    .era-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);min-height:220px;display:flex;flex-direction:column}
+    .era-card h2{margin:0 0 8px;font-size:16px}
+    .era-desc{color:var(--muted);font-size:13px;margin-bottom:8px}
+    .list{overflow:auto;padding-right:6px}
+    .person{display:flex;gap:12px;align-items:flex-start;padding:8px;border-radius:8px;transition:background .18s}
+    .person:hover{background:rgba(255,255,255,0.012)}
+    .avatar{width:44px;height:44px;background:linear-gradient(135deg,#334155,#0ea5a9);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .meta{flex:1}
+    .name{font-weight:600}
+    .dates{font-size:12px;color:var(--muted)}
+    .role{font-size:13px;color:#bfe9d4;margin-top:6px}
+
+    footer{margin-top:22px;color:var(--muted);font-size:13px}
+
+    .pill{display:inline-block;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02);font-size:12px;margin-left:8px}
+
+    .empty{padding:18px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:10px;text-align:center;color:var(--muted)}
+
+    .list::-webkit-scrollbar{width:8px}
+    .list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.03);border-radius:8px}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">Φ</div>
+      <div>
+        <h1>Philosophers — From Ancient to Today</h1>
+        <p class="lead">Chronological grouping of major philosophers across eras and traditions. Search, filter by era, or browse.</p>
+      </div>
+    </header>
+
+    <div class="controls">
+      <label class="search" title="Search philosophers">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input id="q" placeholder="Search by name, era, school, or keyword..." oninput="applyFilter()"/>
+      </label>
+
+      <select id="eraFilter" onchange="applyFilter()">
+        <option value="all">All eras</option>
+        <option value="ancient">Ancient (before 500 CE)</option>
+        <option value="medieval">Medieval (500–1500)</option>
+        <option value="early-modern">Renaissance & Early Modern (1500–1800)</option>
+        <option value="19c">19th Century (1800–1900)</option>
+        <option value="modern">20th & 21st Century</option>
+      </select>
+
+      <button onclick="resetFilters()">Reset</button>
+    </div>
+
+    <main class="grid" id="grid">
+
+      <section class="era-card" data-era="ancient">
+        <h2>Ancient Philosophy (Before ~500 CE) <span class="pill">Eastern & Western</span></h2>
+        <div class="era-desc">Foundational thinkers from China, India, Greece, and Rome.</div>
+        <div class="list" id="ancientList">
+
+          <div class="person" data-keywords="confucius china ethics social harmony" data-name="Confucius">
+            <div class="avatar">C</div>
+            <div class="meta">
+              <div class="name">Confucius <span class="dates">(551–479 BCE)</span></div>
+              <div class="role">Chinese — Founder of Confucianism; ethics & social harmony.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="laozi china daoism tao te ching" data-name="Laozi">
+            <div class="avatar">L</div>
+            <div class="meta">
+              <div class="name">Laozi <span class="dates">(6th c. BCE?)</span></div>
+              <div class="role">Chinese — Founder of Daoism; author of <em>Tao Te Ching</em>.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="zhuangzi china daoism spontaneity" data-name="Zhuangzi">
+            <div class="avatar">Z</div>
+            <div class="meta">
+              <div class="name">Zhuangzi <span class="dates">(4th c. BCE)</span></div>
+              <div class="role">Chinese — Daoist philosopher emphasizing spontaneity and naturalness.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="mozi china mohism universal love" data-name="Mozi">
+            <div class="avatar">M</div>
+            <div class="meta">
+              <div class="name">Mozi <span class="dates">(470–391 BCE)</span></div>
+              <div class="role">Chinese — Founder of Mohism; advocated universal love and pragmatic governance.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="buddha siddhartha gautama india buddhism" data-name="Buddha">
+            <div class="avatar">B</div>
+            <div class="meta">
+              <div class="name">Buddha (Siddhartha Gautama) <span class="dates">(c. 563–c. 483 BCE)</span></div>
+              <div class="role">Indian — Founder of Buddhism; teachings on suffering, attachment, and the path to liberation.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="mahavira jainism ahimsa india" data-name="Mahavira">
+            <div class="avatar">M</div>
+            <div class="meta">
+              <div class="name">Mahavira <span class="dates">(599–527 BCE)</span></div>
+              <div class="role">Indian — Key figure in Jain philosophy; emphasis on non-violence (Ahimsa).</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="chanakya kautilya arthashastra india political" data-name="Chanakya">
+            <div class="avatar">C</div>
+            <div class="meta">
+              <div class="name">Chanakya (Kautilya) <span class="dates">(4th c. BCE)</span></div>
+              <div class="role">Indian — Political philosopher; attributed author of the <em>Arthashastra</em>.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="nagarjuna madhyamaka buddhist india" data-name="Nagarjuna">
+            <div class="avatar">N</div>
+            <div class="meta">
+              <div class="name">Nagarjuna <span class="dates">(c. 150–250 CE)</span></div>
+              <div class="role">Indian — Buddhist philosopher; founder of Madhyamaka (Middle Way) school.</div>
+            </div>
+          </div>
+
+          <hr style="border:none;margin:8px 0;border-top:1px solid rgba(255,255,255,0.02)">
+
+          <div class="person" data-keywords="thales miletus greek pre-socratic" data-name="Thales of Miletus">
+            <div class="avatar">T</div>
+            <div class="meta">
+              <div class="name">Thales of Miletus <span class="dates">(c. 624–546 BCE)</span></div>
+              <div class="role">Greek — Often considered the first Greek philosopher; naturalist explanations for the world.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="pythagoras math metaphysics greek" data-name="Pythagoras">
+            <div class="avatar">P</div>
+            <div class="meta">
+              <div class="name">Pythagoras <span class="dates">(c. 570–495 BCE)</span></div>
+              <div class="role">Greek — Mathematics, metaphysics, and a religious-philosophical community focused on harmony.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="heraclitus everything flows change" data-name="Heraclitus">
+            <div class="avatar">H</div>
+            <div class="meta">
+              <div class="name">Heraclitus <span class="dates">(c. 535–475 BCE)</span></div>
+              <div class="role">Greek — Doctrine of change: "everything flows"; focus on logos.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="parmenides being denies change" data-name="Parmenides">
+            <div class="avatar">P</div>
+            <div class="meta">
+              <div class="name">Parmenides <span class="dates">(early 5th c. BCE)</span></div>
+              <div class="role">Greek — Argued that being is unchanging and denounced the reality of change.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="socrates ethical method socratic" data-name="Socrates">
+            <div class="avatar">S</div>
+            <div class="meta">
+              <div class="name">Socrates <span class="dates">(469–399 BCE)</span></div>
+              <div class="role">Greek — Ethics, dialectic method (Socratic questioning); left no writings.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="plato forms republic" data-name="Plato">
+            <div class="avatar">P</div>
+            <div class="meta">
+              <div class="name">Plato <span class="dates">(427–347 BCE)</span></div>
+              <div class="role">Greek — Theory of Forms; author of <em>The Republic</em> and many dialogues.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="aristotle logic ethics biology" data-name="Aristotle">
+            <div class="avatar">A</div>
+            <div class="meta">
+              <div class="name">Aristotle <span class="dates">(384–322 BCE)</span></div>
+              <div class="role">Greek — Systematic philosopher: logic, metaphysics, ethics, natural science.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="epicurus pleasure tranquility hedonism" data-name="Epicurus">
+            <div class="avatar">E</div>
+            <div class="meta">
+              <div class="name">Epicurus <span class="dates">(341–270 BCE)</span></div>
+              <div class="role">Greek — Materialist ethics: pleasure as the absence of pain; simple living.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="zeno stoicism founder" data-name="Zeno of Citium">
+            <div class="avatar">Z</div>
+            <div class="meta">
+              <div class="name">Zeno of Citium <span class="dates">(334–262 BCE)</span></div>
+              <div class="role">Greek — Founder of Stoicism; virtue as the highest good.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="pyrrho skepticism" data-name="Pyrrho">
+            <div class="avatar">P</div>
+            <div class="meta">
+              <div class="name">Pyrrho <span class="dates">(c. 360–270 BCE)</span></div>
+              <div class="role">Greek — Early skeptic; suspension of judgment (epoché).</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="plotinus neoplatonism" data-name="Plotinus">
+            <div class="avatar">P</div>
+            <div class="meta">
+              <div class="name">Plotinus <span class="dates">(204–270 CE)</span></div>
+              <div class="role">Neoplatonism — Metaphysical philosopher; emanation of the One.</div>
+            </div>
+          </div>
+
+          <hr style="border:none;margin:8px 0;border-top:1px solid rgba(255,255,255,0.02)">
+
+          <div class="person" data-keywords="cicero roman stoicism" data-name="Cicero">
+            <div class="avatar">C</div>
+            <div class="meta">
+              <div class="name">Cicero <span class="dates">(106–43 BCE)</span></div>
+              <div class="role">Roman — Statesman and philosopher; transmitted Greek thought to Rome.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="seneca stoic statesman" data-name="Seneca">
+            <div class="avatar">S</div>
+            <div class="meta">
+              <div class="name">Seneca <span class="dates">(4 BCE–65 CE)</span></div>
+              <div class="role">Roman — Stoic philosopher, dramatist, and advisor to Nero.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="epictetus stoic ethics" data-name="Epictetus">
+            <div class="avatar">E</div>
+            <div class="meta">
+              <div class="name">Epictetus <span class="dates">(50–135 CE)</span></div>
+              <div class="role">Stoic — Former slave; taught freedom through inner discipline.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="marcus aurelius stoic emperor meditations" data-name="Marcus Aurelius">
+            <div class="avatar">M</div>
+            <div class="meta">
+              <div class="name">Marcus Aurelius <span class="dates">(121–180 CE)</span></div>
+              <div class="role">Roman — Stoic emperor; author of <em>Meditations</em>.</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="era-card" data-era="medieval">
+        <h2>Medieval Philosophy (500–1500 CE)</h2>
+        <div class="era-desc">Scholastic, Islamic, Jewish, and Asian thinkers who integrated religion and reason.</div>
+        <div class="list">
+
+          <div class="person" data-keywords="augustine christian neoplatonism" data-name="Augustine of Hippo">
+            <div class="avatar">A</div>
+            <div class="meta">
+              <div class="name">Augustine of Hippo <span class="dates">(354–430)</span></div>
+              <div class="role">Christian theologian — Synthesis of Christianity and Neoplatonism.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="boethius consolation of philosophy" data-name="Boethius">
+            <div class="avatar">B</div>
+            <div class="meta">
+              <div class="name">Boethius <span class="dates">(480–524)</span></div>
+              <div class="role">Philosopher — Author of <em>The Consolation of Philosophy</em>.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="thomas aquinas scholasticism" data-name="Thomas Aquinas">
+            <div class="avatar">T</div>
+            <div class="meta">
+              <div class="name">Thomas Aquinas <span class="dates">(1225–1274)</span></div>
+              <div class="role">Scholastic philosopher — Synthesized Aristotelianism and Christian theology.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="anselm ontological argument" data-name="Anselm of Canterbury">
+            <div class="avatar">A</div>
+            <div class="meta">
+              <div class="name">Anselm of Canterbury <span class="dates">(1033–1109)</span></div>
+              <div class="role">Theologian — Famous for the ontological argument for God’s existence.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="william ockham razor" data-name="William of Ockham">
+            <div class="avatar">W</div>
+            <div class="meta">
+              <div class="name">William of Ockham <span class="dates">(c.1287–1347)</span></div>
+              <div class="role">Philosopher — Known for Ockham's Razor: prefer simpler explanations.</div>
+            </div>
+          </div>
+
+          <hr style="border:none;margin:8px 0;border-top:1px solid rgba(255,255,255,0.02)">
+
+          <div class="person" data-keywords="al-farabi islamic philosophy" data-name="Al-Farabi">
+            <div class="avatar">A</div>
+            <div class="meta">
+              <div class="name">Al-Farabi <span class="dates">(872–950)</span></div>
+              <div class="role">Islamic philosopher — Work on logic and political philosophy.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="avicenna ibn sina metaphysics" data-name="Avicenna (Ibn Sina)">
+            <div class="avatar">I</div>
+            <div class="meta">
+              <div class="name">Avicenna (Ibn Sina) <span class="dates">(980–1037)</span></div>
+              <div class="role">Persian polymath — Influential in metaphysics, medicine, and Aristotelianism.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="al-ghazali incoherence critique islam" data-name="Al-Ghazali">
+            <div class="avatar">G</div>
+            <div class="meta">
+              <div class="name">Al-Ghazali <span class="dates">(1058–1111)</span></div>
+              <div class="role">Islamic theologian — Critiqued philosophers in <em>The Incoherence of the Philosophers</em>.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="averroes ibn rushd aristotle commentator" data-name="Averroes (Ibn Rushd)">
+            <div class="avatar">A</div>
+            <div class="meta">
+              <div class="name">Averroes (Ibn Rushd) <span class="dates">(1126–1198)</span></div>
+              <div class="role">Islamic philosopher — Major commentator on Aristotle.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="ibn khaldun sociology philosophy of history" data-name="Ibn Khaldun">
+            <div class="avatar">I</div>
+            <div class="meta">
+              <div class="name">Ibn Khaldun <span class="dates">(1332–1406)</span></div>
+              <div class="role">Historian & philosopher — Early thinker on sociology and cyclical history.</div>
+            </div>
+          </div>
+
+          <hr style="border:none;margin:8px 0;border-top:1px solid rgba(255,255,255,0.02)">
+
+          <div class="person" data-keywords="philo alexandria jewish hellenistic" data-name="Philo of Alexandria">
+            <div class="avatar">P</div>
+            <div class="meta">
+              <div class="name">Philo of Alexandria <span class="dates">(20 BCE–50 CE)</span></div>
+              <div class="role">Jewish Hellenistic philosopher — Allegorical readings of scripture influenced later thought.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="maimonides guide for the perplexed" data-name="Maimonides">
+            <div class="avatar">M</div>
+            <div class="meta">
+              <div class="name">Maimonides (Moses ben Maimon) <span class="dates">(1138–1204)</span></div>
+              <div class="role">Jewish philosopher — Sought to reconcile faith with Aristotelian philosophy.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="adi shankara advaita vedanta india" data-name="Adi Shankara">
+            <div class="avatar">S</div>
+            <div class="meta">
+              <div class="name">Adi Shankara <span class="dates">(8th c.)</span></div>
+              <div class="role">Indian — Proponent of Advaita Vedanta (non-dualism).</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="ramanuja theistic vedanta india" data-name="Ramanuja">
+            <div class="avatar">R</div>
+            <div class="meta">
+              <div class="name">Ramanuja <span class="dates">(1017–1137)</span></div>
+              <div class="role">Indian — Theistic Vedanta; devotional emphasis.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="zhu xi neo-confucian china" data-name="Zhu Xi">
+            <div class="avatar">Z</div>
+            <div class="meta">
+              <div class="name">Zhu Xi <span class="dates">(1130–1200)</span></div>
+              <div class="role">Chinese — Leading Neo-Confucian synthesizer whose commentaries shaped East Asian thought.</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="era-card" data-era="early-modern">
+        <h2>Renaissance & Early Modern (1500–1800)</h2>
+        <div class="era-desc">Thinkers who set the stage for modern science, politics, and epistemology.</div>
+        <div class="list">
+
+          <div class="person" data-keywords="machiavelli political realism prince" data-name="Niccolò Machiavelli">
+            <div class="avatar">N</div>
+            <div class="meta">
+              <div class="name">Niccolò Machiavelli <span class="dates">(1469–1527)</span></div>
+              <div class="role">Political realist — Author of <em>The Prince</em>.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="francis bacon empiricism scientific method" data-name="Francis Bacon">
+            <div class="avatar">F</div>
+            <div class="meta">
+              <div class="name">Francis Bacon <span class="dates">(1561–1626)</span></div>
+              <div class="role">Advocate of the scientific method and inductive reasoning.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="rene descartes cogito rationalism" data-name="René Descartes">
+            <div class="avatar">R</div>
+            <div class="meta">
+              <div class="name">René Descartes <span class="dates">(1596–1650)</span></div>
+              <div class="role">Rationalist philosopher — "Cogito, ergo sum"; foundationalism in epistemology.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="thomas hobbes leviathan social contract" data-name="Thomas Hobbes">
+            <div class="avatar">T</div>
+            <div class="meta">
+              <div class="name">Thomas Hobbes <span class="dates">(1588–1679)</span></div>
+              <div class="role">Political philosopher — Social contract theory in <em>Leviathan</em>.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="baruch spinoza pantheism ethics" data-name="Baruch Spinoza">
+            <div class="avatar">B</div>
+            <div class="meta">
+              <div class="name">Baruch Spinoza <span class="dates">(1632–1677)</span></div>
+              <div class="role">Ethics and metaphysics — A pantheistic vision of God and nature.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="john locke empiricism liberalism" data-name="John Locke">
+            <div class="avatar">J</div>
+            <div class="meta">
+              <div class="name">John Locke <span class="dates">(1632–1704)</span></div>
+              <div class="role">Empiricist — Political liberalism; rights and government by consent.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="gottfried leibniz monadology optimism" data-name="Gottfried Leibniz">
+            <div class="avatar">G</div>
+            <div class="meta">
+              <div class="name">Gottfried Wilhelm Leibniz <span class="dates">(1646–1716)</span></div>
+              <div class="role">Metaphysician — Monadology and rationalist contributions to math and logic.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="george berkeley idealism to be is to be perceived" data-name="George Berkeley">
+            <div class="avatar">G</div>
+            <div class="meta">
+              <div class="name">George Berkeley <span class="dates">(1685–1753)</span></div>
+              <div class="role">Philosopher — Immaterialism/idealism: "to be is to be perceived."</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="david hume empiricism skepticism" data-name="David Hume">
+            <div class="avatar">D</div>
+            <div class="meta">
+              <div class="name">David Hume <span class="dates">(1711–1776)</span></div>
+              <div class="role">Empiricist and skeptic — Critique of causation and induction.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="jean-jacques rousseau social contract natural freedom" data-name="Jean-Jacques Rousseau">
+            <div class="avatar">R</div>
+            <div class="meta">
+              <div class="name">Jean-Jacques Rousseau <span class="dates">(1712–1778)</span></div>
+              <div class="role">Political philosopher — Social contract, education, and natural freedom.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="immanuel kant critique of pure reason moral duty" data-name="Immanuel Kant">
+            <div class="avatar">I</div>
+            <div class="meta">
+              <div class="name">Immanuel Kant <span class="dates">(1724–1804)</span></div>
+              <div class="role">Critical philosophy — Epistemology and ethics: duty, autonomy, and transcendental idealism.</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="era-card" data-era="19c">
+        <h2>19th Century (1800–1900)</h2>
+        <div class="era-desc">Philosophers wrestling with modernity, industrialization, and new social theories.</div>
+        <div class="list">
+
+          <div class="person" data-keywords="georg hegel dialectic absolute idealism" data-name="Georg Hegel">
+            <div class="avatar">G</div>
+            <div class="meta">
+              <div class="name">Georg Wilhelm Friedrich Hegel <span class="dates">(1770–1831)</span></div>
+              <div class="role">Philosopher — Dialectical method and absolute idealism.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="arthur schopenhauer pessimism will" data-name="Arthur Schopenhauer">
+            <div class="avatar">A</div>
+            <div class="meta">
+              <div class="name">Arthur Schopenhauer <span class="dates">(1788–1860)</span></div>
+              <div class="role">Pessimistic metaphysics — Will as the fundamental reality.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="john stuart mill utilitarianism liberty" data-name="John Stuart Mill">
+            <div class="avatar">J</div>
+            <div class="meta">
+              <div class="name">John Stuart Mill <span class="dates">(1806–1873)</span></div>
+              <div class="role">Utilitarianism and liberal thought — On liberty and utilitarian ethics.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="karl marx dialectical materialism communism" data-name="Karl Marx">
+            <div class="avatar">K</div>
+            <div class="meta">
+              <div class="name">Karl Marx <span class="dates">(1818–1883)</span></div>
+              <div class="role">Social and political theorist — Historical materialism and critique of capitalism.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="friedrich nietzsche existentialism god is dead" data-name="Friedrich Nietzsche">
+            <div class="avatar">F</div>
+            <div class="meta">
+              <div class="name">Friedrich Nietzsche <span class="dates">(1844–1900)</span></div>
+              <div class="role">Cultural critic — Will to power, critique of morality, existential themes.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="soren kierkegaard existentialism christian" data-name="Søren Kierkegaard">
+            <div class="avatar">S</div>
+            <div class="meta">
+              <div class="name">Søren Kierkegaard <span class="dates">(1813–1855)</span></div>
+              <div class="role">Christian existentialism — Individual faith and subjectivity.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="auguste comte positivism sociology" data-name="Auguste Comte">
+            <div class="avatar">A</div>
+            <div class="meta">
+              <div class="name">Auguste Comte <span class="dates">(1798–1857)</span></div>
+              <div class="role">Founder of positivism and early sociology.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="herbert spencer social darwinism" data-name="Herbert Spencer">
+            <div class="avatar">H</div>
+            <div class="meta">
+              <div class="name">Herbert Spencer <span class="dates">(1820–1903)</span></div>
+              <div class="role">Philosopher of social evolution — Associated with Social Darwinism.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="william james pragmatism psychology" data-name="William James">
+            <div class="avatar">W</div>
+            <div class="meta">
+              <div class="name">William James <span class="dates">(1842–1910)</span></div>
+              <div class="role">Pragmatist philosopher — Contributions to psychology and philosophy of religion.</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      <section class="era-card" data-era="modern">
+        <h2>20th & 21st Century</h2>
+        <div class="era-desc">Analytic, continental, political, feminist, and post-structuralist thinkers shaping contemporary debate.</div>
+        <div class="list">
+
+          <div class="person" data-keywords="bertrand russell logic analytic" data-name="Bertrand Russell">
+            <div class="avatar">B</div>
+            <div class="meta">
+              <div class="name">Bertrand Russell <span class="dates">(1872–1970)</span></div>
+              <div class="role">Logic and analytic philosophy — Work in logic and philosophy of language.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="ludwig wittgenstein language meaning" data-name="Ludwig Wittgenstein">
+            <div class="avatar">L</div>
+            <div class="meta">
+              <div class="name">Ludwig Wittgenstein <span class="dates">(1889–1951)</span></div>
+              <div class="role">Philosopher of language and mind — Tractatus and later Philosophical Investigations.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="martin heidegger existential phenomenology" data-name="Martin Heidegger">
+            <div class="avatar">M</div>
+            <div class="meta">
+              <div class="name">Martin Heidegger <span class="dates">(1889–1976)</span></div>
+              <div class="role">Existential phenomenology — Being and time; ontology and critique of modernity.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="jean-paul sartre existentialism freedom" data-name="Jean-Paul Sartre">
+            <div class="avatar">J</div>
+            <div class="meta">
+              <div class="name">Jean-Paul Sartre <span class="dates">(1905–1980)</span></div>
+              <div class="role">Existentialist — Emphasis on radical freedom and responsibility.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="simone de beauvoir feminist existentialism" data-name="Simone de Beauvoir">
+            <div class="avatar">S</div>
+            <div class="meta">
+              <div class="name">Simone de Beauvoir <span class="dates">(1908–1986)</span></div>
+              <div class="role">Feminist existentialism — Author of <em>The Second Sex</em>.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="hannah arendt political theory totalitarianism" data-name="Hannah Arendt">
+            <div class="avatar">H</div>
+            <div class="meta">
+              <div class="name">Hannah Arendt <span class="dates">(1906–1975)</span></div>
+              <div class="role">Political theorist — Work on totalitarianism, authority, and the public realm.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="albert camus absurdism" data-name="Albert Camus">
+            <div class="avatar">A</div>
+            <div class="meta">
+              <div class="name">Albert Camus <span class="dates">(1913–1960)</span></div>
+              <div class="role">Philosopher & writer — Associated with absurdism and revolt.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="michel foucault power knowledge post-structuralism" data-name="Michel Foucault">
+            <div class="avatar">M</div>
+            <div class="meta">
+              <div class="name">Michel Foucault <span class="dates">(1926–1984)</span></div>
+              <div class="role">Post-structuralist — Studies of power, institutions, and knowledge.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="jacques derrida deconstruction" data-name="Jacques Derrida">
+            <div class="avatar">J</div>
+            <div class="meta">
+              <div class="name">Jacques Derrida <span class="dates">(1930–2004)</span></div>
+              <div class="role">Founder of deconstruction — Rethinking text, meaning, and binary oppositions.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="jurgen habermas critical theory communicative action" data-name="Jürgen Habermas">
+            <div class="avatar">J</div>
+            <div class="meta">
+              <div class="name">Jürgen Habermas <span class="dates">(1929– )</span></div>
+              <div class="role">Critical theorist — Communicative action and deliberative democracy.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="noam chomsky linguistics political criticism" data-name="Noam Chomsky">
+            <div class="avatar">N</div>
+            <div class="meta">
+              <div class="name">Noam Chomsky <span class="dates">(1928– )</span></div>
+              <div class="role">Linguist & political theorist — Generative grammar and political critique.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="slavoj zizek psychoanalytic marxism" data-name="Slavoj Žižek">
+            <div class="avatar">S</div>
+            <div class="meta">
+              <div class="name">Slavoj Žižek <span class="dates">(1949– )</span></div>
+              <div class="role">Contemporary theorist — Psychoanalytic-Marxist cultural critique.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="judith butler gender theory performativity" data-name="Judith Butler">
+            <div class="avatar">J</div>
+            <div class="meta">
+              <div class="name">Judith Butler <span class="dates">(1956– )</span></div>
+              <div class="role">Gender theorist — Notions of performativity and social construction of gender.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="peter singer utilitarianism animal ethics" data-name="Peter Singer">
+            <div class="avatar">P</div>
+            <div class="meta">
+              <div class="name">Peter Singer <span class="dates">(1946– )</span></div>
+              <div class="role">Ethicist — Practical ethics, animal liberation, utilitarian arguments.</div>
+            </div>
+          </div>
+
+          <div class="person" data-keywords="martha nussbaum capabilities ethics" data-name="Martha Nussbaum">
+            <div class="avatar">M</div>
+            <div class="meta">
+              <div class="name">Martha Nussbaum <span class="dates">(1947– )</span></div>
+              <div class="role">Ethics and political philosophy — Capabilities approach and human development.</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>Tip: Use the search box to quickly find a philosopher (try "Stoicism", "Kant", or "Buddha").</div>
+    </footer>
+  </div>
+
+  <script>
+    function normalize(s){return (s||'').toString().toLowerCase();}
+    function applyFilter(){
+      const q = normalize(document.getElementById('q').value.trim());
+      const era = document.getElementById('eraFilter').value;
+      const persons = document.querySelectorAll('.person');
+      let anyVisible = false;
+      persons.forEach(p=>{
+        const name = normalize(p.dataset.name||'');
+        const keys = normalize(p.dataset.keywords||'');
+        const inEraCard = p.closest('.era-card').dataset.era || 'all';
+        const matchesEra = (era==='all') || (era===inEraCard);
+        const matchesQuery = !q || name.includes(q) || keys.includes(q);
+        if(matchesEra && matchesQuery){ p.style.display='flex'; anyVisible=true } else { p.style.display='none' }
+      });
+
+      document.querySelectorAll('.era-card').forEach(card=>{
+        const list = card.querySelector('.list');
+        const visible = list.querySelectorAll('.person[style*="display: flex"]');
+        let empty = card.querySelector('.empty');
+        if(visible.length===0){
+          if(!empty){
+            empty = document.createElement('div'); empty.className='empty'; empty.textContent='No matching philosophers in this era.'; list.appendChild(empty);
+          }
+        } else { if(empty) empty.remove(); }
+      });
+    }
+    function resetFilters(){document.getElementById('q').value='';document.getElementById('eraFilter').value='all';applyFilter();}
+
+    document.addEventListener('keydown',e=>{if(e.key==='/' && document.activeElement.tagName!=='INPUT'){e.preventDefault();document.getElementById('q').focus();}});
+  </script>
+</body>
+</html>
