@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Differential Equations</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fffaf5, #f0f6ff);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #3a7ca5;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #3a7ca5;
+  border-bottom: 2px solid #3a7ca5;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #3a7ca5;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #3a7ca5;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #255678; }
+.diagram { margin: 20px 0; text-align: center; }
+svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-dna"></i> Differential Equations</h1>
+  <p>Ordinary and partial differential equations, methods and applications.</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>A <strong>differential equation (DE)</strong> is an equation involving a function and its derivatives. DEs are used to model change and describe natural phenomena such as population growth, physics motion, and heat transfer.</p>
+  <div class="example">
+    <strong>Example:</strong> \(\frac{dy}{dx} = 3y\) describes exponential growth or decay.
+  </div>
+</section>
+
+<section>
+  <h2>Ordinary Differential Equations (ODEs)</h2>
+  <p>ODEs involve derivatives with respect to a single independent variable.</p>
+  <ul>
+    <li>First-order: \(\frac{dy}{dx} = f(x,y)\)</li>
+    <li>Second-order: \(\frac{d^2y}{dx^2} + p(x)\frac{dy}{dx} + q(x)y = r(x)\)</li>
+    <li>Higher-order: Involves derivatives of order 3 or more</li>
+  </ul>
+  <div class="example">
+    Solve \(\frac{dy}{dx} = ky\) → \(y = Ce^{kx}\)
+  </div>
+</section>
+
+<section>
+  <h2>Methods of Solving ODEs</h2>
+  <ul>
+    <li>Separable equations: \(\frac{dy}{dx} = g(x)h(y)\) → \(\int \frac{1}{h(y)} dy = \int g(x) dx\)</li>
+    <li>Linear equations: \(\frac{dy}{dx} + P(x)y = Q(x)\) → using integrating factor \( \mu(x) = e^{\int P(x) dx} \)</li>
+    <li>Exact equations: \(M(x,y)dx + N(x,y)dy = 0\) → check \(\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}\)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Partial Differential Equations (PDEs)</h2>
+  <p>PDEs involve derivatives with respect to multiple independent variables.</p>
+  <ul>
+    <li>Example: Heat equation \(\frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2}\)</li>
+    <li>Wave equation \(\frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}\)</li>
+    <li>Laplace equation \(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = 0\)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Physics: Motion, oscillations, circuits</li>
+    <li>Biology: Population dynamics</li>
+    <li>Engineering: Heat transfer, fluid flow</li>
+    <li>Economics: Growth and decay models</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Diagram Example</h2>
+  <div class="diagram">
+    <svg width="250" height="150">
+      <line x1="20" y1="130" x2="220" y2="50" stroke="#3a7ca5" stroke-width="3"/>
+      <text x="120" y="40" fill="#222">Solution Curve y(x)</text>
+      <line x1="20" y1="130" x2="220" y2="130" stroke="#e94e77" stroke-width="2"/>
+      <text x="230" y="135" fill="#222">x-axis</text>
+    </svg>
+  </div>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Differential equations were developed in the 17th century by <strong>Newton</strong> and <strong>Leibniz</strong> along with calculus. They are fundamental in describing dynamic systems in science and engineering.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
