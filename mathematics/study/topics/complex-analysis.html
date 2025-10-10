@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complex Analysis</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fff5f9, #e6f0ff);
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+header {
+  background: #8a2be2;
+  color: #fff;
+  text-align: center;
+  padding: 35px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+header h1 { margin: 0; font-size: 2.2em; }
+.container {
+  max-width: 900px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+h2 {
+  color: #8a2be2;
+  border-bottom: 2px solid #8a2be2;
+  padding-bottom: 5px;
+}
+section { margin-bottom: 35px; }
+.example {
+  background: #f0f4f8;
+  border-left: 4px solid #8a2be2;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+ul { line-height: 1.7; }
+code { background: #eef2f5; padding: 2px 5px; border-radius: 4px; }
+footer { text-align: center; margin-top: 40px; }
+a.back {
+  display: inline-block;
+  text-decoration: none;
+  background: #8a2be2;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+a.back:hover { background: #5a1eb2; }
+.diagram { margin: 20px 0; text-align: center; }
+svg { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1><i class="fa-solid fa-circle-notch"></i> Complex Analysis</h1>
+  <p>Analytic functions, Cauchy’s theorem, and contour integration</p>
+</header>
+
+<div class="container">
+
+<section>
+  <h2>Introduction</h2>
+  <p>Complex analysis studies functions of a complex variable. It explores analytic functions, contour integration, singularities, and powerful theorems like Cauchy’s theorem and residue theory.</p>
+</section>
+
+<section>
+  <h2>Complex Numbers Recap</h2>
+  <ul>
+    <li>Complex number: \( z = x + iy \), \( i^2 = -1 \)</li>
+    <li>Modulus: \( |z| = \sqrt{x^2 + y^2} \)</li>
+    <li>Argument: \( \arg(z) = \theta \) in polar form \( z = r e^{i\theta} \)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Analytic Functions</h2>
+  <p>A function \( f(z) \) is analytic at \( z_0 \) if it is differentiable in a neighborhood of \( z_0 \).</p>
+  <div class="example">
+    \( f(z) = z^2 + 3z + 5 \) is analytic everywhere in \( \mathbb{C} \)
+  </div>
+</section>
+
+<section>
+  <h2>Cauchy-Riemann Equations</h2>
+  <p>For \( f(z) = u(x,y) + iv(x,y) \), analytic iff:</p>
+  \[
+  \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}, \quad
+  \frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}
+  \]
+  <div class="example">
+    \( f(z) = x^2 - y^2 + i(2xy) \) satisfies Cauchy-Riemann equations → analytic
+  </div>
+</section>
+
+<section>
+  <h2>Contour Integration</h2>
+  <p>Integration of complex functions along paths \( \gamma \) in the complex plane:</p>
+  \[
+  \int_\gamma f(z) \, dz
+  \]
+  <div class="example">
+    Example: \( \int_{|z|=1} z^n dz = 0 \) for \( n \neq -1 \)
+  </div>
+  <div class="diagram">
+    <svg width="200" height="200">
+      <circle cx="100" cy="100" r="80" stroke="#8a2be2" stroke-width="3" fill="none"/>
+      <circle cx="100" cy="100" r="3" fill="#8a2be2"/>
+      <text x="105" y="105" fill="#222">0</text>
+    </svg>
+    <p>Contour around origin</p>
+  </div>
+</section>
+
+<section>
+  <h2>Cauchy’s Theorem</h2>
+  <p>If \( f(z) \) is analytic inside and on a simple closed contour \( C \), then:</p>
+  \[
+  \oint_C f(z) dz = 0
+  \]
+  <div class="example">
+    Useful for evaluating integrals and proving fundamental results in complex analysis.
+  </div>
+</section>
+
+<section>
+  <h2>Residue Theory</h2>
+  <ul>
+    <li>Residue of \( f(z) \) at singularity \( z_0 \): \( \text{Res}(f, z_0) \)</li>
+    <li>Integral around contour: \( \oint_C f(z) dz = 2\pi i \sum \text{Res}(f, z_k) \)</li>
+  </ul>
+  <div class="example">
+    \( f(z) = \frac{1}{z^2+1} \) has residues \( \frac{i}{2}, -\frac{i}{2} \) at \( i \) and \( -i \)
+  </div>
+</section>
+
+<section>
+  <h2>Applications</h2>
+  <ul>
+    <li>Complex function theory in physics and engineering</li>
+    <li>Evaluation of real integrals using contour integration</li>
+    <li>Fluid dynamics, electrostatics, and conformal mapping</li>
+    <li>Signal processing and Fourier analysis</li>
+  </ul>
+</section>
+
+<section>
+  <h2>History</h2>
+  <p>Complex analysis was developed in the 19th century by mathematicians like <strong>Augustin-Louis Cauchy</strong>, <strong>Bernhard Riemann</strong>, and <strong>Karl Weierstrass</strong>. It is a cornerstone of modern mathematical analysis.</p>
+</section>
+
+<footer>
+  <a href="topics.html" class="back"><i class="fa-solid fa-arrow-left"></i> Back to Topics</a>
+</footer>
+
+</div>
+</body>
+</html>
