@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Biology — Medicines, Diseases & Solutions</title>
+  <meta name="description" content="An accessible primer on diseases and medicines — how they work, common types, solutions, benefits and risks, and public-health approaches." />
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent1:#6ee7b7; --accent2:#60a5fa; --glass: rgba(255,255,255,0.04);
+      --radius:14px; --maxw:1100px; --gap:20px; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071023 0%, #071827 60%);color:#e6eef6}
+    .wrap{max-width:var(--maxw);margin:36px auto;padding:28px;border-radius:18px;background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow: 0 8px 30px rgba(2,6,23,0.6);} 
+
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#04232b;font-weight:800;box-shadow:0 6px 20px rgba(60,130,180,0.12)}
+    h1{font-size:22px;margin:0}
+    p.lead{margin:4px 0 0;color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:var(--gap);margin-top:22px}
+    main{min-width:0}
+    .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
+
+    .section{margin-bottom:18px}
+    .section h2{margin:0 0 10px;font-size:18px}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--muted);font-size:13px}
+
+    .grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .card-compact{padding:14px}
+    ul{margin:0 0 0 18px}
+
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .stat{font-weight:700;font-size:20px}
+
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* FAQ accordion */
+    .faq dt{cursor:pointer;padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));margin-bottom:8px}
+    .faq dd{margin:0;padding:0 12px 12px 12px;color:var(--muted);display:none}
+
+    /* responsive */
+    @media (max-width:920px){.grid{grid-template-columns:1fr}.brand h1{font-size:18px}}
+
+    /* tiny UI */
+    .tag-good{background:linear-gradient(90deg, rgba(30,200,140,0.12), rgba(96,165,250,0.06));color:var(--accent1);padding:6px;border-radius:8px}
+    .tag-bad{background:linear-gradient(90deg, rgba(240,80,120,0.06), rgba(20,20,20,0.02));color:#ff8aa1;padding:6px;border-radius:8px}
+
+    .hero{display:flex;gap:18px;align-items:center}
+    .hero .stats{display:flex;gap:8px}
+    .btn{padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent2),var(--accent1));border:none;color:#05202a;cursor:pointer;font-weight:700}
+
+    .search{display:flex;gap:8px;margin-top:12px}
+    .search input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit}
+
+    .code{background:#051223;padding:12px;border-radius:10px;color:#bfe7ff;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,monospace;font-size:13px}
+
+    .pill-list{display:flex;gap:8px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div class="brand">
+        <div class="logo">Bio</div>
+        <div>
+          <h1>Biology — Medicines & Diseases</h1>
+          <p class="lead">A clear, balanced guide to common diseases, how medicines work, their benefits and risks, and practical solutions.</p>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="pill">Updated: October 12, 2025</div>
+      </div>
+    </header>
+
+    <div class="grid" aria-live="polite">
+      <main>
+        <section class="card section hero" aria-label="overview">
+          <div style="flex:1">
+            <h2>Overview</h2>
+            <p>Diseases are conditions that affect the normal functioning of organisms. Medicines (drugs) are substances used to prevent, diagnose, treat, or manage diseases. This page summarizes common disease categories, medicine classes, how they work, advantages and drawbacks, and practical public-health and clinical solutions.</p>
+            <div class="search">
+              <input placeholder="Search topics: antibiotics, vaccines, hypertension, diabetes..." aria-label="Search topics" />
+              <button class="btn" onclick="alert('Use the page sections or the FAQ below — this is a demo search.')">Search</button>
+            </div>
+          </div>
+          <div style="width:260px">
+            <div class="pill-list" style="margin-top:8px">
+              <div class="pill">Infectious</div>
+              <div class="pill">Non-infectious</div>
+              <div class="pill">Chronic</div>
+              <div class="pill">Genetic</div>
+            </div>
+            <div style="margin-top:18px" class="card card-compact">
+              <div class="two-col">
+                <div>
+                  <div class="stat">40K+</div>
+                  <div class="muted" style="color:var(--muted);font-size:13px">Medicines listed (examples)</div>
+                </div>
+                <div>
+                  <div class="stat">4</div>
+                  <div class="muted" style="color:var(--muted);font-size:13px">Main medicine types</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card section" id="diseases">
+          <h2>Types of Diseases</h2>
+          <div class="grid-cards">
+            <div class="card-compact card">
+              <h3>Infectious Diseases</h3>
+              <p class="muted">Caused by pathogens — bacteria, viruses, fungi, parasites. Examples: influenza, TB, malaria, COVID-19, tuberculosis, fungal infections.</p>
+              <ul>
+                <li>Spread: contact, airborne, vector-borne, food/water.</li>
+                <li>Treatment: antimicrobials (antibiotics, antivirals, antifungals), vaccines for prevention.</li>
+              </ul>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Non-infectious Diseases</h3>
+              <p class="muted">Not caused by pathogens. Examples: heart disease, stroke, most cancers, diabetes.</p>
+              <ul>
+                <li>Often related to genetics, lifestyle, environment.</li>
+                <li>Management includes medicines (antihypertensives, insulin), surgery, lifestyle changes.</li>
+              </ul>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Genetic & Congenital Conditions</h3>
+              <p class="muted">Arise from gene variation or inheritance. Examples: cystic fibrosis, sickle cell, hemophilia.</p>
+              <ul>
+                <li>Treatments range from symptom management, enzyme replacement, to gene therapies.</li>
+              </ul>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Chronic vs Acute</h3>
+              <p class="muted">Acute: sudden and short (e.g., appendicitis). Chronic: long-term (e.g., arthritis, COPD, diabetes).</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card section" id="medicines">
+          <h2>Types of Medicines & How They Work</h2>
+
+          <div class="grid-cards">
+            <div class="card-compact card">
+              <h3>Antibiotics</h3>
+              <p class="muted">Target bacteria by interfering with cell walls, protein synthesis, or DNA replication.</p>
+              <p><strong>Good:</strong> life-saving for bacterial infections. <strong>Bad:</strong> misuse causes resistance.</p>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Antivirals</h3>
+              <p class="muted">Inhibit viral entry, replication, or maturation (e.g., HIV, influenza, hepatitis).</p>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Vaccines</h3>
+              <p class="muted">Train the immune system to recognize pathogens, preventing disease or reducing severity.</p>
+              <p><span class="tag-good">Prevention-first</span> — one of the most effective public health tools.</p>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Analgesics & Anti-inflammatory</h3>
+              <p class="muted">Pain relievers (paracetamol, NSAIDs, opioids). Use carefully — opioids have high dependence risk.</p>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Chronic-disease medicines</h3>
+              <p class="muted">Insulin (diabetes), statins (cholesterol), antihypertensives (blood pressure) for long-term control.</p>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Biologics & Gene Therapies</h3>
+              <p class="muted">Complex molecules (antibodies, enzymes) and gene-editing approaches for targeted treatment (e.g., some cancers, rare diseases).</p>
+            </div>
+          </div>
+
+          <div style="margin-top:12px" class="card">
+            <h3>How Medicines Are Developed (Quick Pipeline)</h3>
+            <ol>
+              <li>Discovery & preclinical testing (lab + animals)</li>
+              <li>Clinical trials — Phase I (safety), II (efficacy), III (larger efficacy/safety)</li>
+              <li>Regulatory approval</li>
+              <li>Post-marketing surveillance (real-world safety)</li>
+            </ol>
+            <p class="muted">This process is long and expensive but important to ensure safety and effectiveness.</p>
+          </div>
+        </section>
+
+        <section class="card section" id="benefits-risks">
+          <h2>Benefits vs Risks — The Trade-offs</h2>
+          <div class="two-col">
+            <div class="card card-compact">
+              <h3 class="tag-good">Major Benefits</h3>
+              <ul>
+                <li>Reduced mortality and morbidity (vaccines, antibiotics).</li>
+                <li>Improved quality of life for chronic conditions.</li>
+                <li>Targeted treatments for previously untreatable diseases (biologics, gene therapy).</li>
+              </ul>
+            </div>
+            <div class="card card-compact">
+              <h3 class="tag-bad">Common Risks & Downsides</h3>
+              <ul>
+                <li>Side effects — mild (nausea) to severe (allergic reactions).</li>
+                <li>Drug interactions and contraindications.</li>
+                <li>Antimicrobial resistance: a global public-health threat if antibiotics are overused or misused.</li>
+                <li>Accessibility and cost — many new medicines are expensive and not evenly available worldwide.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="card section" id="solutions">
+          <h2>Solutions: Clinical, Personal & Public-Health</h2>
+
+          <div class="grid-cards">
+            <div class="card-compact card">
+              <h3>Prevention</h3>
+              <ul>
+                <li>Vaccination programs, clean water, sanitation, vector control.</li>
+                <li>Health education: hand hygiene, safe food handling, sexual health.</li>
+              </ul>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Diagnosis & Early Treatment</h3>
+              <p class="muted">Rapid, accurate diagnosis reduces unnecessary treatment and improves outcomes. Examples: rapid tests for malaria, PCR for viral infections, blood tests for diabetes.</p>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Rational Medicine Use</h3>
+              <p class="muted">Prescribing guidelines, antibiotic stewardship, checking for interactions, tailoring doses by age/weight/kidney function.</p>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Access & Equity</h3>
+              <p class="muted">Policies to reduce cost barriers: generics, pooled procurement, international funding programs, local production where feasible.</p>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Community & Lifestyle</h3>
+              <p class="muted">Nutrition, exercise, tobacco cessation, responsible alcohol use—powerful for preventing chronic disease.</p>
+            </div>
+
+            <div class="card-compact card">
+              <h3>Research & Surveillance</h3>
+              <p class="muted">Invest in new antibiotics, antivirals, vaccines, and systems that track safety and resistance patterns.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card section" id="practical">
+          <h2>Practical Guidance (What You Can Do)</h2>
+          <ul>
+            <li>Follow vaccination schedules and public-health advice.</li>
+            <li>Use antibiotics only when prescribed; finish the prescribed course unless advised otherwise.</li>
+            <li>Report side effects to a healthcare provider and keep a current medication list.</li>
+            <li>Adopt healthy lifestyle choices to reduce risk of chronic disease.</li>
+            <li>Be aware of counterfeit medicines; buy from trusted pharmacies and sources.</li>
+          </ul>
+        </section>
+
+        <section class="card section" id="faq">
+          <h2>FAQ</h2>
+          <dl class="faq">
+            <dt>Are antibiotics effective against viruses?</dt>
+            <dd>No — antibiotics target bacteria. Viruses require antivirals or supportive care; misuse of antibiotics promotes resistance.</dd>
+            <dt>Are vaccines safe?</dt>
+            <dd>Vaccines undergo rigorous testing; most side effects are mild. Serious adverse events are rare and monitored by regulators.</dd>
+            <dt>What is antimicrobial resistance?</dt>
+            <dd>It occurs when microbes evolve to survive medicines designed to kill them — driven by overuse, under-dosing, and poor infection control.</dd>
+            <dt>How can I check if a medicine is right for me?</dt>
+            <dd>Consult a qualified healthcare professional, bring your medical history and a list of your current medications, and discuss alternatives and side effects.</dd>
+          </dl>
+        </section>
+
+      </main>
+
+      <aside>
+        <div class="card" aria-label="quick-resources">
+          <h3>Quick Resources</h3>
+          <ul>
+            <li><strong>When to seek urgent care:</strong> difficulty breathing, chest pain, severe bleeding, sudden confusion, seizures.</li>
+            <li><strong>Medication safety tips:</strong> check expiry dates, store as instructed, never mix unknown pills.</li>
+            <li><strong>Trusted healthcare steps:</strong> get a second opinion for major surgery, confirm diagnoses with tests when possible.</li>
+          </ul>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="card">
+          <h3>Short Glossary</h3>
+          <p class="muted"><strong>Pathogen:</strong> disease-causing organism. <strong>Antigen:</strong> a molecule that provokes immune response. <strong>Placebo:</strong> inactive substance used in trials.</p>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="card">
+          <h3>Quick facts</h3>
+          <p class="muted">Not medical advice — for education only.</p>
+          <div style="margin-top:8px"> 
+            <div style="display:flex;gap:8px;align-items:center"><div style="font-weight:700">Keep</div><div style="color:var(--muted)">a current medication list</div></div>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div style="font-weight:700">Ask</div><div style="color:var(--muted)">about side effects</div></div>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+
+    <footer>
+      <div class="card" style="display:inline-block;padding:12px;border-radius:12px">
+        <small>Educational content only. For personal medical advice consult a licensed healthcare professional.</small>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq dt').forEach(dt=>{
+      dt.addEventListener('click',()=>{
+        const dd = dt.nextElementSibling;
+        const open = dd.style.display === 'block';
+        document.querySelectorAll('.faq dd').forEach(x=>x.style.display='none');
+        dd.style.display = open ? 'none' : 'block';
+      })
+    });
+
+    // small keyboard shortcut: press 'g' to scroll to 'solutions'
+    document.addEventListener('keydown',e=>{
+      if(e.key.toLowerCase()==='g'){
+        const el=document.getElementById('solutions'); if(el) el.scrollIntoView({behavior:'smooth'})
+      }
+    });
+  </script>
+</body>
+</html>
