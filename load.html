@@ -3,60 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Script Tokenizer (Clean Text JSON)</title>
+<title>Train NLP Model</title>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.12.0/dist/tf.min.js"></script>
 <script src="https://unpkg.com/compromise@13.11.3/builds/compromise.min.js"></script>
 <style>
-body {
-  font-family: "Segoe UI", sans-serif;
-  background: #f9fafb;
-  margin: 0;
-  padding: 20px;
-  color: #222;
-}
-h1 { text-align: center; margin-bottom: 10px; }
-#results {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
-}
-.card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 15px;
-  max-height: 600px;
-  overflow-y: auto;
-  white-space: pre-wrap;
-}
-button {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 15px;
-  margin-top: 25px;
-}
+body { font-family: "Segoe UI", sans-serif; background: #f9fafb; padding: 20px; color: #222; }
+button { padding: 10px 18px; font-size: 15px; border-radius: 6px; border: none; cursor: pointer; background: #2563eb; color: white; margin-top: 15px; }
 button:hover { background: #1e40af; }
-pre {
-  white-space: pre-wrap;
-  word-break: break-word;
-  font-size: 12px;
-  color: #333;
-}
+textarea { width: 100%; height: 200px; margin-top: 15px; font-family: monospace; font-size: 14px; }
 </style>
 </head>
 <body>
-<h1>Movie Script Tokenizer (Clean Text)</h1>
-<p style="text-align:center;">Fetching and tokenizing scripts into JSON structures (HTML tags removed)...</p>
 
-<div id="results"></div>
-
-<div style="text-align:center">
-  <button id="downloadBtn">Download Combined JSON</button>
-</div>
+<h1>Train NLP Sentence Generator</h1>
+<p>Fetching scripts and training model in browser...</p>
+<button id="trainBtn">Start Training</button>
+<textarea id="generated" placeholder="Generated sentences will appear here..."></textarea>
 
 <script>
 const urls = [
@@ -65,75 +27,81 @@ const urls = [
   "https://api.allorigins.win/raw?url=http://www.awesomefilm.com/script/48hours.txt",
   "https://api.allorigins.win/raw?url=http://www.scifiscripts.com/scripts/2001.txt",
   "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Alien_Nation_Bannon_Cameron_October_1987.html",
-  "https://api.allorigins.win/raw?url=http://www.horrorlair.com/scripts/aliens.html",
-  "https://api.allorigins.win/raw?url=https://www.angelfire.com/movies/ridleyscott/script/LegendOfDarkness.txt",
-  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/LifeAsAHouse.html",
-  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Life.txt",
-  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Little+Nicky.txt",
-  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Logans+Run.txt",
-  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Lost+Highway.txt"
+  "https://api.allorigins.win/raw?url=http://www.horrorlair.com/scripts/aliens.html"
 ];
 
-const allTokens = { noun: [], pronoun: [], adjective: [], adverb: [], verb: [], other: [] };
-
-async function fetchAndTokenize() {
-  const resultsDiv = document.getElementById('results');
+async function fetchAllText() {
+  let combined = "";
   for (const link of urls) {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `<h3>${link}</h3><pre>Loading...</pre>`;
-    resultsDiv.appendChild(card);
-
     try {
       const res = await fetch(link);
       let text = await res.text();
-
-      // Remove HTML tags if any
-      text = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
-
-      const doc = nlp(text);
-
-      const nouns = doc.nouns().out('array');
-      const pronouns = doc.pronouns().out('array');
-      const adjectives = doc.adjectives().out('array');
-      const adverbs = doc.adverbs().out('array');
-      const verbs = doc.verbs().out('array');
-      const known = [...nouns, ...pronouns, ...adjectives, ...adverbs, ...verbs];
-      const allWords = doc.terms().out('array');
-      const others = allWords.filter(w => !known.includes(w));
-
-      allTokens.noun.push(...nouns);
-      allTokens.pronoun.push(...pronouns);
-      allTokens.adjective.push(...adjectives);
-      allTokens.adverb.push(...adverbs);
-      allTokens.verb.push(...verbs);
-      allTokens.other.push(...others);
-
-      const dataset = {
-        noun: nouns.slice(0, 500),
-        pronoun: pronouns.slice(0, 500),
-        adjective: adjectives.slice(0, 500),
-        adverb: adverbs.slice(0, 500),
-        verb: verbs.slice(0, 500),
-        other: others.slice(0, 500)
-      };
-
-      card.querySelector('pre').textContent = JSON.stringify(dataset, null, 2);
-    } catch (err) {
-      card.querySelector('pre').textContent = 'Error fetching: ' + err.message;
-    }
+      text = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').toLowerCase();
+      combined += text + " ";
+    } catch(e) { console.warn("Failed to fetch", link); }
   }
+  return combined;
 }
 
-document.getElementById('downloadBtn').addEventListener('click', () => {
-  const blob = new Blob([JSON.stringify(allTokens, null, 2)], { type: "application/json" });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'all_tokens_clean.json';
-  a.click();
-});
+// Tokenize words and create sequences
+function prepareSequences(text, seqLength = 20) {
+  const words = text.split(/\s+/);
+  const vocab = Array.from(new Set(words));
+  const word2idx = {};
+  const idx2word = {};
+  vocab.forEach((w,i) => { word2idx[w] = i; idx2word[i] = w; });
 
-fetchAndTokenize();
+  const sequences = [];
+  const labels = [];
+  for (let i=0; i<words.length-seqLength; i++) {
+    const seq = words.slice(i, i+seqLength).map(w => word2idx[w]);
+    sequences.push(seq.slice(0, seq.length-1));
+    labels.push(seq[seq.length-1]);
+  }
+  return { sequences, labels, vocabSize: vocab.length, word2idx, idx2word };
+}
+
+// Build a simple LSTM model
+function buildModel(vocabSize, seqLength) {
+  const model = tf.sequential();
+  model.add(tf.layers.embedding({ inputDim: vocabSize, outputDim: 128, inputLength: seqLength-1 }));
+  model.add(tf.layers.lstm({ units: 256, returnSequences: false }));
+  model.add(tf.layers.dense({ units: vocabSize, activation: 'softmax' }));
+  model.compile({ optimizer: 'adam', loss: 'sparseCategoricalCrossentropy' });
+  return model;
+}
+
+// Generate text from trained model
+async function generateText(model, idx2word, word2idx, seqLength, seed="the", length=30) {
+  let words = seed.split(" ");
+  for (let i=0; i<length; i++) {
+    let seq = words.slice(-seqLength+1).map(w => word2idx[w] || 0);
+    while (seq.length < seqLength-1) seq.unshift(0);
+    const input = tf.tensor([seq]);
+    const pred = model.predict(input);
+    const idx = (await pred.argMax(-1).data())[0];
+    words.push(idx2word[idx]);
+  }
+  return words.join(" ");
+}
+
+document.getElementById("trainBtn").addEventListener("click", async () => {
+  const text = await fetchAllText();
+  const seqLength = 20;
+  const { sequences, labels, vocabSize, word2idx, idx2word } = prepareSequences(text, seqLength);
+
+  const xs = tf.tensor2d(sequences);
+  const ys = tf.tensor1d(labels, 'int32');
+
+  const model = buildModel(vocabSize, seqLength);
+
+  await model.fit(xs, ys, { epochs: 5, batchSize: 128 });
+  xs.dispose(); ys.dispose();
+
+  const generated = await generateText(model, idx2word, word2idx, seqLength, "i am", 50);
+  document.getElementById("generated").value = generated;
+});
 </script>
+
 </body>
 </html>
