@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Script Tokenizer</title>
+<title>Script Tokenizer (Full JSON View)</title>
 <script src="https://unpkg.com/compromise@13.11.3/builds/compromise.min.js"></script>
 <style>
 body {
@@ -13,10 +13,10 @@ body {
   padding: 20px;
   color: #222;
 }
-h1 { text-align: center; }
+h1 { text-align: center; margin-bottom: 10px; }
 #results {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 15px;
   margin-top: 20px;
 }
@@ -25,8 +25,9 @@ h1 { text-align: center; }
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   padding: 15px;
-  max-height: 400px;
+  max-height: 600px;
   overflow-y: auto;
+  white-space: pre-wrap;
 }
 button {
   background: #2563eb;
@@ -36,24 +37,25 @@ button {
   border-radius: 6px;
   cursor: pointer;
   font-size: 15px;
-  margin-top: 15px;
+  margin-top: 25px;
 }
 button:hover { background: #1e40af; }
 pre {
   white-space: pre-wrap;
   word-break: break-word;
-  font-size: 13px;
+  font-size: 12px;
   color: #333;
 }
 </style>
 </head>
 <body>
 <h1>Movie Script Tokenizer</h1>
-<p>Fetching and tokenizing movie scripts into parts of speech...</p>
+<p style="text-align:center;">Fetching and tokenizing scripts into JSON structures...</p>
 
 <div id="results"></div>
+
 <div style="text-align:center">
-  <button id="downloadBtn">Download JSON</button>
+  <button id="downloadBtn">Download Combined JSON</button>
 </div>
 
 <script>
@@ -62,10 +64,8 @@ const urls = [
   "https://api.allorigins.win/raw?url=http://www.scifiscripts.com/scripts/5thelement.txt",
   "https://api.allorigins.win/raw?url=http://www.awesomefilm.com/script/48hours.txt",
   "https://api.allorigins.win/raw?url=http://www.scifiscripts.com/scripts/2001.txt",
-  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/15minutes.html",
   "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Alien_Nation_Bannon_Cameron_October_1987.html",
-  "https://api.allorigins.win/raw?url=http://www.horrorlair.com/scripts/aliens.html",
-  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Erik+The+Viking.txt"
+  "https://api.allorigins.win/raw?url=http://www.horrorlair.com/scripts/aliens.html"
 ];
 
 const allTokens = { noun: [], pronoun: [], adjective: [], adverb: [], verb: [], other: [] };
@@ -92,6 +92,7 @@ async function fetchAndTokenize() {
       const allWords = doc.terms().out('array');
       const others = allWords.filter(w => !known.includes(w));
 
+      // Merge into master dataset
       allTokens.noun.push(...nouns);
       allTokens.pronoun.push(...pronouns);
       allTokens.adjective.push(...adjectives);
@@ -99,8 +100,16 @@ async function fetchAndTokenize() {
       allTokens.verb.push(...verbs);
       allTokens.other.push(...others);
 
-      card.querySelector('pre').textContent =
-        `Nouns: ${nouns.length}\nPronouns: ${pronouns.length}\nAdjectives: ${adjectives.length}\nAdverbs: ${adverbs.length}\nVerbs: ${verbs.length}\nOthers: ${others.length}`;
+      const dataset = {
+        noun: nouns.slice(0, 500),       // show only 500 for readability
+        pronoun: pronouns.slice(0, 500),
+        adjective: adjectives.slice(0, 500),
+        adverb: adverbs.slice(0, 500),
+        verb: verbs.slice(0, 500),
+        other: others.slice(0, 500)
+      };
+
+      card.querySelector('pre').textContent = JSON.stringify(dataset, null, 2);
     } catch (err) {
       card.querySelector('pre').textContent = 'Error fetching: ' + err.message;
     }
@@ -111,7 +120,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   const blob = new Blob([JSON.stringify(allTokens, null, 2)], { type: "application/json" });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'tokens.json';
+  a.download = 'all_tokens.json';
   a.click();
 });
 
