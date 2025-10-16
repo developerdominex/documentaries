@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dataset Browser — Hybrid AI</title>
+<title>Hybrid AI NLP Dataset Loader</title>
 <link rel="icon" href="hybrid.png">
 <style>
 :root { --accent:#6366f1; --bg:#f3f4f6; --text:#111827; --muted:#6b7280; --radius:16px;}
@@ -22,29 +22,34 @@ button.download:hover { background:#4f46e5; }
 </head>
 <body>
 
-<h1>Hybrid AI Dataset Browser</h1>
+<h1>Hybrid AI NLP Dataset Loader</h1>
 <div id="progressContainer"><div id="progressBar"></div></div>
 <div id="status">Initializing...</div>
 <div id="datasetsContainer"></div>
-<button class="download" id="downloadBtn" style="display:none;">Download All Datasets</button>
+<button class="download" id="downloadBtn" style="display:none;">Download Combined NLP Dataset</button>
 
 <script>
 const urls = [
+  // English word lists
   "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt",
   "https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english.txt",
-  "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+
+  // Classic literature (Public Domain)
   "https://www.gutenberg.org/files/1342/1342-0.txt", // Pride and Prejudice
-  "https://www.gutenberg.org/files/11/11-0.txt", // Alice in Wonderland
+  "https://www.gutenberg.org/files/11/11-0.txt",     // Alice in Wonderland
+  "https://www.gutenberg.org/files/1661/1661-0.txt", // Sherlock Holmes
+
+  // Conversational datasets
   "https://raw.githubusercontent.com/suriyadeepan/datasets/master/seq2seq/cornell_movie_corpus/movie_lines.txt",
   "https://raw.githubusercontent.com/suriyadeepan/datasets/master/seq2seq/cornell_movie_corpus/movie_conversations.txt",
+
+  // Stopwords
   "https://raw.githubusercontent.com/stopwords-iso/stopwords-en/master/stopwords-en.txt",
+
+  // Parts of speech
   "https://raw.githubusercontent.com/dariusk/corpora/master/data/words/adjs.json",
   "https://raw.githubusercontent.com/dariusk/corpora/master/data/words/nouns.json",
-  "https://raw.githubusercontent.com/dariusk/corpora/master/data/words/verbs.json",
-  "https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/common.json",
-  "https://raw.githubusercontent.com/dariusk/corpora/master/data/science/space.json",
-  "https://raw.githubusercontent.com/dariusk/corpora/master/data/science/physics.json",
-  "https://raw.githubusercontent.com/dariusk/corpora/master/data/science/chemistry.json"
+  "https://raw.githubusercontent.com/dariusk/corpora/master/data/words/verbs.json"
 ];
 
 const progressBar = document.getElementById("progressBar");
@@ -67,7 +72,7 @@ async function loadAll() {
       datasetDiv.className = "dataset";
       datasetDiv.innerHTML = `
         <div class="dataset-header">Dataset ${i+1} — ${url.split("/").pop()} <span>▼</span></div>
-        <div class="dataset-content">${text.slice(0,5000)}\n\n[...truncated]</div>
+        <div class="dataset-content">${text}</div>
       `;
       datasetsContainer.appendChild(datasetDiv);
 
@@ -86,14 +91,14 @@ async function loadAll() {
     }
   }
 
-  status.textContent = "✅ All datasets loaded!";
+  status.textContent = "✅ All NLP datasets loaded!";
   downloadBtn.style.display = "inline-block";
 
   const blob = new Blob([allText], { type:"text/plain" });
   downloadBtn.onclick = () => {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "combined_dataset.txt";
+    a.download = "nlp_combined_dataset.txt";
     a.click();
   };
 }
