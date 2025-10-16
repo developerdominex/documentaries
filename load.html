@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dataset Loader — Hybrid AI</title>
+<link rel="icon" href="hybrid.png">
+<style>
+:root {
+  --accent: #6366f1;
+  --bg: #f3f4f6;
+  --text: #111827;
+  --muted: #6b7280;
+  --radius: 16px;
+}
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: radial-gradient(circle at top right, #eef2ff, #f9fafb);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+p {
+  color: var(--muted);
+  margin-bottom: 20px;
+  text-align: center;
+}
+#progressContainer {
+  width: 100%;
+  max-width: 600px;
+  background: #e5e7eb;
+  border-radius: var(--radius);
+  overflow: hidden;
+  height: 16px;
+  margin-bottom: 16px;
+}
+#progressBar {
+  width: 0%;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+#status {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+#output {
+  width: 90%;
+  max-width: 800px;
+  height: 300px;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  padding: 12px;
+  font-family: monospace;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+button {
+  margin-top: 20px;
+  background: var(--accent);
+  border: none;
+  color: white;
+  font-size: 15px;
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { background: #4f46e5; }
+</style>
+</head>
+<body>
+
+<h1>Hybrid AI Dataset Loader</h1>
+<p>Loading open datasets from online sources. Please wait…</p>
+
+<div id="progressContainer"><div id="progressBar"></div></div>
+<div id="status">Initializing...</div>
+<pre id="output"></pre>
+
+<button id="downloadBtn" style="display:none;">Download Combined Dataset</button>
+
+<script>
+const urls = [
+  // English text & linguistic corpora
+  "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt",
+  "https://raw.githubusercontent.com/dscape/spell/master/test/resources/big.txt",
+  "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt",
+  
+  // Dialogues and conversational datasets
+  "https://raw.githubusercontent.com/suriyadeepan/datasets/master/seq2seq/cornell_movie_corpus/movie_lines.txt",
+  "https://raw.githubusercontent.com/PolyAI-LDN/conversational-datasets/master/amazon_customer_service/amazon_customer_service_dialogs.json",
+  
+  // Wikipedia-like or factual text
+  "https://raw.githubusercontent.com/dariusk/corpora/master/data/humans/facts.json",
+  "https://raw.githubusercontent.com/dariusk/corpora/master/data/science/space.json",
+  "https://raw.githubusercontent.com/dariusk/corpora/master/data/animals/common.json",
+  "https://raw.githubusercontent.com/dariusk/corpora/master/data/words/nouns.json",
+  "https://raw.githubusercontent.com/dariusk/corpora/master/data/words/adjs.json",
+  
+  // Emotions and sentiment
+  "https://raw.githubusercontent.com/dariusk/corpora/master/data/humans/emotions.json",
+  "https://raw.githubusercontent.com/dariusk/corpora/master/data/humans/feelings.json",
+  
+  // News & modern text sources
+  "https://raw.githubusercontent.com/ryanmcdermott/trump-speeches/master/speeches.txt",
+  "https://raw.githubusercontent.com/selva86/datasets/master/newsgroups.json",
+  "https://raw.githubusercontent.com/selva86/datasets/master/diamonds.csv",
+  
+  // Stopwords & short text
+  "https://raw.githubusercontent.com/stopwords-iso/stopwords-en/master/stopwords-en.txt",
+  "https://raw.githubusercontent.com/dariusk/corpora/master/data/words/verbs.json",
+  
+  // Technical & scientific examples
+  "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data",
+  "https://raw.githubusercontent.com/jbrownlee/Datasets/master/airline-passengers.csv"
+];
+
+const progressBar = document.getElementById("progressBar");
+const status = document.getElementById("status");
+const output = document.getElementById("output");
+const downloadBtn = document.getElementById("downloadBtn");
+
+async function loadAll() {
+  let allText = "";
+  for (let i = 0; i < urls.length; i++) {
+    const url = urls[i];
+    status.textContent = `Loading (${i+1}/${urls.length}): ${url}`;
+    try {
+      const response = await fetch(url);
+      const text = await response.text();
+      allText += "\n\n=== DATASET " + (i+1) + " ===\n" + text;
+      progressBar.style.width = `${((i+1)/urls.length)*100}%`;
+      await new Promise(r => setTimeout(r, 200)); // smooth progress
+    } catch (err) {
+      allText += `\n\n[Error loading: ${url}]\n${err.message}\n`;
+    }
+  }
+
+  status.textContent = "✅ All datasets loaded successfully!";
+  output.textContent = allText.slice(0, 50000) + "\n\n[... trimmed for display]";
+  downloadBtn.style.display = "inline-block";
+
+  // prepare blob for download
+  const blob = new Blob([allText], { type: "text/plain" });
+  downloadBtn.onclick = () => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "combined_dataset.txt";
+    a.click();
+  };
+}
+
+loadAll();
+</script>
+
+</body>
+</html>
