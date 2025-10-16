@@ -1,94 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Load Movie Lines</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Script Tokenizer</title>
+<script src="https://unpkg.com/compromise@13.11.3/builds/compromise.min.js"></script>
 <style>
-  body {
-    font-family: sans-serif;
-    margin: 16px;
-    background: #f9f9f9;
-    color: #111;
-  }
-  h1 {
-    margin-bottom: 12px;
-  }
-  .dataset {
-    margin-bottom: 24px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #fff;
-  }
-  .dataset-header {
-    padding: 8px 12px;
-    background: #6366f1;
-    color: white;
-    font-weight: bold;
-  }
-  .dataset-content {
-    padding: 12px;
-    max-height: 400px;
-    overflow-y: auto;
-    white-space: pre-wrap;
-    background: #f3f4f6;
-  }
-  #status {
-    margin-bottom: 16px;
-  }
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f9fafb;
+  margin: 0;
+  padding: 20px;
+  color: #222;
+}
+h1 { text-align: center; }
+#results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 15px;
+}
+button:hover { background: #1e40af; }
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 13px;
+  color: #333;
+}
 </style>
 </head>
 <body>
-  <h1>Movie Lines Datasets</h1>
-  <div id="status">Loading datasets...</div>
-  <div id="datasetsContainer"></div>
+<h1>Movie Script Tokenizer</h1>
+<p>Fetching and tokenizing movie scripts into parts of speech...</p>
+
+<div id="results"></div>
+<div style="text-align:center">
+  <button id="downloadBtn">Download JSON</button>
+</div>
 
 <script>
 const urls = [
-  "https://api.allorigins.win/raw?url=https://drive.google.com/uc?export=download&id=1oyEX84MO_GeyVYletPFnNSUwyxBwF24M",
-  "https://api.allorigins.win/raw?url=https://drive.google.com/uc?export=download&id=1_EokqYqopU57_0ucb-zQbddZzSYQcbl9",
-  "https://api.allorigins.win/raw?url=https://drive.google.com/uc?export=download&id=1v0qXE6q3_0uRx3lsKKoYzXXNtqVUC1Qf",
-  "https://api.allorigins.win/raw?url=https://drive.google.com/uc?export=download&id=1s8LuAikhdjFbU-2-j5BxUy6L5pIOlcwz",
-  "https://api.allorigins.win/raw?url=https://drive.google.com/uc?export=download&id=1ZJRrERNl94JsMJ9QtW86qkRyF6C3CXez"
+  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/eight-millimeter.html",
+  "https://api.allorigins.win/raw?url=http://www.scifiscripts.com/scripts/5thelement.txt",
+  "https://api.allorigins.win/raw?url=http://www.awesomefilm.com/script/48hours.txt",
+  "https://api.allorigins.win/raw?url=http://www.scifiscripts.com/scripts/2001.txt",
+  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/15minutes.html",
+  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Alien_Nation_Bannon_Cameron_October_1987.html",
+  "https://api.allorigins.win/raw?url=http://www.horrorlair.com/scripts/aliens.html",
+  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Erik+The+Viking.txt"
 ];
 
+const allTokens = { noun: [], pronoun: [], adjective: [], adverb: [], verb: [], other: [] };
 
-const statusEl = document.getElementById("status");
-const container = document.getElementById("datasetsContainer");
+async function fetchAndTokenize() {
+  const resultsDiv = document.getElementById('results');
+  for (const link of urls) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `<h3>${link}</h3><pre>Loading...</pre>`;
+    resultsDiv.appendChild(card);
 
-async function loadAll() {
-  for (let i = 0; i < urls.length; i++) {
-    const url = urls[i];
-    statusEl.textContent = `Loading (${i+1}/${urls.length})…`;
     try {
-      const resp = await fetch(url);
-      if (!resp.ok) {
-        throw new Error(`HTTP ${resp.status}`);
-      }
-      const text = await resp.text();
+      const res = await fetch(link);
+      const text = await res.text();
+      const doc = nlp(text);
 
-      const div = document.createElement("div");
-      div.className = "dataset";
-      div.innerHTML = `
-        <div class="dataset-header">Dataset ${i+1}</div>
-        <div class="dataset-content" id="content-${i}">${text}</div>
-      `;
-      container.appendChild(div);
+      const nouns = doc.nouns().out('array');
+      const pronouns = doc.pronouns().out('array');
+      const adjectives = doc.adjectives().out('array');
+      const adverbs = doc.adverbs().out('array');
+      const verbs = doc.verbs().out('array');
+      const known = [...nouns, ...pronouns, ...adjectives, ...adverbs, ...verbs];
+      const allWords = doc.terms().out('array');
+      const others = allWords.filter(w => !known.includes(w));
+
+      allTokens.noun.push(...nouns);
+      allTokens.pronoun.push(...pronouns);
+      allTokens.adjective.push(...adjectives);
+      allTokens.adverb.push(...adverbs);
+      allTokens.verb.push(...verbs);
+      allTokens.other.push(...others);
+
+      card.querySelector('pre').textContent =
+        `Nouns: ${nouns.length}\nPronouns: ${pronouns.length}\nAdjectives: ${adjectives.length}\nAdverbs: ${adverbs.length}\nVerbs: ${verbs.length}\nOthers: ${others.length}`;
     } catch (err) {
-      const div = document.createElement("div");
-      div.className = "dataset";
-      div.innerHTML = `
-        <div class="dataset-header">Dataset ${i+1}</div>
-        <div class="dataset-content">Error loading: ${err.message}</div>
-      `;
-      container.appendChild(div);
+      card.querySelector('pre').textContent = 'Error fetching: ' + err.message;
     }
   }
-  statusEl.textContent = "All loaded.";
 }
 
-loadAll();
-</script>
+document.getElementById('downloadBtn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(allTokens, null, 2)], { type: "application/json" });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tokens.json';
+  a.click();
+});
 
+fetchAndTokenize();
+</script>
 </body>
 </html>
