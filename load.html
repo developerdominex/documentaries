@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Script Tokenizer (Full JSON View)</title>
+<title>Script Tokenizer (Clean Text JSON)</title>
 <script src="https://unpkg.com/compromise@13.11.3/builds/compromise.min.js"></script>
 <style>
 body {
@@ -49,8 +49,8 @@ pre {
 </style>
 </head>
 <body>
-<h1>Movie Script Tokenizer</h1>
-<p style="text-align:center;">Fetching and tokenizing scripts into JSON structures...</p>
+<h1>Movie Script Tokenizer (Clean Text)</h1>
+<p style="text-align:center;">Fetching and tokenizing scripts into JSON structures (HTML tags removed)...</p>
 
 <div id="results"></div>
 
@@ -65,7 +65,13 @@ const urls = [
   "https://api.allorigins.win/raw?url=http://www.awesomefilm.com/script/48hours.txt",
   "https://api.allorigins.win/raw?url=http://www.scifiscripts.com/scripts/2001.txt",
   "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Alien_Nation_Bannon_Cameron_October_1987.html",
-  "https://api.allorigins.win/raw?url=http://www.horrorlair.com/scripts/aliens.html"
+  "https://api.allorigins.win/raw?url=http://www.horrorlair.com/scripts/aliens.html",
+  "https://api.allorigins.win/raw?url=https://www.angelfire.com/movies/ridleyscott/script/LegendOfDarkness.txt",
+  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/LifeAsAHouse.html",
+  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Life.txt",
+  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Little+Nicky.txt",
+  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Logans+Run.txt",
+  "https://api.allorigins.win/raw?url=http://www.dailyscript.com/scripts/Lost+Highway.txt"
 ];
 
 const allTokens = { noun: [], pronoun: [], adjective: [], adverb: [], verb: [], other: [] };
@@ -80,7 +86,11 @@ async function fetchAndTokenize() {
 
     try {
       const res = await fetch(link);
-      const text = await res.text();
+      let text = await res.text();
+
+      // Remove HTML tags if any
+      text = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+
       const doc = nlp(text);
 
       const nouns = doc.nouns().out('array');
@@ -92,7 +102,6 @@ async function fetchAndTokenize() {
       const allWords = doc.terms().out('array');
       const others = allWords.filter(w => !known.includes(w));
 
-      // Merge into master dataset
       allTokens.noun.push(...nouns);
       allTokens.pronoun.push(...pronouns);
       allTokens.adjective.push(...adjectives);
@@ -101,7 +110,7 @@ async function fetchAndTokenize() {
       allTokens.other.push(...others);
 
       const dataset = {
-        noun: nouns.slice(0, 500),       // show only 500 for readability
+        noun: nouns.slice(0, 500),
         pronoun: pronouns.slice(0, 500),
         adjective: adjectives.slice(0, 500),
         adverb: adverbs.slice(0, 500),
@@ -120,7 +129,7 @@ document.getElementById('downloadBtn').addEventListener('click', () => {
   const blob = new Blob([JSON.stringify(allTokens, null, 2)], { type: "application/json" });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'all_tokens.json';
+  a.download = 'all_tokens_clean.json';
   a.click();
 });
 
