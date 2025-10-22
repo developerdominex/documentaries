@@ -1,128 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>King & Queen Data Collector</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      color: #333;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    button {
-      margin: 5px;
-      padding: 10px 15px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    pre {
-      background: #222;
-      color: #fff;
-      padding: 15px;
-      border-radius: 5px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      max-height: 500px;
-      overflow-y: auto;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Monarch Biographies Collector — 5 Countries</title>
+<style>
+  :root{
+    --bg:#0f1724; --card:#071226; --muted:#9aa4b2; --accent:#60a5fa; --glass: rgba(255,255,255,0.03);
+    --ok:#16a34a; --warn:#f59e0b; --err:#ef4444;
+  }
+  html,body{height:100%; margin:0; font-family:Inter,Segoe UI,Roboto,Arial,sans-serif; background:linear-gradient(180deg,#071024 0%,#071228 100%); color:#e6eef6;}
+  .wrap{max-width:1100px;margin:20px auto;padding:18px;}
+  header{display:flex;gap:12px;align-items:center;justify-content:space-between}
+  h1{margin:0;font-size:1.2rem}
+  p.lead{margin:6px 0 14px;color:var(--muted);max-width:760px}
+  .controls{display:flex;gap:8px;align-items:center}
+  button{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#06202b;font-weight:600;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);font-weight:600}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-top:12px}
+  .card h3{margin:0 0 8px;font-size:1rem;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .meta{font-size:0.85rem;color:var(--muted)}
+  .result-list{margin:10px 0 0;padding:8px;background:var(--glass);border-radius:8px;max-height:280px;overflow:auto;font-family:ui-monospace,monospace;font-size:0.95rem;white-space:pre-wrap}
+  .line{padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+  .small{font-size:0.85rem;color:var(--muted)}
+  .status{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:600}
+  .status.ok{background:rgba(22,163,74,0.12);color:var(--ok)}
+  .status.warn{background:rgba(245,158,11,0.12);color:var(--warn)}
+  .status.err{background:rgba(239,68,68,0.08);color:var(--err)}
+  .footer{margin-top:16px;color:var(--muted);font-size:0.9rem}
+  .copybtn{margin-left:8px;padding:6px 9px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--accent);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+  .progressbar{height:10px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;margin-top:12px}
+  .progress{height:100%;background:linear-gradient(90deg,var(--accent),rgba(96,165,250,0.6));width:0%}
+  pre.copybox{white-space:pre-wrap;background:#021124;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-family:ui-monospace,monospace;font-size:0.9rem;max-height:280px;overflow:auto}
+  .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+  @media(min-width:880px){ .grid{grid-template-columns:repeat(2,1fr)} }
+</style>
 </head>
 <body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Monarch Biographies Collector — 5 Countries</h1>
+        <p class="lead">This tool will locate monarch lists for the first 5 countries, extract the names of kings & queens, fetch each monarch's biography page from Wikipedia, clean the text, and produce a JSON of full biographies. Click <strong>Start</strong> to run (network requests to Wikipedia API).</p>
+      </div>
+      <div class="controls">
+        <button id="startBtn">Start</button>
+        <button id="copyAllBtn" class="ghost">Copy JSON</button>
+        <button id="downloadBtn" class="ghost">Download JSON</button>
+      </div>
+    </header>
 
-<h1>Collect Kings & Queens (First 5 Countries)</h1>
-<button id="startBtn">Start Collecting</button>
-<button id="copyBtn">Copy JSON</button>
-<button id="downloadBtn">Download JSON</button>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><strong>Progress</strong> <span class="small" id="progressText">Idle</span></div>
+        <div><span id="stats" class="small">0 / 0 processed</span></div>
+      </div>
+      <div class="progressbar" aria-hidden><div id="progress" class="progress"></div></div>
+    </div>
 
-<h2>Collected Data:</h2>
-<pre id="output">Click "Start Collecting" to begin...</pre>
+    <div id="results" class="grid"></div>
+
+    <div class="footer">
+      <p>Notes: the script deliberately filters out likely colonial administrators and governors and tries to include rulers (king/queen/sultan/shah/emir). If a monarch is missed, it can be adjusted later. This runs serially and may take some time — be patient.</p>
+    </div>
+  </div>
 
 <script>
-const countries = ["Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh"];
-let finalData = {};
+/*
+  Monarch Biographies Collector (client-side)
+  - Processes these 5 countries only:
+      ["Afghanistan","Albania","Algeria","Andorra","Angola"]
+  - Steps per country:
+    1) Search for "List of monarchs of {country}" (and a couple fallback queries)
+    2) Parse the list page, extract linked person titles from relevant list sections
+    3) For each candidate person, fetch their Wikipedia page and check:
+         - categories for monarch keywords
+         - intro/extract for words like "King", "Queen", "Sultan", "Shah", "Emir", "reigned"
+         - infobox/parse HTML for "Reign" fields
+    4) If judged a monarch, fetch full page content and extract cleaned biography text
+    5) Save into resultsData and show in UI
+*/
 
-async function fetchKingsFromCountry(country) {
-  const searchTitle = `List of monarchs of ${country}`;
-  const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(searchTitle)}&format=json&origin=*`;
+const COUNTRIES = ["Afghanistan","Albania","Algeria","Andorra","Angola"];
+const SEARCH_TEMPLATES = [
+  "List of monarchs of {country}",
+  "Monarchs of {country}",
+  "Kings of {country}",
+  "List of rulers of {country}",
+  "List of heads of state of {country}"
+];
 
-  const res = await fetch(url);
-  const data = await res.json();
+const API_BASE = "https://en.wikipedia.org/w/api.php?origin=*";
+const THROTTLE_MS = 650; // polite delay between API calls
+const MAX_CANDIDATES_PER_LIST = 200; // safety cap
+const resultsData = []; // array of {country, monarchs: [{name,url,life,biography}]}
+let processedCountries = 0;
 
-  if (!data.query.search.length) return [];
+const startBtn = document.getElementById('startBtn');
+const copyAllBtn = document.getElementById('copyAllBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const resultsEl = document.getElementById('results');
+const progressEl = document.getElementById('progress');
+const progressText = document.getElementById('progressText');
+const statsEl = document.getElementById('stats');
 
-  const pageTitle = data.query.search[0].title;
-  const pageUrl = `https://en.wikipedia.org/w/api.php?action=parse&page=${encodeURIComponent(pageTitle)}&format=json&origin=*`;
+startBtn.addEventListener('click', () => { startBtn.disabled = true; runAll(); });
+copyAllBtn.addEventListener('click', copyAll);
+downloadBtn.addEventListener('click', downloadAll);
 
-  const pageRes = await fetch(pageUrl);
-  const pageData = await pageRes.json();
+async function runAll(){
+  resultsEl.innerHTML = '';
+  resultsData.length = 0;
+  processedCountries = 0;
+  updateProgress();
 
-  if (!pageData.parse || !pageData.parse.text) return [];
-
-  const htmlContent = pageData.parse.text["*"];
-  const div = document.createElement("div");
-  div.innerHTML = htmlContent;
-
-  let links = Array.from(div.querySelectorAll("a"))
-    .map(a => a.title)
-    .filter(title => title && !title.includes(":"));
-
-  return [...new Set(links)].slice(0, 10); // limit to first 10 names
+  for (const country of COUNTRIES) {
+    const card = createCountryCard(country);
+    resultsEl.appendChild(card);
+    try {
+      const monarchs = await fetchMonarchsForCountry(country, card);
+      resultsData.push({ country, monarchs });
+      markCardDone(card, true, monarchs.length);
+    } catch (err) {
+      console.error('Error for', country, err);
+      resultsData.push({ country, monarchs: [] });
+      markCardDone(card, false, 0, String(err));
+    }
+    processedCountries++;
+    updateProgress();
+    await sleep(THROTTLE_MS);
+  }
+  startBtn.disabled = false;
+  progressText.textContent = 'Completed';
+  progressEl.style.width = '100%';
 }
 
-async function fetchBiography(name) {
-  const url = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles=${encodeURIComponent(name)}&format=json&origin=*`;
-  const res = await fetch(url);
-  const data = await res.json();
-  const page = data.query.pages[Object.keys(data.query.pages)[0]];
-  return page.extract || "No biography available";
+// UI helpers
+function createCountryCard(country) {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.innerHTML = `
+    <h3>${escapeHtml(country)} <span id="status-${idFrom(country)}" class="status small">queued</span></h3>
+    <div class="meta small">Monarchs found: <span id="count-${idFrom(country)}">—</span></div>
+    <div id="list-${idFrom(country)}" class="result-list small">Waiting...</div>
+    <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+      <button class="copybtn" id="copy-${idFrom(country)}">Copy country JSON</button>
+      <button class="copybtn" id="open-${idFrom(country)}">Open sample page</button>
+      <span id="size-${idFrom(country)}" class="small" style="margin-left:auto;color:var(--muted)"></span>
+    </div>
+  `;
+  // hook buttons later when data available
+  return el;
 }
 
-async function startCollection() {
-  finalData = {};
-  document.getElementById("output").textContent = "Fetching data... Please wait.";
+function markCardDone(card, ok, count, errMsg) {
+  const country = card.querySelector('h3').textContent.trim().split('\n')[0];
+  const statusEl = card.querySelector('.status');
+  const countEl = card.querySelector('.meta span');
+  if (ok) {
+    statusEl.textContent = 'ok';
+    statusEl.className = 'status ok';
+    const c = count;
+    card.querySelector(`#count-${idFrom(country)}`)?.textContent = String(c);
+  } else {
+    statusEl.textContent = 'error';
+    statusEl.className = 'status err';
+    card.querySelector(`#list-${idFrom(country)}`).textContent = 'Error: ' + (errMsg || 'failed');
+  }
+}
 
-  for (const country of countries) {
-    finalData[country] = [];
-    const kings = await fetchKingsFromCountry(country);
+// main per-country flow
+async function fetchMonarchsForCountry(country, cardEl) {
+  setCardStatus(cardEl, 'searching');
+  const listPage = await findListPageForCountry(country);
+  await sleep(THROTTLE_MS);
+  if (!listPage) {
+    setCardStatus(cardEl, 'no-list');
+    cardEl.querySelector(`#list-${idFrom(country)}`).textContent = 'No list page found.';
+    return [];
+  }
 
-    for (const king of kings) {
-      const bio = await fetchBiography(king);
-      finalData[country].push({ name: king, biography: bio });
+  // parse candidate person links from list page HTML
+  const candidates = parseCandidatesFromListHtml(listPage.html, country);
+  if (candidates.length === 0) {
+    setCardStatus(cardEl, 'no-candidates');
+    cardEl.querySelector(`#list-${idFrom(country)}`).textContent = 'No candidate names found on list page.';
+    return [];
+  }
+
+  const monarchs = [];
+  const listBox = cardEl.querySelector(`#list-${idFrom(country)}`);
+  listBox.textContent = 'Found candidates: ' + candidates.length + '. Verifying...';
+  // iterate candidates sequentially, check whether they are monarchs, and if so fetch biography
+  for (let i = 0; i < candidates.length; i++) {
+    const title = candidates[i];
+    // polite throttle
+    await sleep(THROTTLE_MS);
+    try {
+      const personMeta = await fetchPersonMeta(title);
+      // decide if monarch
+      const judged = isPersonMonarch(personMeta, country);
+      if (judged) {
+        // fetch full biography HTML and extract readable text
+        await sleep(THROTTLE_MS);
+        const fullHtml = await fetchParseHtml(title);
+        const bioText = extractReadableTextFromParseHtml(fullHtml?.html || '');
+        const life = extractLifeFromIntro(personMeta.extract || '');
+        const personObj = {
+          name: title,
+          url: personMeta.url,
+          life: life || null,
+          biography: bioText || (personMeta.extract || '')
+        };
+        monarchs.push(personObj);
+        // append to UI incrementally
+        const line = document.createElement('div');
+        line.className = 'line';
+        line.textContent = `${title} — ${personObj.life || 'life N/A'}`;
+        listBox.appendChild(line);
+      } else {
+        // ignore non-monarchs
+      }
+    } catch (e) {
+      console.warn('person fetch error', title, e);
     }
   }
 
-  document.getElementById("output").textContent = JSON.stringify(finalData, null, 2);
+  // finished country
+  cardEl.querySelector(`#count-${idFrom(country)}`).textContent = String(monarchs.length);
+  // attach copy & open behavior
+  const copyBtn = cardEl.querySelector(`#copy-${idFrom(country)}`);
+  copyBtn.addEventListener('click', () => {
+    const obj = { country, monarchs };
+    navigator.clipboard.writeText(JSON.stringify(obj, null, 2));
+    copyBtn.textContent = 'Copied ✓';
+    setTimeout(()=>copyBtn.textContent = 'Copy country JSON', 1200);
+  });
+  const openBtn = cardEl.querySelector(`#open-${idFrom(country)}`);
+  openBtn.addEventListener('click', () => {
+    // open list page as sample
+    if (listPage && listPage.url) window.open(listPage.url, '_blank');
+    else alert('No list page URL available.');
+  });
+
+  return monarchs;
 }
 
-function copyJSON() {
-  navigator.clipboard.writeText(JSON.stringify(finalData, null, 2));
-  alert("JSON copied to clipboard!");
+// Find candidate list page for a country by testing search templates
+async function findListPageForCountry(country) {
+  for (const tmpl of SEARCH_TEMPLATES) {
+    const q = tmpl.replace('{country}', country);
+    const url = `${API_BASE}&action=query&list=search&srsearch=${encodeURIComponent(q)}&srlimit=5&format=json`;
+    try {
+      const resp = await fetchJson(url);
+      const hits = resp.query?.search || [];
+      for (const hit of hits) {
+        // fetch parse HTML for the hit and check if it contains lists or 'monarch' words
+        await sleep(200);
+        const parsed = await fetchParseHtml(hit.title);
+        if (!parsed) continue;
+        const html = parsed.html;
+        // crude check: page should have lists or headings referencing monarch or king/queen
+        if (html && (html.toLowerCase().includes('reign') || html.toLowerCase().includes('king') || html.toLowerCase().includes('queen') || html.toLowerCase().includes('monarch') || html.includes('<ul') )) {
+          return { title: parsed.title, html: html, url: parsed.url };
+        }
+      }
+    } catch(e) {
+      console.warn('search error', e);
+    }
+  }
+  return null;
 }
 
-function downloadJSON() {
-  const blob = new Blob([JSON.stringify(finalData, null, 2)], { type: "application/json" });
+// parse candidate linked person titles from the list page HTML
+function parseCandidatesFromListHtml(htmlString, country) {
+  if (!htmlString) return [];
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  const content = doc.querySelector('.mw-parser-output') || doc.body;
+  const candidates = [];
+  // prefer lists (ul/ol) in the content
+  const lists = Array.from(content.querySelectorAll('ul, ol'));
+  for (const ul of lists) {
+    // if it's a list with many links, take links
+    const links = Array.from(ul.querySelectorAll('a')).map(a => a.getAttribute('title')).filter(Boolean);
+    for (const t of links) {
+      if (isLikelyPersonTitle(t)) candidates.push(t);
+      if (candidates.length >= MAX_CANDIDATES_PER_LIST) break;
+    }
+    if (candidates.length >= 30) break; // early stop if many
+  }
+  // fallback: take top-level links from paragraphs (some pages use <p>)
+  if (candidates.length === 0) {
+    const links = Array.from(content.querySelectorAll('a')).map(a => a.getAttribute('title')).filter(Boolean);
+    for (const t of links) {
+      if (isLikelyPersonTitle(t)) candidates.push(t);
+      if (candidates.length >= 50) break;
+    }
+  }
+  // dedupe while preserving order
+  return uniquePreserveOrder(candidates);
+}
+
+// Heuristic: candidate looks like a person title (not Special:, not file:, contains space)
+function isLikelyPersonTitle(title) {
+  if (!title || typeof title !== 'string') return false;
+  if (title.includes(':')) return false;
+  if (!/\s/.test(title)) return false; // likely not a person if single token
+  // filter out common non-person words
+  const badPatterns = /(list|timeline|history|kingdom|kingdoms|dynasty|republic|territory|province|president|governor|governor-general|prime minister|flag|coat of arms|coat|arms)/i;
+  if (badPatterns.test(title)) return false;
+  return true;
+}
+
+// Fetch person metadata: categories + extract (intro) + url
+async function fetchPersonMeta(title) {
+  const url = `${API_BASE}&action=query&prop=categories|extracts&explaintext&exintro&titles=${encodeURIComponent(title)}&cllimit=500&format=json`;
+  const json = await fetchJson(url);
+  const pages = json.query?.pages || {};
+  const pid = Object.keys(pages)[0];
+  const p = pages[pid] || {};
+  const categories = (p.categories || []).map(c => c.title);
+  const extract = p.extract || '';
+  const pageUrl = 'https://en.wikipedia.org/wiki/' + encodeURIComponent(title.replace(/ /g,'_'));
+  return { title, categories, extract, url: pageUrl };
+}
+
+// Decide whether a person is a monarch using multiple heuristics
+function isPersonMonarch(personMeta, country) {
+  // check categories
+  const catText = (personMeta.categories || []).join(' ').toLowerCase();
+  if (/(king|queen|monarch|sultan|shah|emir|khan|tsar|czar|czarina|maharaja|raja|pharaoh|rajah)/i.test(catText)) return true;
+
+  // check intro extract for royal words and 'reign' or 'ruled'
+  const intro = (personMeta.extract || '').toLowerCase();
+  if (/(king|queen|sultan|shah|emir|khan|maharaja|raja|emperor|tsar|czar|pharaoh)/i.test(intro) && /(reign|reigned|ruled|was king|was queen|crowned|ascended)/i.test(intro)) return true;
+
+  // also accept if intro explicitly says "was the king of {country}" or similar
+  const countryLower = country.toLowerCase();
+  if (new RegExp(`(king|queen|sultan|shah|emir|khan|maharaja|raja|emperor) of ${escapeRegExp(countryLower)}`, 'i').test(intro)) return true;
+
+  // last resort: inspect categories for country name nearby (e.g., "Kings of Afghanistan")
+  if (new RegExp(`${escapeRegExp(countryLower)}`, 'i').test(catText) && /(king|queen|monarch|sultan|shah|emir|khan)/i.test(catText)) return true;
+
+  // otherwise not judged a monarch
+  return false;
+}
+
+// Fetch parse HTML (action=parse) for person page (used to extract full biography)
+async function fetchParseHtml(title) {
+  const url = `${API_BASE}&action=parse&page=${encodeURIComponent(title)}&prop=text&format=json`;
+  try {
+    const json = await fetchJson(url);
+    if (!json.parse) return null;
+    const html = json.parse.text['*'];
+    const pageUrl = 'https://en.wikipedia.org/wiki/' + encodeURIComponent(json.parse.title.replace(/ /g,'_'));
+    return { html, title: json.parse.title, url: pageUrl };
+  } catch (e) {
+    return null;
+  }
+}
+
+// Extract full readable biography text from the parse HTML - returns cleaned text
+function extractReadableTextFromParseHtml(htmlString) {
+  if (!htmlString) return null;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  const content = doc.querySelector('.mw-parser-output') || doc.body;
+  if (!content) return null;
+
+  // Remove unwanted nodes
+  const removeSel = ['table', '.navbox', '.vertical-navbox', '.toc', '.mw-editsection', 'sup.reference', '.infobox', 'style', 'script', 'noscript', 'figure'];
+  removeSel.forEach(sel => content.querySelectorAll(sel).forEach(n => n.remove()));
+
+  // Helper to clean text
+  function cleanText(s) {
+    if (!s) return '';
+    return s.replace(/\[[^\]]*\]/g, '').replace(/\s+/g, ' ').trim();
+  }
+
+  const out = [];
+  // prefer paragraphs and headings
+  const children = Array.from(content.childNodes);
+  children.forEach(node => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const tag = node.tagName.toLowerCase();
+      if (tag === 'p') {
+        const t = cleanText(node.textContent);
+        if (t.length > 30) out.push(t + '\n');
+      } else if (tag.match(/^h[1-4]$/)) {
+        const t = cleanText(node.textContent);
+        if (t) out.push('\n' + t.toUpperCase() + '\n');
+      } else if (tag === 'ul' || tag === 'ol') {
+        const items = Array.from(node.querySelectorAll('li')).map(li => cleanText(li.textContent)).filter(Boolean);
+        items.forEach(it => out.push('- ' + it));
+      } else {
+        // skip other large blocks
+      }
+    }
+  });
+
+  let final = out.join('\n').trim();
+  if (!final) final = cleanText(content.textContent || '');
+  // collapse multiple blank lines
+  final = final.replace(/\n{3,}/g, '\n\n').trim();
+  return final;
+}
+
+// Extract simple life dates from intro like "(1901–1980)" or "born 1901" patterns
+function extractLifeFromIntro(intro) {
+  if (!intro) return null;
+  const m = intro.match(/\(\s*(?:born\s*)?([0-9]{3,4})(?:\s*[–-]\s*([0-9]{3,4}))?\s*\)/);
+  if (m) {
+    return m[1] + (m[2] ? '–' + m[2] : '');
+  }
+  // fallback: find "born YYYY" or "died YYYY"
+  const b = intro.match(/born\s+([0-9]{3,4})/i);
+  const d = intro.match(/died\s+([0-9]{3,4})/i);
+  if (b || d) return (b ? b[1] : '') + (d ? '–' + d[1] : '');
+  return null;
+}
+
+// Utility: fetch JSON with basic error handling
+async function fetchJson(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('Network error: ' + r.status);
+  return r.json();
+}
+
+// Small helpers
+function uniquePreserveOrder(arr) {
+  const set = new Set();
+  const out = [];
+  for (const x of arr) {
+    if (!x) continue;
+    const t = x.trim();
+    if (!set.has(t)) { set.add(t); out.push(t); }
+  }
+  return out;
+}
+function isLikelyPersonTitle(title) {
+  if (!title) return false;
+  if (title.includes(':')) return false;
+  if (!/\s/.test(title)) return false;
+  // exclude obvious non-person titles
+  if (/^(List|Timeline|History|Dynasty|Kings of|Category|Timeline)/i.test(title)) return false;
+  return true;
+}
+function setCardStatus(card, state) {
+  const st = card.querySelector('.status');
+  const list = card.querySelector('.result-list');
+  if (state === 'searching') { st.textContent = 'searching'; st.className='status'; list.textContent = 'Searching list page...'; }
+  else if (state === 'no-list') { st.textContent = 'no list'; st.className='status warn'; list.textContent='No list page found'; }
+  else if (state === 'no-candidates') { st.textContent='no candidates'; st.className='status warn'; list.textContent='No candidates found'; }
+}
+function idFrom(s){ return s.replace(/[^a-z0-9]/gi,'_'); }
+function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]); }
+function sleep(ms){ return new Promise(res=>setTimeout(res, ms)); }
+function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+// top-level copy/download
+function copyAll(){
+  const json = JSON.stringify(resultsData, null, 2);
+  navigator.clipboard.writeText(json);
+  alert('JSON copied to clipboard (size ' + json.length + ' chars).');
+}
+function downloadAll(){
+  const json = JSON.stringify(resultsData, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   a.href = url;
-  a.download = "kings_and_queens.json";
+  a.download = 'monarchs_biographies_5countries.json';
   a.click();
   URL.revokeObjectURL(url);
 }
 
-document.getElementById("startBtn").addEventListener("click", startCollection);
-document.getElementById("copyBtn").addEventListener("click", copyJSON);
-document.getElementById("downloadBtn").addEventListener("click", downloadJSON);
-</script>
+// update progress bar/text
+function updateProgress(){
+  const total = COUNTRIES.length;
+  const done = processedCountries;
+  statsEl.textContent = `${done} / ${total} processed`;
+  const pct = Math.round((done / total) * 100);
+  progressEl.style.width = pct + '%';
+  progressText.textContent = (done === 0 ? 'Starting' : `${done} / ${total} done`);
+}
 
+</script>
 </body>
 </html>
