@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Collect: Kings/Monarchs by Country (Wikipedia)</title>
+<style>
+  :root{
+    --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent:#60a5fa; --glass: rgba(255,255,255,0.03);
+    --success:#16a34a; --danger:#ef4444;
+  }
+  html,body{height:100%; margin:0; font-family:Inter,Segoe UI,Roboto,Arial,sans-serif; background:linear-gradient(180deg,#071028 0%,#071024 100%); color:#e6eef6;}
+  .wrap{max-width:1100px;margin:28px auto;padding:18px;}
+  header{display:flex;gap:12px;align-items:center;justify-content:space-between}
+  h1{margin:0;font-size:1.25rem}
+  p.lead{margin:6px 0 14px;color:var(--muted)}
+  .controls{display:flex;gap:8px;align-items:center}
+  button{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#06202b;font-weight:600;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);font-weight:600}
+  button.danger{background:var(--danger);color:#fff}
+  .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:18px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+  .card h3{margin:0 0 8px;font-size:1rem;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .meta{font-size:0.85rem;color:var(--muted)}
+  .result-list{margin:10px 0 0;padding:8px;background:var(--glass);border-radius:8px;max-height:260px;overflow:auto;font-family:ui-monospace,monospace;font-size:0.95rem}
+  .line{padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+  .line:last-child{border-bottom:none}
+  .small{font-size:0.85rem;color:var(--muted)}
+  .status{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:600}
+  .status.ok{background:rgba(96,165,250,0.12);color:var(--accent)}
+  .status.warn{background:rgba(250,204,21,0.08);color:#f59e0b}
+  .status.err{background:rgba(239,68,68,0.08);color:var(--danger)}
+  .footer{margin-top:16px;color:var(--muted);font-size:0.9rem}
+  .copybtn{margin-left:8px;padding:6px 9px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--accent);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+  .progressbar{height:10px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;margin-top:12px}
+  .progress{height:100%;background:linear-gradient(90deg,rgba(96,165,250,0.9),rgba(96,165,250,0.6));width:0%}
+  pre.copybox{white-space:pre-wrap;background:#021124;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-family:ui-monospace,monospace;font-size:0.95rem;max-height:260px;overflow:auto}
+  @media(min-width:860px){ .grid{grid-template-columns:repeat(2,1fr)} }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Collect: Kings & Monarchs (Wikipedia)</h1>
+        <p class="lead">Attempts to fetch lists of monarchs/kings for many countries using the Wikipedia API. Results are heuristic-based — some pages differ in layout; where a direct list is found it will be shown, otherwise a summary extract is provided.</p>
+      </div>
+      <div class="controls">
+        <button id="startBtn">Start Fetch</button>
+        <button id="copyAllBtn" class="ghost">Copy All</button>
+        <button id="downloadBtn" class="ghost">Download JSON</button>
+      </div>
+    </header>
+
+    <div class="card" style="margin-top:12px">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+        <div><strong>Progress</strong> <span class="small" id="progressText">Idle</span></div>
+        <div><span id="stats" class="small">0 / 0 processed</span></div>
+      </div>
+      <div class="progressbar" aria-hidden><div id="progress" class="progress"></div></div>
+    </div>
+
+    <div id="results" class="grid" style="margin-top:12px"></div>
+
+    <div class="footer">
+      <p>Notes: This file queries Wikipedia live (no server). Some pages use non-uniform structures; the script attempts to parse lists and meaningful lines from the page HTML. If you need a stricter, complete extraction (e.g., for all historical rulers with sources), a server-side processing of Wikipedia dumps would be recommended.</p>
+    </div>
+  </div>
+
+<script>
+/*
+collect.html
+- Iterates the country list below
+- For each country it tries multiple wikipedia search queries:
+  "List of monarchs of X", "Monarchs of X", "Kings of X", "List of heads of state of X"
+- For matched pages, fetches parsed page HTML (MediaWiki API parse) and attempts to extract <ul>/<ol> list items
+  that look like monarch entries (contain years or 'King', 'Shah', 'Emir', 'Ruler', etc.)
+- Displays results per country and provides per-country and global copy buttons
+- Throttles requests (delayBetweenRequests ms) to be polite
+*/
+
+const COUNTRIES = [
+"Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde (Cape Verde)","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Republic of the","Congo, Democratic Republic of the","Costa Rica","Côte d’Ivoire","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","São Tomé and Príncipe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+];
+
+const SEARCH_QUERIES = [
+  'List of monarchs of {country}',
+  'List of kings of {country}',
+  'Monarchs of {country}',
+  'Kings of {country}',
+  'List of heads of state of {country}',
+  'Monarchs in {country}'
+];
+
+const WIKIPEDIA_API_BASE = 'https://en.wikipedia.org/w/api.php?origin=*';
+const delayBetweenRequests = 600; // ms - polite throttle
+
+let resultsData = [];
+let total = COUNTRIES.length;
+let done = 0;
+
+const resultsEl = document.getElementById('results');
+const startBtn = document.getElementById('startBtn');
+const copyAllBtn = document.getElementById('copyAllBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const progressEl = document.getElementById('progress');
+const progressText = document.getElementById('progressText');
+const statsEl = document.getElementById('stats');
+
+startBtn.addEventListener('click', () => {
+  startBtn.disabled = true;
+  resultsEl.innerHTML = '';
+  resultsData = [];
+  done = 0;
+  progressText.textContent = 'Starting…';
+  statsEl.textContent = `0 / ${total} processed`;
+  runAll();
+});
+
+copyAllBtn.addEventListener('click', async () => {
+  const text = resultsData.map(r => `${r.country}\n${r.rawText || '(no data)'}\n`).join('\n');
+  await copyToClipboard(text);
+  alert('All results copied to clipboard.');
+});
+
+downloadBtn.addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(resultsData, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'monarchs_by_country.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+async function runAll(){
+  for (let i=0;i<COUNTRIES.length;i++){
+    const country = COUNTRIES[i];
+    updateProgress(i, COUNTRIES.length);
+    const cardEl = createCountryCard(country);
+    resultsEl.appendChild(cardEl);
+    try {
+      const res = await fetchMonarchsForCountry(country);
+      resultsData.push(res);
+      populateCardWithResult(cardEl, res);
+    } catch(err){
+      console.error('error for',country,err);
+      const res = {country, error: String(err), rawText:null, items:[]};
+      resultsData.push(res);
+      populateCardWithResult(cardEl, res);
+    }
+    await sleep(delayBetweenRequests);
+    done++;
+    statsEl.textContent = `${done} / ${total} processed`;
+  }
+  progressText.textContent = 'Completed';
+  progressEl.style.width = '100%';
+  startBtn.disabled = false;
+}
+
+function updateProgress(index, totalCount){
+  const pct = Math.round((index/totalCount)*100);
+  progressEl.style.width = pct + '%';
+  progressText.textContent = `${index} / ${totalCount} started`;
+}
+
+function createCountryCard(country){
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.innerHTML = `
+    <h3>${escapeHtml(country)} <span id="status-${idFrom(country)}" class="status small">queued</span></h3>
+    <div class="meta small">Source: <span id="src-${idFrom(country)}">—</span></div>
+    <div id="list-${idFrom(country)}" class="result-list small">Waiting...</div>
+    <div style="margin-top:8px;display:flex;gap:8px">
+      <button class="copybtn" id="copy-${idFrom(country)}">Copy</button>
+      <button class="copybtn" id="open-${idFrom(country)}">Open page</button>
+    </div>
+  `;
+  return el;
+}
+
+function populateCardWithResult(cardEl, res){
+  const id = idFrom(res.country);
+  const statusEl = cardEl.querySelector(`#status-${id}`);
+  const srcEl = cardEl.querySelector(`#src-${id}`);
+  const listEl = cardEl.querySelector(`#list-${id}`);
+  const copyBtn = cardEl.querySelector(`#copy-${id}`);
+  const openBtn = cardEl.querySelector(`#open-${id}`);
+
+  if (res.error){
+    statusEl.textContent = 'error';
+    statusEl.className = 'status err';
+    srcEl.textContent = 'none';
+    listEl.innerHTML = `<div class="line">Error: ${escapeHtml(res.error)}</div>`;
+    copyBtn.addEventListener('click', ()=>{ copyToClipboard(`${res.country}\nError: ${res.error}`); });
+    openBtn.disabled = true;
+    return;
+  }
+
+  statusEl.textContent = (res.items && res.items.length>0) ? 'ok' : 'no list';
+  statusEl.className = (res.items && res.items.length>0) ? 'status ok' : 'status warn';
+  srcEl.textContent = res.pageTitle ? res.pageTitle : 'none';
+
+  // Fill list
+  listEl.innerHTML = '';
+  if (res.items && res.items.length>0){
+    res.items.forEach(li => {
+      const row = document.createElement('div');
+      row.className = 'line';
+      row.textContent = li;
+      listEl.appendChild(row);
+    });
+  } else if (res.rawText){
+    const p = document.createElement('pre');
+    p.className = 'copybox';
+    p.textContent = res.rawText;
+    listEl.appendChild(p);
+  } else {
+    listEl.innerHTML = '<div class="line">No list could be parsed from matched pages.</div>';
+  }
+
+  copyBtn.addEventListener('click', async ()=>{
+    const text = (res.items && res.items.length>0) ? res.items.join('\\n') : (res.rawText || '(no data)');
+    await copyToClipboard(`${res.country}\\n${text}`);
+    copyBtn.textContent = 'Copied ✓';
+    setTimeout(()=>copyBtn.textContent = 'Copy',1000);
+  });
+
+  openBtn.addEventListener('click', ()=>{
+    if (res.pageUrl) window.open(res.pageUrl,'_blank');
+    else alert('No page URL available for this country.');
+  });
+}
+
+// MAIN fetching logic
+async function fetchMonarchsForCountry(country){
+  // Try multiple query templates
+  for (const tmpl of SEARCH_QUERIES){
+    const query = tmpl.replace('{country}', country);
+    // Use search API to find top page
+    const searchUrl = `${WIKIPEDIA_API_BASE}&action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=3&format=json`;
+    try {
+      const sr = await fetchJson(searchUrl);
+      if (sr && sr.query && sr.query.search && sr.query.search.length>0){
+        // try each returned page
+        for (const page of sr.query.search){
+          const title = page.title;
+          const parsed = await fetchPageHtmlByTitle(title);
+          // attempt to parse list of monarchs from parsed.html
+          const items = parseMonarchListFromHtml(parsed.html);
+          if (items && items.length>0){
+            return {country, pageTitle: title, pageUrl: parsed.url, items, rawText: null};
+          } else {
+            // fallback: try extracting a plaintext extract (intro) for some usable dates/names
+            const extract = await fetchExtractByTitle(title);
+            // heuristics: if extract mentions "King" or "Shah" or has years, treat as fallback
+            if (looksLikeMonarchExtract(extract)){
+              return {country, pageTitle: title, pageUrl: parsed.url, items: [], rawText: extract};
+            }
+          }
+          // polite pause
+          await sleep(200);
+        }
+      }
+    } catch(e){
+      console.warn('search error',e);
+      // continue to next template
+    }
+  }
+  // Final fallback: try searching just the country title for "List of heads ..."
+  try {
+    const fallbackSearch = `${country} monarchy`;
+    const sr = await fetchJson(`${WIKIPEDIA_API_BASE}&action=query&list=search&srsearch=${encodeURIComponent(fallbackSearch)}&srlimit=3&format=json`);
+    if (sr && sr.query && sr.query.search && sr.query.search.length>0){
+      for (const page of sr.query.search){
+        const title = page.title;
+        const parsed = await fetchPageHtmlByTitle(title);
+        const items = parseMonarchListFromHtml(parsed.html);
+        if (items && items.length>0){
+          return {country, pageTitle: title, pageUrl: parsed.url, items, rawText: null};
+        } else {
+          const extract = await fetchExtractByTitle(title);
+          if (looksLikeMonarchExtract(extract)) return {country, pageTitle: title, pageUrl: parsed.url, items:[], rawText: extract};
+        }
+      }
+    }
+  } catch(e){ /* ignore */ }
+
+  // Nothing found
+  return {country, pageTitle:null, pageUrl:null, items:[], rawText:null};
+}
+
+// Helper: fetch parsed HTML of a page by title
+async function fetchPageHtmlByTitle(title){
+  const url = `${WIKIPEDIA_API_BASE}&action=parse&page=${encodeURIComponent(title)}&prop=text&format=json`;
+  const data = await fetchJson(url);
+  if (!data || !data.parse) throw new Error('No parse result');
+  const html = data.parse.text['*'];
+  const pageUrl = 'https://en.wikipedia.org/wiki/' + encodeURIComponent(title.replace(/ /g,'_'));
+  return {html, url: pageUrl, title: data.parse.title};
+}
+
+// Helper: fetch extract plaintext
+async function fetchExtractByTitle(title){
+  const url = `${WIKIPEDIA_API_BASE}&action=query&prop=extracts&exintro&explaintext&titles=${encodeURIComponent(title)}&format=json`;
+  const data = await fetchJson(url);
+  if (!data || !data.query || !data.query.pages) return null;
+  const pages = data.query.pages;
+  const pid = Object.keys(pages)[0];
+  return pages[pid] && pages[pid].extract ? pages[pid].extract : null;
+}
+
+// parse monarch entries from HTML (greedy heuristics)
+function parseMonarchListFromHtml(htmlString){
+  if (!htmlString) return [];
+  // Create a DOM parser
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  // Extract the main content nodes
+  const content = doc.querySelector('.mw-parser-output') || doc.body;
+  if (!content) return [];
+
+  // Strategy:
+  // 1) Look for <ul> or <ol> elements that contain many lines with years or key titles
+  // 2) Extract their li text and filter lines that look like monarch entries
+  const lists = Array.from(content.querySelectorAll('ul, ol'));
+  let candidates = [];
+  for (const ul of lists){
+    const lis = Array.from(ul.querySelectorAll('li'));
+    if (lis.length < 1) continue;
+    const matching = lis.map(li => li.textContent.trim()).filter(text => isLikelyMonarchLine(text));
+    if (matching.length >= Math.max(1, Math.floor(lis.length * 0.2))){
+      // good candidate list
+      candidates.push({matching, total: lis.length});
+    } else {
+      // also accept if many matching across document
+      if (matching.length>0) candidates.push({matching, total: lis.length});
+    }
+  }
+
+  // If we found candidate lists, flatten and return unique entries (trimmed)
+  if (candidates.length>0){
+    const flat = [].concat(...candidates.map(c=>c.matching));
+    return uniquePreserveOrder(flat).map(s => s.replace(/\\s+/g,' ').trim());
+  }
+
+  // 2) If no list found, try to parse headings + paragraphs with "Reign" or timeline tables
+  // look for tables with class "wikitable" that might contain monarch lists
+  const tables = Array.from(content.querySelectorAll('table'));
+  for (const table of tables){
+    const rows = Array.from(table.querySelectorAll('tr'));
+    const extracted = [];
+    for (const tr of rows){
+      const text = tr.textContent.replace(/\\[.*?\\]/g,'').trim();
+      if (isLikelyMonarchLine(text)) extracted.push(text);
+    }
+    if (extracted.length>0) return uniquePreserveOrder(extracted);
+  }
+
+  // 3) Last resort: scan all paragraphs for lines containing years and monarch keywords
+  const paras = Array.from(content.querySelectorAll('p')).map(p=>p.textContent.trim());
+  const paraMatches = [];
+  for (const p of paras){
+    const sentences = p.split(/[\\.\\n]+/).map(s=>s.trim()).filter(Boolean);
+    for (const s of sentences){
+      if (isLikelyMonarchLine(s)) paraMatches.push(s);
+    }
+  }
+  return uniquePreserveOrder(paraMatches);
+}
+
+// heuristics
+function isLikelyMonarchLine(s){
+  if (!s || s.length<6) return false;
+  const lower = s.toLowerCase();
+  const keywords = ['king','queen','shah','emir','sultan','raja','monarch','princes','prince','tsar','khan','ruler','reign','ruled'];
+  if (keywords.some(k=>lower.includes(k))) return true;
+  // year pattern like 1709–1715 or 1709-1715 or (1709–15) or 1709 to 1715
+  const yearRegex = /\\b\\d{3,4}\\b/;
+  if (yearRegex.test(s)) return true;
+  // roman numerals and ordinal years sometimes indicate monarch lines
+  if (/\\b(i{1,3}|iv|v|vi{0,3}|vii|viii|ix|x)\\b/i.test(s) && s.length<200) return true;
+  return false;
+}
+
+function looksLikeMonarchExtract(text){
+  if (!text) return false;
+  const t = text.toLowerCase();
+  if (t.includes('king') || t.includes('shah') || t.includes('emir') || t.includes('sultan') || t.includes('monarch')) return true;
+  if (/\\d{3,4}/.test(t)) return true;
+  return false;
+}
+
+// utility: fetch JSON with error handling
+async function fetchJson(url){
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('Network response not ok: ' + r.status);
+  return r.json();
+}
+
+function idFrom(s){ return s.replace(/[^a-z0-9]/gi,'_'); }
+
+async function copyToClipboard(text){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(text);
+  } else {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    ta.remove();
+  }
+}
+
+function uniquePreserveOrder(arr){
+  const seen = new Set();
+  const out = [];
+  for (const x of arr){
+    const t = x.trim();
+    if (!t) continue;
+    if (!seen.has(t)){
+      seen.add(t); out.push(t);
+    }
+  }
+  return out;
+}
+
+function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function sleep(ms){ return new Promise(res=>setTimeout(res,ms)); }
+</script>
+</body>
+</html>
