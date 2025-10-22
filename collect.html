@@ -3,380 +3,573 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Monarch Biographies Collector — 5 Countries (Fixed)</title>
+<title>Collect Leaders (Wikidata) — Afghanistan → Austria</title>
 <style>
-  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:0;background:#071024;color:#e6eef6}
-  .wrap{max-width:1100px;margin:20px auto;padding:18px}
-  header{display:flex;justify-content:space-between;align-items:center;gap:12px}
-  h1{margin:0;font-size:1.2rem}
-  .lead{color:#9aa4b2;max-width:760px}
-  .controls{display:flex;gap:8px}
-  button{background:#60a5fa;border:none;padding:8px 12px;border-radius:8px;color:#022;cursor:pointer}
-  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#60a5fa}
-  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:12px;border-radius:10px;margin-top:12px;border:1px solid rgba(255,255,255,0.03)}
-  .meta{color:#9aa4b2;font-size:0.9rem}
-  .result{background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;margin-top:8px;max-height:260px;overflow:auto;font-family:ui-monospace,monospace}
-  pre{white-space:pre-wrap;margin:0;font-family:ui-monospace,monospace}
-  .progressbar{height:10px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;margin-top:8px}
-  .progress{height:100%;background:linear-gradient(90deg,#60a5fa,#3b82f6);width:0%}
-  .small{font-size:0.85rem;color:#9aa4b2}
-  .status{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:600}
-  .status.ok{background:rgba(34,197,94,0.12);color:#22c55e}
-  .status.warn{background:rgba(245,158,11,0.08);color:#f59e0b}
-  .status.err{background:rgba(239,68,68,0.08);color:#ef4444}
+  :root{
+    --bg:#071026; --card:#07182a; --muted:#9aa4b2; --accent:#60a5fa; --glass: rgba(255,255,255,0.03);
+    --ok:#16a34a; --warn:#f59e0b; --err:#ef4444;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#041127 0%,#071024 100%);color:#e6eef6}
+  .wrap{max-width:1100px;margin:24px auto;padding:18px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  h1{margin:0;font-size:1.25rem}
+  p.lead{margin:6px 0 14px;color:var(--muted);max-width:760px}
+  .controls{display:flex;gap:8px;align-items:center}
+  button{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#06202b;font-weight:700;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)}
+  .progressbar{height:10px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;margin-top:12px}
+  .progress{height:100%;background:linear-gradient(90deg,var(--accent),rgba(96,165,250,0.6));width:0%}
+  .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:18px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+  .card h3{margin:0 0 8px;font-size:1rem;display:flex;justify-content:space-between;align-items:center}
+  .meta{font-size:0.85rem;color:var(--muted)}
+  .result-list{margin:8px 0 0;padding:8px;background:var(--glass);border-radius:8px;max-height:300px;overflow:auto;font-family:ui-monospace,monospace;font-size:0.95rem;white-space:pre-wrap}
+  .copybtn{margin-left:8px;padding:6px 9px;border-radius:8px;background:transparent;color:var(--accent);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+  .status{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:700}
+  .status.ok{background:rgba(22,163,74,0.08);color:var(--ok)}
+  .status.warn{background:rgba(245,158,11,0.08);color:var(--warn)}
+  .status.err{background:rgba(239,68,68,0.08);color:var(--err)}
+  .small{font-size:0.85rem;color:var(--muted)}
+  pre.copybox{white-space:pre-wrap;background:#021124;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-family:ui-monospace,monospace;font-size:0.9rem;max-height:300px;overflow:auto}
+  @media(min-width:860px){ .grid{grid-template-columns:repeat(2,1fr)} }
 </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <div>
-        <h1>Monarch Biographies Collector — 5 Countries (Fixed)</h1>
-        <div class="lead">This tool fetches kings & queens (biographies) for five countries. Click <strong>Start</strong> and wait — requests are throttled to avoid rate limits.</div>
+        <h1>Collect: Leaders (Wikidata) — Afghanistan → Austria</h1>
+        <p class="lead">This page fetches historical & current leaders (heads of state, heads of government, monarchs) for the 10 countries: Afghanistan, Albania, Algeria, Andorra, Angola, Antigua and Barbuda, Argentina, Armenia, Australia, Austria. Data comes from Wikidata + Wikipedia summary. Click Start Fetch to begin.</p>
       </div>
       <div class="controls">
-        <button id="startBtn">Start</button>
-        <button id="copyBtn" class="ghost">Copy JSON</button>
+        <button id="startBtn">Start Fetch</button>
+        <button id="copyAllBtn" class="ghost">Copy All JSON</button>
         <button id="downloadBtn" class="ghost">Download JSON</button>
       </div>
     </header>
 
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <div><strong>Progress</strong> <span id="progressText" class="small">Idle</span></div>
-        <div><span id="stats" class="small">0 / 5 processed</span></div>
+        <div><strong>Progress</strong> <span class="small" id="progressText">Idle</span></div>
+        <div><span id="stats" class="small">0 / 0</span></div>
       </div>
-      <div class="progressbar"><div id="progress" class="progress"></div></div>
+      <div class="progressbar" aria-hidden><div id="progress" class="progress"></div></div>
     </div>
 
-    <div id="resultsArea"></div>
+    <div id="results" class="grid"></div>
 
-    <p class="small" style="margin-top:12px">Notes: heuristics are conservative — they'll try to include people who actually reigned (king/queen/sultan/shah/emir/etc.). If a valid monarch is missed, we can refine the filter.</p>
+    <div style="margin-top:14px;color:var(--muted);font-size:0.9rem">
+      Notes: The page queries public Wikimedia APIs. The browser may show occasional rate-limit (Retry-After) delays; script uses polite throttling and caching in localStorage to speed re-runs.
+    </div>
   </div>
 
 <script>
-/* Fixed collector implementation */
-const COUNTRIES = ["Afghanistan","Albania","Algeria","Andorra","Angola"];
-const SEARCH_QUERIES = [
-  "List of monarchs of {c}",
-  "Monarchs of {c}",
-  "Kings of {c}",
-  "List of rulers of {c}",
-  "List of heads of state of {c}"
-];
-const API_BASE = "https://en.wikipedia.org/w/api.php?origin=*";
-const THROTTLE = 700;       // ms between significant calls
-const MAX_CANDIDATES = 60;  // per country cap
-const results = [];         // final array {country, monarchs: [...]}
-let processed = 0;
+/* collect.html — browser-only
+   Fetches leaders (heads of state, heads of government, monarchs) for 10 countries
+   Uses:
+     - wbsearchentities to find country QIDs
+     - query.wikidata.org SPARQL endpoint to find persons (P35,P6,P39->monarch)
+     - wikidata entity JSON to find English wiki title
+     - Wikipedia REST /summary to fetch plaintext extract
+   Caching: localStorage
+*/
 
+const COUNTRIES = [
+  "Afghanistan","Albania","Algeria","Andorra","Angola",
+  "Antigua and Barbuda","Argentina","Armenia","Australia","Austria"
+];
+
+const MAX_PERSONS_PER_COUNTRY = 250;
+const SPARQL_ENDPOINT = 'https://query.wikidata.org/sparql';
+const WIKIDATA_SEARCH = 'https://www.wikidata.org/w/api.php?origin=*';
+const WIKIDATA_ENTITY = 'https://www.wikidata.org/wiki/Special:EntityData';
+const WIKIPEDIA_REST = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+const USER_AGENT = 'collect-wikidata-demo/1.0 (browser)';
+
+// throttling + concurrency tuned for browser
+const THROTTLE_MS = 700;
+const COUNTRY_PAUSE_MS = 1200;
+const CONCURRENCY = 2; // how many person fetches in parallel per country
+
+// UI refs
 const startBtn = document.getElementById('startBtn');
-const copyBtn = document.getElementById('copyBtn');
-const downloadBtn = document.getElementById('downloadBtn');
-const resultsArea = document.getElementById('resultsArea');
+const resultsEl = document.getElementById('results');
 const progressEl = document.getElementById('progress');
 const progressText = document.getElementById('progressText');
 const statsEl = document.getElementById('stats');
+const copyAllBtn = document.getElementById('copyAllBtn');
+const downloadBtn = document.getElementById('downloadBtn');
 
-startBtn.onclick = () => run();
-copyBtn.onclick = () => copyAll();
-downloadBtn.onclick = () => downloadAll();
+let resultsData = [];
+let done = 0;
 
-async function run(){
-  startBtn.disabled = true;
-  resultsArea.innerHTML = '';
-  results.length = 0;
-  processed = 0;
-  updateProgress();
+// utility sleep
+const sleep = ms => new Promise(res=>setTimeout(res, ms));
 
-  for (const country of COUNTRIES) {
-    const card = makeCard(country);
-    resultsArea.appendChild(card);
+// safe fetch with Retry-After handling (for browser)
+async function fetchWithRetry(url, options = {}, retries = 5, baseDelay = 700) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const monarchs = await processCountry(country, card);
-      results.push({ country, monarchs });
-      markCardComplete(card, true, monarchs.length);
+      const resp = await fetch(url, options);
+      if (resp.status === 429) {
+        const ra = resp.headers.get('retry-after');
+        const wait = ra ? (isNaN(Number(ra)) ? 4000 : Number(ra) * 1000) : baseDelay * (attempt+1);
+        console.warn('Rate limited, waiting', wait, 'ms (Retry-After:', ra, ')');
+        await sleep(wait);
+        continue;
+      }
+      if (!resp.ok) {
+        // treat 5xx as retry-able
+        if (resp.status >= 500 && attempt < retries) {
+          const wait = baseDelay * Math.pow(2, attempt) + Math.random()*200;
+          console.warn('Server error, retrying in', wait, 'ms', resp.status);
+          await sleep(wait);
+          continue;
+        }
+        throw new Error('HTTP ' + resp.status + ' for ' + url);
+      }
+      return resp;
     } catch (err) {
-      console.error('Error processing', country, err);
-      results.push({ country, monarchs: [] });
-      markCardComplete(card, false, 0, err && err.message);
+      if (attempt === retries) throw err;
+      const wait = baseDelay * Math.pow(2, attempt) + Math.random()*200;
+      console.warn('Fetch error, retrying in', wait, 'ms', err.message || err);
+      await sleep(wait);
     }
-    processed++;
-    updateProgress();
-    await sleep(THROTTLE);
   }
-
-  startBtn.disabled = false;
-  progressText.textContent = 'Completed';
+  throw new Error('Failed fetch after retries: ' + url);
 }
 
-function makeCard(country) {
-  const div = document.createElement('div');
-  div.className = 'card';
-  div.innerHTML = `
-    <h3>${escapeHtml(country)} <span class="status" id="status_${idFrom(country)}">queued</span></h3>
-    <div class="meta small">Monarchs found: <span id="count_${idFrom(country)}">—</span></div>
-    <div id="list_${idFrom(country)}" class="result"><pre id="pre_${idFrom(country)}">Waiting...</pre></div>
+// localStorage caching helpers
+function cacheGet(key) {
+  try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : null; } catch(e){ return null; }
+}
+function cacheSet(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch(e){ /* ignore */ }
+}
+
+// get country QID via wbsearchentities (cached)
+async function getCountryQid(country) {
+  const cacheKey = `cid:${country}`;
+  const cached = cacheGet(cacheKey);
+  if (cached) return cached;
+  const url = `${WIKIDATA_SEARCH}&action=wbsearchentities&format=json&language=en&limit=10&search=${encodeURIComponent(country)}`;
+  const resp = await fetchWithRetry(url, { headers: {'Accept':'application/json'} });
+  const data = await resp.json();
+  let qid = null;
+  if (data.search && data.search.length) {
+    // prefer description mentioning 'country' or 'sovereign state'
+    qid = data.search[0].id;
+    for (const s of data.search) {
+      const desc = (s.description || '').toLowerCase();
+      if (desc.includes('country') || desc.includes('sovereign state') || desc.includes('state') || desc.includes('nation')) {
+        qid = s.id; break;
+      }
+    }
+  }
+  cacheSet(cacheKey, qid);
+  return qid;
+}
+
+// build SPARQL for selected country QID
+function buildSparql(countryQid, limit = MAX_PERSONS_PER_COUNTRY) {
+  // uses P35 (head of state), P6 (head of government), and positions subclass-of monarch (Q116)
+  return `
+SELECT DISTINCT ?person ?personLabel ?personDescription ?position ?positionLabel ?start ?end ?birth ?death WHERE {
+  VALUES ?country { wd:${countryQid} }
+
+  {
+    ?country wdt:P35 ?person .
+  } UNION {
+    ?country wdt:P6 ?person .
+  } UNION {
+    ?person wdt:P39 ?pos .
+    ?pos wdt:P279* wd:Q116 .
+    ?person wdt:P27 ?country .
+    BIND(?pos AS ?position)
+  }
+
+  OPTIONAL {
+    ?person p:P39 ?ps .
+    ?ps ps:P39 ?position .
+    OPTIONAL { ?ps pq:P580 ?start. }
+    OPTIONAL { ?ps pq:P582 ?end. }
+  }
+
+  OPTIONAL { ?person wdt:P569 ?birth. }
+  OPTIONAL { ?person wdt:P570 ?death. }
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+LIMIT ${limit}
+`.trim();
+}
+
+// run SPARQL query (CORS allowed)
+async function runSparql(query) {
+  const url = SPARQL_ENDPOINT + '?query=' + encodeURIComponent(query);
+  const resp = await fetchWithRetry(url, { headers: { 'Accept': 'application/sparql-results+json' } }, 6, 900);
+  const json = await resp.json();
+  return json;
+}
+
+// aggregate bindings into unique persons
+function aggregateBindings(bindings) {
+  const rows = bindings?.results?.bindings || [];
+  const map = new Map();
+  rows.forEach(r => {
+    const personUri = r.person.value;
+    const qid = personUri.split('/').pop();
+    const label = r.personLabel ? r.personLabel.value : qid;
+    const desc = r.personDescription ? r.personDescription.value : '';
+    const birth = r.birth ? r.birth.value : null;
+    const death = r.death ? r.death.value : null;
+    const posQ = r.position ? r.position.value.split('/').pop() : null;
+    const posLabel = r.positionLabel ? r.positionLabel.value : null;
+    const start = r.start ? r.start.value : null;
+    const end = r.end ? r.end.value : null;
+    if (!map.has(qid)) map.set(qid, { qid, name: label, description: desc, birth, death, positions: [] });
+    if (posQ) map.get(qid).positions.push({ qid: posQ, label: posLabel, start, end });
+  });
+  return Array.from(map.values());
+}
+
+// fetch wikidata entity JSON to find enwiki title (cached)
+async function fetchWikidataEntity(qid) {
+  const cacheKey = `ent:${qid}`;
+  const cached = cacheGet(cacheKey);
+  if (cached) return cached;
+  const url = `${WIKIDATA_ENTITY}/${qid}.json`;
+  const resp = await fetchWithRetry(url, {}, 4, 800);
+  const data = await resp.json();
+  cacheSet(cacheKey, data);
+  return data;
+}
+function getEnwikiTitleFromEntity(entJson, qid) {
+  try {
+    const ent = entJson.entities[qid];
+    if (!ent) return null;
+    if (ent.sitelinks && ent.sitelinks.enwiki) return ent.sitelinks.enwiki.title;
+    for (const k in ent.sitelinks) if (k.toLowerCase().includes('enwiki')) return ent.sitelinks[k].title;
+    return null;
+  } catch(e){ return null; }
+}
+
+// fetch Wikipedia REST summary (cached)
+async function fetchWikiSummary(title) {
+  if (!title) return '';
+  const cacheKey = `sum:${title}`;
+  const cached = cacheGet(cacheKey);
+  if (cached) return cached;
+  const url = WIKIPEDIA_REST + encodeURIComponent(title);
+  try {
+    const resp = await fetchWithRetry(url, { headers: { 'Accept':'application/json' } }, 5, 800);
+    const data = await resp.json();
+    const extract = data.extract || '';
+    cacheSet(cacheKey, extract);
+    return extract;
+  } catch (e) {
+    console.warn('Failed wiki summary', title, e.message || e);
+    cacheSet(cacheKey, '');
+    return '';
+  }
+}
+
+// create country card in UI
+function createCountryCard(country) {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.innerHTML = `
+    <h3>${escapeHtml(country)} <span class="status" id="status-${idFrom(country)}">queued</span></h3>
+    <div class="meta small">Country QID: <span id="qid-${idFrom(country)}">—</span></div>
+    <div id="list-${idFrom(country)}" class="result-list small">Waiting...</div>
+    <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+      <button class="copybtn" id="copy-${idFrom(country)}">Copy JSON</button>
+      <button class="copybtn" id="download-${idFrom(country)}">Download</button>
+    </div>
   `;
-  return div;
+  return el;
 }
-function markCardComplete(card, ok, count, err) {
-  const country = card.querySelector('h3').textContent.split('\n')[0].trim();
-  const statusEl = card.querySelector('.status');
-  const pre = card.querySelector('pre');
-  if (ok) {
-    statusEl.className = 'status ok';
-    statusEl.textContent = 'ok';
-    card.querySelector(`#count_${idFrom(country)}`).textContent = String(count);
-  } else {
-    statusEl.className = 'status err';
+
+function populateCard(cardEl, res) {
+  const id = idFrom(res.country);
+  const statusEl = cardEl.querySelector(`#status-${id}`);
+  const qidEl = cardEl.querySelector(`#qid-${id}`);
+  const listEl = cardEl.querySelector(`#list-${id}`);
+  const copyBtn = cardEl.querySelector(`#copy-${id}`);
+  const downloadBtn = cardEl.querySelector(`#download-${id}`);
+
+  if (res.error) {
     statusEl.textContent = 'error';
-    pre.textContent = 'Error: ' + (err || 'failed');
+    statusEl.className = 'status err';
+    qidEl.textContent = '—';
+    listEl.innerHTML = `<div class="line">Error: ${escapeHtml(res.error)}</div>`;
+    copyBtn.disabled = true;
+    downloadBtn.disabled = true;
+    return;
   }
+
+  statusEl.textContent = res.leaders && res.leaders.length ? 'ok' : 'no data';
+  statusEl.className = res.leaders && res.leaders.length ? 'status ok' : 'status warn';
+  qidEl.textContent = res.countryQid || '—';
+
+  const pretty = JSON.stringify(res.leaders || [], null, 2);
+  listEl.innerHTML = `<pre class="copybox" id="pre-${id}">${escapeHtml(pretty)}</pre>`;
+
+  copyBtn.addEventListener('click', async ()=>{
+    await copyToClipboard(pretty);
+    copyBtn.textContent = 'Copied ✓';
+    setTimeout(()=>copyBtn.textContent = 'Copy JSON',900);
+  });
+
+  downloadBtn.addEventListener('click', ()=>{
+    const blob = new Blob([pretty], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${res.country.replace(/\s+/g,'_')}_leaders.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
 }
 
-/* --- country-level flow --- */
-async function processCountry(country, cardEl) {
-  const pre = cardEl.querySelector('pre');
-  pre.textContent = 'Searching list pages...';
-  // 1) find a likely list page by trying search templates
-  let listPage = null;
-  for (const tmpl of SEARCH_QUERIES) {
-    const q = tmpl.replace('{c}', country);
+// top-level run
+startBtn.addEventListener('click', async () => {
+  startBtn.disabled = true;
+  resultsEl.innerHTML = '';
+  resultsData = [];
+  done = 0;
+  progressText.textContent = 'Starting...';
+  statsEl.textContent = `0 / ${COUNTRIES.length}`;
+  progressEl.style.width = '0%';
+
+  for (let i=0;i<COUNTRIES.length;i++) {
+    const country = COUNTRIES[i];
+    updateProgress(i, COUNTRIES.length);
+    const card = createCountryCard(country);
+    resultsEl.appendChild(card);
+
     try {
-      const s = await wikiSearch(q, 5);
-      await sleep(250);
-      if (!s || !s.length) continue;
-      // iterate top hits and test parse HTML content for patterns (lists or 'reign' or 'king')
-      for (const hit of s) {
-        try {
-          const parsed = await wikiParse(hit.title);
-          await sleep(200);
-          if (parsed && looksLikeMonarchList(parsed.html)) {
-            listPage = parsed;
-            break;
-          }
-        } catch(e){
-          // ignore
-        }
-      }
-      if (listPage) break;
-    } catch(e){
-      // ignore and try next template
+      const res = await fetchLeadersForCountry(country);
+      resultsData.push(res);
+      populateCard(card, res);
+    } catch (err) {
+      const res = { country, error: String(err), leaders: [] };
+      resultsData.push(res);
+      populateCard(card, res);
     }
+
+    done++;
+    statsEl.textContent = `${done} / ${COUNTRIES.length}`;
+    await sleep(COUNTRY_PAUSE_MS);
   }
 
-  if (!listPage) {
-    pre.textContent = 'No list page found for ' + country;
-    return [];
-  }
+  progressText.textContent = 'Completed';
+  progressEl.style.width = '100%';
+  startBtn.disabled = false;
+});
 
-  pre.textContent = 'Parsing candidate names from list page: ' + listPage.title;
-  // 2) extract linked person titles from list page; prefer lists (<ul>/<ol>)
-  const candidates = extractPersonTitlesFromListHtml(listPage.html).slice(0, MAX_CANDIDATES);
-  if (candidates.length === 0) {
-    pre.textContent = 'No candidate person links found on the list page.';
-    return [];
-  }
-  pre.textContent = `Found ${candidates.length} candidate links; verifying each...`;
+// copy all JSON
+copyAllBtn.addEventListener('click', async ()=>{
+  const full = JSON.stringify(resultsData, null, 2);
+  await copyToClipboard(full);
+  alert('All results copied to clipboard.');
+});
 
-  // 3) For each candidate, fetch extract+categories and decide if monarch; if yes fetch full bio
-  const monarchs = [];
-  for (let i=0;i<candidates.length;i++){
-    const title = candidates[i];
-    pre.textContent = `Checking (${i+1}/${candidates.length}): ${title}`;
-    await sleep(THROTTLE);
-    try {
-      const meta = await wikiGetExtractAndCategories(title);
-      if (!meta) continue;
-      const judge = isRoyal(meta, country);
-      if (!judge) continue;
-      // fetch full page HTML and extract cleaned biography
-      await sleep(THROTTLE);
-      const parsed = await wikiParse(title);
-      const bio = parsed ? extractReadableText(parsed.html) : (meta.extract || '');
-      const life = extractLife(meta.extract || '');
-      monarchs.push({
-        name: title,
-        url: parsed ? parsed.url : ('https://en.wikipedia.org/wiki/' + encodeURIComponent(title.replace(/ /g,'_'))),
-        life: life || null,
-        biography: bio || (meta.extract || '')
-      });
-      // update UI incrementally
-      const textNode = document.createElement('div');
-      textNode.className = 'line';
-      textNode.textContent = `${title}${life ? ' — ' + life : ''}`;
-      cardEl.querySelector('.result').appendChild(textNode);
-    } catch (e) {
-      console.warn('error checking candidate', title, e);
-    }
-  }
+// download combined
+downloadBtn.addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(resultsData, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'leaders_structured.json'; a.click(); URL.revokeObjectURL(url);
+});
 
-  if (monarchs.length === 0) {
-    cardEl.querySelector('pre').textContent = 'No monarchs determined from candidate list.';
-  }
-
-  return monarchs;
+// update progress bar
+function updateProgress(index, total) {
+  const pct = Math.round((index/total)*100);
+  progressEl.style.width = `${pct}%`;
+  progressText.textContent = `${index} / ${total} started`;
 }
 
-/* --- Wikipedia API helpers --- */
-async function wikiSearch(query, limit=5) {
-  const url = `${API_BASE}&action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=${limit}&format=json`;
-  const json = await fetchJson(url);
-  return json?.query?.search || [];
-}
-async function wikiParse(title) {
-  const url = `${API_BASE}&action=parse&page=${encodeURIComponent(title)}&prop=text&format=json`;
-  const json = await fetchJson(url);
-  if (!json?.parse) return null;
-  return { html: json.parse.text['*'], title: json.parse.title, url: 'https://en.wikipedia.org/wiki/' + encodeURIComponent(json.parse.title.replace(/ /g,'_')) };
-}
-async function wikiGetExtractAndCategories(title) {
-  const url = `${API_BASE}&action=query&prop=extracts%7Ccategories&exintro&explaintext&titles=${encodeURIComponent(title)}&cllimit=500&format=json`;
-  const json = await fetchJson(url);
-  const pages = json?.query?.pages;
-  if (!pages) return null;
-  const pid = Object.keys(pages)[0];
-  const p = pages[pid];
-  if (!p) return null;
-  return { extract: p.extract || '', categories: (p.categories || []).map(c=>c.title) };
-}
-async function fetchJson(url) {
-  const r = await fetch(url);
-  if (!r.ok) throw new Error('Network error ' + r.status);
-  return r.json();
-}
+// fetch leaders for one country: qid -> SPARQL -> aggregate -> fetch entity + wiki summary
+async function fetchLeadersForCountry(country) {
+  const countryQid = await getCountryQid(country);
+  if (!countryQid) throw new Error('Could not determine country QID');
+  // SPARQL
+  const sparql = buildSparql(countryQid, MAX_PERSONS_PER_COUNTRY);
+  const bindings = await runSparql(sparql);
+  const persons = aggregateBindings(bindings);
+  // optionally limit if huge
+  // persons = persons.slice(0, 300);
 
-/* --- parsing heuristics --- */
-function looksLikeMonarchList(html) {
-  if (!html) return false;
-  const lower = html.toLowerCase();
-  // presence of 'reign' or 'king' or multiple <li> suggests a list of rulers
-  if (lower.includes('reign') || lower.includes('king') || lower.includes('queen') || lower.includes('monarch')) return true;
-  if (lower.includes('<ul') || lower.includes('<ol')) return true;
-  return false;
-}
+  // fetch persons info with limited concurrency
+  const leaders = [];
+  let idx = 0;
 
-function extractPersonTitlesFromListHtml(html) {
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  const content = doc.querySelector('.mw-parser-output') || doc.body;
-  if (!content) return [];
-  const titles = [];
-  // prefer links inside list items
-  const lists = content.querySelectorAll('ul,ol');
-  for (const ul of lists) {
-    const lis = ul.querySelectorAll('li');
-    if (lis.length === 0) continue;
-    for (const li of lis) {
-      const a = li.querySelector('a[title]');
-      if (a) {
-        const t = a.getAttribute('title');
-        if (isValidPersonTitle(t)) titles.push(t);
-        // also collect other links in same li
-        const others = li.querySelectorAll('a[title]');
-        for (const o of others) {
-          const tt = o.getAttribute('title');
-          if (isValidPersonTitle(tt)) titles.push(tt);
+  async function worker() {
+    while (true) {
+      const i = idx++;
+      if (i >= persons.length) return;
+      const p = persons[i];
+      try {
+        // fetch entity JSON
+        const ent = await fetchWikidataEntity(p.qid);
+        const enTitle = getEnwikiTitle(ent, p.qid);
+        let wikiExtract = '';
+        if (enTitle) {
+          wikiExtract = await fetchWikiSummary(enTitle);
+          await sleep(THROTTLE_MS);
         }
+        leaders.push({
+          qid: p.qid,
+          name: p.name,
+          description: p.description || '',
+          birth: p.birth || null,
+          death: p.death || null,
+          positions: p.positions || [],
+          wikipedia_title: enTitle || null,
+          wikipedia_extract: wikiExtract || ''
+        });
+        console.log('  +', p.name);
+      } catch (err) {
+        console.warn('person fetch error', p.name, err);
+        leaders.push({ qid: p.qid, name: p.name, error: String(err) });
       }
     }
-    if (titles.length >= 20) break;
   }
-  // fallback: collect links from paragraphs if none found
-  if (titles.length === 0) {
-    const links = content.querySelectorAll('a[title]');
-    for (const a of links) {
-      const t = a.getAttribute('title');
-      if (isValidPersonTitle(t)) titles.push(t);
-      if (titles.length >= 50) break;
+
+  const workers = [];
+  const concurrency = Math.max(1, Math.min(CONCURRENCY, persons.length));
+  for (let w=0; w<concurrency; w++) workers.push(worker());
+  await Promise.all(workers);
+
+  return { country, countryQid, leaders };
+}
+
+// ================= helper network / parsing functions =================
+
+// get country qid (uses wbsearchentities via origin=*)
+async function getCountryQid(country) {
+  const cacheKey = `cid:${country}`;
+  const cached = cacheGet(cacheKey);
+  if (cached) return cached;
+
+  const url = `${WIKIDATA_SEARCH}&action=wbsearchentities&format=json&language=en&limit=10&search=${encodeURIComponent(country)}`;
+  const resp = await fetchWithRetry(url, { headers:{ 'Accept':'application/json' } }, 5, 800);
+  const data = await resp.json();
+  let qid = null;
+  if (data.search && data.search.length) {
+    qid = data.search[0].id;
+    for (const s of data.search) {
+      const desc = (s.description || '').toLowerCase();
+      if (desc.includes('country') || desc.includes('sovereign state') || desc.includes('nation') || desc.includes('state')) { qid = s.id; break; }
     }
   }
-  return unique(titles);
+  cacheSet(cacheKey, qid);
+  return qid;
 }
 
-function isValidPersonTitle(title) {
-  if (!title) return false;
-  if (title.includes(':')) return false; // skip File:, Category:, etc
-  if (!/\s/.test(title)) return false; // likely not a person if single token
-  // skip obvious non-persons
-  if (/^(List|History|Timeline|Category|Kings and|Dynasty|Government|Politics|Timeline)/i.test(title)) return false;
-  return true;
-}
+function buildSparql(countryQid, limit = MAX_PERSONS_PER_COUNTRY) {
+  return `
+SELECT DISTINCT ?person ?personLabel ?personDescription ?position ?positionLabel ?start ?end ?birth ?death WHERE {
+  VALUES ?country { wd:${countryQid} }
 
-function unique(arr) {
-  const seen = new Set(); const out = [];
-  for (const x of arr) { if (!x) continue; const t = x.trim(); if (!seen.has(t)) { seen.add(t); out.push(t); } }
-  return out;
-}
-
-/* Decide whether person is monarch */
-function isRoyal(meta, country) {
-  const extract = (meta.extract || '').toLowerCase();
-  const cats = (meta.categories || []).join(' ').toLowerCase();
-  const royalWords = /(king|queen|sultan|shah|emir|khan|prince|princess|maharaja|raja|emperor|tsar|czar)/i;
-  // If categories contain royal words -> accept
-  if (royalWords.test(cats)) return true;
-  // If intro extract contains royal words AND words like 'reign' or 'ruled' or 'crowned' -> accept
-  if (royalWords.test(extract) && /(reign|reigned|ruled|crowned|ascended|succeeded|was king|was queen|was emperor|was sultan)/i.test(extract)) return true;
-  // If intro explicitly says "King of {country}" or "Queen of {country}" -> accept
-  if (new RegExp(`(king|queen|sultan|shah|emir|khan|emperor) of ${escapeRegExp(country.toLowerCase())}`, 'i').test(extract)) return true;
-  // else: reject (conservative)
-  return false;
-}
-
-/* extract full readable bio from parse HTML */
-function extractReadableText(html) {
-  if (!html) return '';
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  const content = doc.querySelector('.mw-parser-output') || doc.body;
-  if (!content) return '';
-  // remove unwanted
-  const selectors = ['table', '.infobox', '.navbox', '.vertical-navbox', '.toc', 'sup.reference', 'script', 'style', 'figure'];
-  selectors.forEach(s => content.querySelectorAll(s).forEach(n => n.remove()));
-  // gather paragraphs and headings
-  const parts = [];
-  for (const node of content.childNodes) {
-    if (node.nodeType !== Node.ELEMENT_NODE) continue;
-    const tag = node.tagName.toLowerCase();
-    if (tag === 'p') {
-      const t = node.textContent.replace(/\[[^\]]*\]/g,'').trim();
-      if (t.length > 30) parts.push(t);
-    } else if (tag.match(/^h[1-4]$/)) {
-      const h = node.textContent.trim();
-      if (h) parts.push('\n' + h.toUpperCase() + '\n');
-    }
+  {
+    ?country wdt:P35 ?person .
+  } UNION {
+    ?country wdt:P6 ?person .
+  } UNION {
+    ?person wdt:P39 ?pos .
+    ?pos wdt:P279* wd:Q116 .
+    ?person wdt:P27 ?country .
+    BIND(?pos AS ?position)
   }
-  return parts.join('\n\n').replace(/\n{3,}/g,'\n\n').trim();
+
+  OPTIONAL {
+    ?person p:P39 ?ps .
+    ?ps ps:P39 ?position .
+    OPTIONAL { ?ps pq:P580 ?start. }
+    OPTIONAL { ?ps pq:P582 ?end. }
+  }
+
+  OPTIONAL { ?person wdt:P569 ?birth. }
+  OPTIONAL { ?person wdt:P570 ?death. }
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+LIMIT ${limit}
+`.trim();
 }
 
-/* simple life extractor from intro */
-function extractLife(intro) {
-  if (!intro) return null;
-  const m = intro.match(/\((?:born\s*)?(\d{3,4})(?:\s*[–-]\s*(\d{3,4}))?/i);
-  if (m) return m[1] + (m[2] ? '–' + m[2] : '');
-  const b = intro.match(/born\s+(\d{3,4})/i);
-  const d = intro.match(/died\s+(\d{3,4})/i);
-  if (b || d) return (b?b[1]:'') + (d?('–'+d[1]):'');
+async function runSparql(query) {
+  const url = SPARQL_ENDPOINT + '?query=' + encodeURIComponent(query);
+  const resp = await fetchWithRetry(url, { headers: { 'Accept': 'application/sparql-results+json' } }, 6, 900);
+  return resp.json();
+}
+
+function aggregateBindings(bindings) {
+  const rows = bindings?.results?.bindings || [];
+  const map = new Map();
+  rows.forEach(r => {
+    const personUri = r.person.value;
+    const qid = personUri.split('/').pop();
+    const name = r.personLabel ? r.personLabel.value : qid;
+    const desc = r.personDescription ? r.personDescription.value : '';
+    const birth = r.birth ? r.birth.value : null;
+    const death = r.death ? r.death.value : null;
+    const posQ = r.position ? r.position.value.split('/').pop() : null;
+    const posLabel = r.positionLabel ? r.positionLabel.value : null;
+    const start = r.start ? r.start.value : null;
+    const end = r.end ? r.end.value : null;
+    if (!map.has(qid)) map.set(qid, { qid, name, description: desc, birth, death, positions: [] });
+    if (posQ) map.get(qid).positions.push({ qid: posQ, label: posLabel, start, end });
+  });
+  return Array.from(map.values());
+}
+
+async function fetchWikidataEntity(qid) {
+  const cacheKey = `ent:${qid}`;
+  const cached = cacheGet(cacheKey);
+  if (cached) return cached;
+  const url = `${WIKIDATA_ENTITY}/${qid}.json`;
+  const resp = await fetchWithRetry(url, {}, 4, 800);
+  const data = await resp.json();
+  cacheSet(cacheKey, data);
+  return data;
+}
+function getEnwikiTitle(entJson, qid) {
+  if (!entJson || !entJson.entities || !entJson.entities[qid]) return null;
+  const ent = entJson.entities[qid];
+  if (ent.sitelinks && ent.sitelinks.enwiki) return ent.sitelinks.enwiki.title;
+  for (const k in ent.sitelinks || {}) if (k.toLowerCase().includes('enwiki')) return ent.sitelinks[k].title;
   return null;
 }
-
-/* --- Utilities --- */
-function idFrom(s){ return s.replace(/[^a-z0-9]/gi,'_'); }
-function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]); }
-function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
-function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
-function updateProgress(){ const pct = Math.round((processed / COUNTRIES.length) * 100); progressEl.style.width = pct + '%'; progressText.textContent = `${processed} / ${COUNTRIES.length} processed`; statsEl.textContent = `${processed} / ${COUNTRIES.length} processed`; }
-
-/* top-level copy & download */
-function copyAll(){
-  const json = JSON.stringify(results, null, 2);
-  navigator.clipboard.writeText(json).then(()=>alert('JSON copied to clipboard ('+json.length+' characters)'));
+async function fetchWikiSummary(title) {
+  if (!title) return '';
+  const cacheKey = `sum:${title}`;
+  const cached = cacheGet(cacheKey);
+  if (cached) return cached;
+  const url = WIKIPEDIA_REST + encodeURIComponent(title);
+  const resp = await fetchWithRetry(url, { headers: { 'Accept': 'application/json' } }, 5, 700);
+  const data = await resp.json();
+  const extract = data.extract || '';
+  cacheSet(cacheKey, extract);
+  return extract;
 }
-function downloadAll(){
-  const json = JSON.stringify(results, null, 2);
-  const blob = new Blob([json], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'monarchs_5countries.json'; a.click(); URL.revokeObjectURL(url);
+
+// copy to clipboard helper
+async function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+  const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+  document.execCommand('copy'); ta.remove();
 }
+
+// simple id from string
+function idFrom(s){ return (s||'').replace(/[^a-z0-9]/gi,'_'); }
+function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+// localStorage wrappers
+function cacheSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function cacheGet(k){ try{ const t=localStorage.getItem(k); return t?JSON.parse(t):null; }catch(e){return null;} }
+
 </script>
 </body>
 </html>
