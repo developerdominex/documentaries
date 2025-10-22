@@ -1,318 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Global Monarchs Collector</title>
-  <style>
-    body {
-      font-family: "Segoe UI", Roboto, sans-serif;
-      background: #f7f9fb;
-      margin: 0;
-      padding: 0;
-      color: #222;
-    }
-
-    header {
-      background: #1a73e8;
-      color: #fff;
-      padding: 1.2rem 2rem;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
-
-    #controls {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      padding: 1rem;
-    }
-
-    button {
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 0.6rem 1rem;
-      cursor: pointer;
-      font-size: 0.95rem;
-      transition: background 0.2s;
-    }
-
-    button:hover {
-      background-color: #155fc7;
-    }
-
-    #progress {
-      text-align: center;
-      font-size: 0.95rem;
-      color: #333;
-      margin-bottom: 1rem;
-    }
-
-    #output {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-    }
-
-    .country-card {
-      background: white;
-      border-radius: 10px;
-      padding: 1rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      height: 500px;
-    }
-
-    .country-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .country-name {
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #1a73e8;
-    }
-
-    .scrollbox {
-      background: #f3f6fa;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 0.6rem;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      flex-grow: 1;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-
-    .scrollbox::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .scrollbox::-webkit-scrollbar-thumb {
-      background-color: #ccc;
-      border-radius: 3px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-      color: #666;
-    }
-
-    .btn-small {
-      background-color: #34a853;
-      padding: 0.4rem 0.7rem;
-      font-size: 0.85rem;
-    }
-
-    .btn-small:hover {
-      background-color: #2c8b46;
-    }
-
-    .btn-red {
-      background-color: #ea4335;
-    }
-
-    .btn-red:hover {
-      background-color: #c13a2e;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Collect: Full Article Text — Kings/Monarchs by Country (Wikipedia)</title>
+<style>
+  :root{
+    --bg:#0f1724; --muted:#9aa4b2; --accent:#60a5fa; --glass: rgba(255,255,255,0.03);
+    --danger:#ef4444;
+  }
+  html,body{height:100%; margin:0; font-family:Inter,Segoe UI,Roboto,Arial,sans-serif; background:linear-gradient(180deg,#071028 0%,#071024 100%); color:#e6eef6;}
+  .wrap{max-width:1100px;margin:20px auto;padding:18px;}
+  header{display:flex;gap:12px;align-items:center;justify-content:space-between}
+  h1{margin:0;font-size:1.2rem}
+  p.lead{margin:6px 0 14px;color:var(--muted);max-width:680px}
+  .controls{display:flex;gap:8px;align-items:center}
+  button{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#06202b;font-weight:600;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent);font-weight:600}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-top:12px}
+  .card h3{margin:0 0 8px;font-size:1rem;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .meta{font-size:0.85rem;color:var(--muted)}
+  .result-list{margin:10px 0 0;padding:8px;background:var(--glass);border-radius:8px;max-height:360px;overflow:auto;font-family:ui-monospace,monospace;font-size:0.95rem;white-space:pre-wrap}
+  .line{padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+  .small{font-size:0.85rem;color:var(--muted)}
+  .status{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:600}
+  .status.ok{background:rgba(96,165,250,0.12);color:var(--accent)}
+  .status.warn{background:rgba(250,204,21,0.08);color:#f59e0b}
+  .status.err{background:rgba(239,68,68,0.08);color:var(--danger)}
+  .footer{margin-top:16px;color:var(--muted);font-size:0.9rem}
+  .copybtn{margin-left:8px;padding:6px 9px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--accent);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+  .progressbar{height:10px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden;margin-top:12px}
+  .progress{height:100%;background:linear-gradient(90deg,rgba(96,165,250,0.9),rgba(96,165,250,0.6));width:0%}
+  pre.copybox{white-space:pre-wrap;background:#021124;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-family:ui-monospace,monospace;font-size:0.9rem;max-height:360px;overflow:auto}
+  @media(min-width:900px){ .two{display:grid;grid-template-columns:1fr 1fr;gap:12px} }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Global Monarchs Collector (Wikipedia Full Text)</h1>
-  </header>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Collect: Full Article Text — Kings/Monarchs (Wikipedia)</h1>
+        <p class="lead">This page attempts to locate a relevant Wikipedia article for each country (likely "List of monarchs", "List of heads of state", or related pages) and fetch the <strong>full article text</strong> (the main article body). Click Start Fetch to begin. Use Copy per country or Download JSON to save everything.</p>
+      </div>
+      <div class="controls">
+        <button id="startBtn">Start Fetch</button>
+        <button id="copyAllBtn" class="ghost">Copy All</button>
+        <button id="downloadBtn" class="ghost">Download JSON</button>
+      </div>
+    </header>
 
-  <section id="controls">
-    <button id="fetchAllBtn">Fetch All Countries</button>
-    <button id="copyAllBtn" class="btn-small">Copy All</button>
-    <button id="downloadBtn" class="btn-small">Download JSON</button>
-  </section>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><strong>Progress</strong> <span class="small" id="progressText">Idle</span></div>
+        <div><span id="stats" class="small">0 / 0 processed</span></div>
+      </div>
+      <div class="progressbar" aria-hidden><div id="progress" class="progress"></div></div>
+    </div>
 
-  <div id="progress">Idle – ready to begin.</div>
+    <div id="results"></div>
 
-  <main id="output"></main>
+    <div class="footer">
+      <p>Important: This client-side tool queries the live Wikipedia API. Expect the run to take several minutes. If you need a full, authoritative dataset for every historic monarch, a server-side pipeline using Wikipedia dumps is recommended.</p>
+    </div>
+  </div>
 
-  <footer>© 2025 Monarch Data Collector | Wikipedia API</footer>
-
-  <script>
-    /* ✅ PART 2 – JavaScript (Countries List + Core Functions) */
-
-const countries = [
-  "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda",
-  "Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain",
-  "Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
-  "Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso",
-  "Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic",
-  "Chad","Chile","China","Colombia","Comoros","Congo, Republic of the",
-  "Congo, Democratic Republic of the","Costa Rica","Côte d’Ivoire","Croatia",
-  "Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica",
-  "Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea",
-  "Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon",
-  "Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea",
-  "Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India",
-  "Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan",
-  "Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon",
-  "Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg",
-  "Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands",
-  "Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia",
-  "Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal",
-  "Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea",
-  "North Macedonia","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea",
-  "Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia",
-  "Rwanda","Saint Kitts and Nevis","Saint Lucia",
-  "Saint Vincent and the Grenadines","Samoa","San Marino","São Tomé and Príncipe",
-  "Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore",
-  "Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea",
-  "South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland",
-  "Syria","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga",
-  "Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda",
-  "Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay",
-  "Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia",
-  "Zimbabwe"
+<script>
+// ✅ Full Country List
+const COUNTRIES = [
+  "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria",
+  "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan",
+  "Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde (Cape Verde)","Cambodia",
+  "Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo, Republic of the","Congo, Democratic Republic of the",
+  "Costa Rica","Côte d’Ivoire","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic",
+  "Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland",
+  "France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea",
+  "Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq",
+  "Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait",
+  "Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg",
+  "Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico",
+  "Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru",
+  "Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman",
+  "Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar",
+  "Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","São Tomé and Príncipe","Saudi Arabia",
+  "Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa",
+  "South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Tajikistan",
+  "Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu",
+  "Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela",
+  "Vietnam","Yemen","Zambia","Zimbabwe"
 ];
 
-// Store results
-let allResults = {};
+// ✅ Wikipedia Search Terms
+const SEARCH_QUERIES = [
+  "List of monarchs of {country}",
+  "{country} monarchy",
+  "Kings of {country}",
+  "List of kings of {country}",
+  "List of rulers of {country}",
+  "Heads of state of {country}"
+];
 
-// Create UI card for each country
-function createCountryCard(country) {
-  const container = document.createElement("div");
-  container.className = "country-card";
+const API = "https://en.wikipedia.org/w/api.php?origin=*";
+const delay = 600;
+let resultsData = [];
+let processed = 0;
 
-  container.innerHTML = `
-    <div class="country-header">
-      <span class="country-name">${country}</span>
-      <button class="btn-small copy-btn" data-country="${country}">Copy</button>
-    </div>
-    <div id="box-${country}" class="scrollbox">Fetching...</div>
-  `;
-  document.getElementById("output").appendChild(container);
+// ✅ Button Bindings
+document.getElementById("startBtn").onclick = start;
+document.getElementById("copyAllBtn").onclick = copyAll;
+document.getElementById("downloadBtn").onclick = downloadAll;
+
+async function start() {
+  processed = 0;
+  resultsData = [];
+  document.getElementById('results').innerHTML = "";
+  
+  for (const country of COUNTRIES) {
+    await processCountry(country);
+    processed++;
+    updateProgress();
+    await sleep(delay);
+  }
 }
 
-// Fetch Wikipedia text for country (Kings/Monarchs related page)
-async function fetchKingsForCountry(country) {
-  try {
-    // Common page name format
-    const title = `List of monarchs of ${country}`;
-    const url = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext&titles=${encodeURIComponent(title)}&format=json&origin=*`;
+// ✅ Fetch Per Country
+async function processCountry(country) {
+  const card = createCard(country);
+  document.getElementById('results').appendChild(card);
 
-    const response = await fetch(url);
-    const data = await response.json();
+  for (const query of SEARCH_QUERIES) {
+    const title = query.replace("{country}", country);
+    const pages = await search(title);
+    if (!pages) continue;
 
-    const pages = data.query.pages;
-    const page = pages[Object.keys(pages)[0]];
+    for (const page of pages) {
+      const parsed = await fetchHtml(page.title);
+      if (!parsed) continue;
 
-    if (!page || page.missing) {
-      return "No data found on Wikipedia.";
+      const cleanText = extractText(parsed.html);
+      if (cleanText && cleanText.length > 200) {
+        resultsData.push({
+          country,
+          pageTitle: parsed.title,
+          pageUrl: parsed.url,
+          fullText: cleanText
+        });
+        populateCard(card, cleanText);
+        return;
+      }
     }
-
-    return cleanText(page.extract);
-  } catch (e) {
-    return "Error fetching data.";
   }
+  populateCard(card, null);
 }
 
-// Clean text before display
-function cleanText(text) {
-  return text
-    .replace(/==+/g, "\n")    // convert headings to spacing
-    .replace(/\n{2,}/g, "\n") // remove repeated line breaks
-    .trim();
-}
-/* ✅ PART 3 – Copy / Download / Fetch Workflow */
+// ✅ Clean Text Extractor
+function extractText(html) {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  let content = doc.querySelector('.mw-parser-output');
+  if (!content) return null;
 
-// Update one card
-async function updateCountryCard(country, index) {
-  const box = document.getElementById(`box-${country}`);
-  box.textContent = "Fetching data from Wikipedia…";
-  document.getElementById("progress").textContent =
-    `(${index + 1}/${countries.length}) Fetching: ${country}`;
+  content.querySelectorAll('table, sup.reference, .toc, .navbox, img, style, script').forEach(e => e.remove());
 
-  const resultText = await fetchKingsForCountry(country);
-  box.textContent = resultText;
+  let output = [];
+  function clean(t){ return t.replace(/\[[^\]]*\]/g,'').replace(/\s+/g,' ').trim(); }
 
-  allResults[country] = {
-    country,
-    fullText: resultText
-  };
-}
-
-// Fetch all countries sequentially
-async function fetchAllCountries() {
-  document.getElementById("progress").textContent = "Starting global fetch…";
-  allResults = {};
-  document.getElementById("output").innerHTML = "";
-  for (let i = 0; i < countries.length; i++) {
-    createCountryCard(countries[i]);
-    await updateCountryCard(countries[i], i);
-  }
-  document.getElementById("progress").textContent = "✅ All countries fetched!";
-}
-
-// Copy one country
-function copyCountryText(country) {
-  const text = allResults[country]?.fullText || "";
-  if (text) {
-    navigator.clipboard.writeText(text);
-    alert(`Copied text for ${country}`);
-  } else {
-    alert(`No text available for ${country}`);
-  }
-}
-
-// Copy all countries
-function copyAll() {
-  const allText = Object.entries(allResults)
-    .map(([c, d]) => `=== ${c} ===\n${d.fullText}`)
-    .join("\n\n");
-  navigator.clipboard.writeText(allText);
-  alert("All text copied to clipboard!");
-}
-
-// Download JSON file
-function downloadJSON() {
-  const blob = new Blob([JSON.stringify(allResults, null, 2)], {
-    type: "application/json",
+  content.childNodes.forEach(node => {
+    if (node.nodeType === 1) {
+      if (/^h[1-4]$/.test(node.tagName.toLowerCase())) {
+        output.push("\n\n" + clean(node.textContent).toUpperCase() + "\n");
+      }
+      if (node.tagName.toLowerCase() === "p") {
+        output.push(clean(node.textContent) + "\n");
+      }
+      if (node.tagName.toLowerCase() === "ul" || node.tagName.toLowerCase() === "ol") {
+        node.querySelectorAll("li").forEach(li => {
+          output.push("- " + clean(li.textContent));
+        });
+      }
+    }
   });
+
+  return output.join("\n").trim();
+}
+
+// ✅ Wikipedia Search + Fetch
+async function search(q) {
+  const url = `${API}&action=query&list=search&srsearch=${encodeURIComponent(q)}&format=json`;
+  try { return (await fetch(url).then(r => r.json())).query.search; } catch { return null; }
+}
+
+async function fetchHtml(title) {
+  const url = `${API}&action=parse&page=${encodeURIComponent(title)}&prop=text&format=json`;
+  try {
+    const json = await fetch(url).then(r => r.json());
+    if (!json.parse) return null;
+    return {
+      html: json.parse.text["*"],
+      title: json.parse.title,
+      url: "https://en.wikipedia.org/wiki/" + json.parse.title.replace(/ /g, "_")
+    };
+  } catch { return null; }
+}
+
+// ✅ UI Helpers
+function createCard(country) {
+  const div = document.createElement("div");
+  div.className = "card";
+  div.innerHTML = `
+    <h3>${country} <span class="status">⏳</span></h3>
+    <pre class="result-text">Fetching...</pre>
+    <button class="copybtn">Copy</button>
+  `;
+  return div;
+}
+
+function populateCard(card, text) {
+  const status = card.querySelector(".status");
+  const resultText = card.querySelector(".result-text");
+  const btn = card.querySelector(".copybtn");
+
+  if (!text) {
+    status.textContent = "❌";
+    resultText.textContent = "No monarch data found.";
+  } else {
+    status.textContent = "✅";
+    resultText.textContent = text;
+    btn.onclick = () => navigator.clipboard.writeText(text);
+  }
+}
+
+function copyAll() {
+  navigator.clipboard.writeText(resultsData.map(r => `=== ${r.country} ===\n${r.fullText}`).join("\n\n"));
+}
+
+function downloadAll() {
+  const blob = new Blob([JSON.stringify(resultsData, null, 2)], {type: "application/json"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url;
-  a.download = "monarchs_data.json";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  a.href = url; a.download = "monarchs.json"; a.click();
   URL.revokeObjectURL(url);
 }
 
-// Event bindings
-document.getElementById("fetchAllBtn").addEventListener("click", fetchAllCountries);
-document.getElementById("copyAllBtn").addEventListener("click", copyAll);
-document.getElementById("downloadBtn").addEventListener("click", downloadJSON);
+function updateProgress() {
+  let percent = (processed / COUNTRIES.length) * 100;
+  document.getElementById("progress").style.width = percent + "%";
+}
 
-// Handle dynamic copy buttons
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("copy-btn")) {
-    const country = e.target.dataset.country;
-    copyCountryText(country);
-  }
-});
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 </script>
+
 </body>
 </html>
-
