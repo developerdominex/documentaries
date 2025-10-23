@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Collect Leaders (Wikidata) — Afghanistan → Austria</title>
+<title>Collect: Famous People & Detailed Biographies (Wikidata → Wikipedia)</title>
 <style>
   :root{
     --bg:#071026; --card:#07182a; --muted:#9aa4b2; --accent:#60a5fa; --glass: rgba(255,255,255,0.03);
@@ -23,14 +23,16 @@
   .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
   .card h3{margin:0 0 8px;font-size:1rem;display:flex;justify-content:space-between;align-items:center}
   .meta{font-size:0.85rem;color:var(--muted)}
-  .result-list{margin:8px 0 0;padding:8px;background:var(--glass);border-radius:8px;max-height:300px;overflow:auto;font-family:ui-monospace,monospace;font-size:0.95rem;white-space:pre-wrap}
+  .result-list{margin:8px 0 0;padding:8px;background:var(--glass);border-radius:8px;max-height:360px;overflow:auto;font-family:ui-monospace,monospace;font-size:0.95rem;white-space:pre-wrap}
   .copybtn{margin-left:8px;padding:6px 9px;border-radius:8px;background:transparent;color:var(--accent);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
   .status{display:inline-block;padding:6px 8px;border-radius:999px;font-weight:700}
   .status.ok{background:rgba(22,163,74,0.08);color:var(--ok)}
   .status.warn{background:rgba(245,158,11,0.08);color:var(--warn)}
   .status.err{background:rgba(239,68,68,0.08);color:var(--err)}
   .small{font-size:0.85rem;color:var(--muted)}
-  pre.copybox{white-space:pre-wrap;background:#021124;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-family:ui-monospace,monospace;font-size:0.9rem;max-height:300px;overflow:auto}
+  pre.copybox{white-space:pre-wrap;background:#021124;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-family:ui-monospace,monospace;font-size:0.9rem;max-height:360px;overflow:auto}
+  label { display:inline-flex; gap:8px; align-items:center; color:var(--muted); font-size:0.9rem; }
+  input[type="number"]{width:72px;padding:6px;border-radius:6px;border:none;background:rgba(255,255,255,0.02);color:var(--muted)}
   @media(min-width:860px){ .grid{grid-template-columns:repeat(2,1fr)} }
 </style>
 </head>
@@ -38,10 +40,13 @@
   <div class="wrap">
     <header>
       <div>
-        <h1>Collect: Leaders (Wikidata) — Afghanistan → Austria</h1>
-        <p class="lead">This page fetches historical & current leaders (heads of state, heads of government, monarchs) for the 10 countries: Afghanistan, Albania, Algeria, Andorra, Angola, Antigua and Barbuda, Argentina, Armenia, Australia, Austria. Data comes from Wikidata + Wikipedia summary. Click Start Fetch to begin.</p>
+        <h1>Collect: Famous People & Full Biographies</h1>
+        <p class="lead">Fetches notable people (popular/famous men & women) for five countries and retrieves full plaintext biographies from Wikipedia. Data source: Wikidata + Wikipedia APIs. Use controls to start, copy or download results.</p>
       </div>
       <div class="controls">
+        <label>Per-country:
+          <input id="limitInput" type="number" min="1" max="200" value="8" title="How many top people per country to fetch">
+        </label>
         <button id="startBtn">Start Fetch</button>
         <button id="copyAllBtn" class="ghost">Copy All JSON</button>
         <button id="downloadBtn" class="ghost">Download JSON</button>
@@ -59,45 +64,25 @@
     <div id="results" class="grid"></div>
 
     <div style="margin-top:14px;color:var(--muted);font-size:0.9rem">
-      Notes: The page queries public Wikimedia APIs. The browser may show occasional rate-limit (Retry-After) delays; script uses polite throttling and caching in localStorage to speed re-runs.
+      Notes: This client-only tool performs many network requests. The first run is slower; results are cached in <code>localStorage</code>. If you receive rate-limit responses (Retry-After) the script will pause and retry automatically.
     </div>
   </div>
 
 <script>
 /* collect.html — browser-only
-   Fetches leaders (heads of state, heads of government, monarchs) for 10 countries
-   Uses:
-     - wbsearchentities to find country QIDs
-     - query.wikidata.org SPARQL endpoint to find persons (P35,P6,P39->monarch)
-     - wikidata entity JSON to find English wiki title
-     - Wikipedia REST /summary to fetch plaintext extract
-   Caching: localStorage
+   Fetch top notable people per country (by sitelinks), then fetch Wikipedia full plaintext biographies.
+   Countries: first five as requested.
 */
 
-const COUNTRIES = [
-  "Niger","Nigeria","North Korea","North Macedonia","Norway","Oman",
-  "Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar",
-  "Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","São Tomé and Príncipe","Saudi Arabia",
-  "Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa",
-  "South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Tajikistan",
-  "Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu",
-  "Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela",
-  "Vietnam","Yemen","Zambia","Zimbabwe"
-];
-
-const MAX_PERSONS_PER_COUNTRY = 250;
+const COUNTRIES = ["Afghanistan","Albania","Algeria","Andorra","Angola"];
 const SPARQL_ENDPOINT = 'https://query.wikidata.org/sparql';
 const WIKIDATA_SEARCH = 'https://www.wikidata.org/w/api.php?origin=*';
 const WIKIDATA_ENTITY = 'https://www.wikidata.org/wiki/Special:EntityData';
-const WIKIPEDIA_REST = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
-const USER_AGENT = 'collect-wikidata-demo/1.0 (browser)';
+const WIKIPEDIA_API = 'https://en.wikipedia.org/w/api.php?origin=*';
+const MEDIAWIKI_EXTRACT = 'https://en.wikipedia.org/w/api.php?origin=*'; // will use action=query&prop=extracts
+const USER_AGENT = 'collect-famous-people/1.0 (browser)';
 
-// throttling + concurrency tuned for browser
-const THROTTLE_MS = 700;
-const COUNTRY_PAUSE_MS = 1200;
-const CONCURRENCY = 2; // how many person fetches in parallel per country
-
-// UI refs
+// UI
 const startBtn = document.getElementById('startBtn');
 const resultsEl = document.getElementById('results');
 const progressEl = document.getElementById('progress');
@@ -105,149 +90,124 @@ const progressText = document.getElementById('progressText');
 const statsEl = document.getElementById('stats');
 const copyAllBtn = document.getElementById('copyAllBtn');
 const downloadBtn = document.getElementById('downloadBtn');
+const limitInput = document.getElementById('limitInput');
 
 let resultsData = [];
 let done = 0;
 
-// utility sleep
-const sleep = ms => new Promise(res=>setTimeout(res, ms));
+// throttling & concurrency
+let PER_COUNTRY_LIMIT = Number(limitInput.value) || 8;
+const CONCURRENCY = 2;     // parallel person fetches per country
+const THROTTLE_MS = 800;   // pause between Wikipedia biography fetches
+const COUNTRY_PAUSE_MS = 1200;
 
-// safe fetch with Retry-After handling (for browser)
-async function fetchWithRetry(url, options = {}, retries = 5, baseDelay = 700) {
-  for (let attempt = 0; attempt <= retries; attempt++) {
+// helpers
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function idFrom(s){ return (s||'').replace(/[^a-z0-9]/gi,'_'); }
+function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+// localStorage caching helpers
+function cacheKey(k){ return `collect_cache:${k}`; }
+function cacheGet(k){ try{ const j=localStorage.getItem(cacheKey(k)); return j?JSON.parse(j):null;}catch(e){return null} }
+function cacheSet(k,v){ try{ localStorage.setItem(cacheKey(k), JSON.stringify(v)); }catch(e){} }
+
+// fetch with retry & honor Retry-After (browser)
+async function fetchWithRetry(url, options = {}, retries = 6, baseDelay = 800) {
+  for (let attempt=0; attempt<=retries; attempt++){
     try {
       const resp = await fetch(url, options);
       if (resp.status === 429) {
         const ra = resp.headers.get('retry-after');
-        const wait = ra ? (isNaN(Number(ra)) ? 4000 : Number(ra) * 1000) : baseDelay * (attempt+1);
-        console.warn('Rate limited, waiting', wait, 'ms (Retry-After:', ra, ')');
+        const wait = ra ? (isNaN(Number(ra)) ? 5000 : Number(ra)*1000) : baseDelay*(attempt+1);
+        console.warn(`Rate limited (429). Waiting ${wait}ms (Retry-After: ${ra})`);
         await sleep(wait);
         continue;
       }
       if (!resp.ok) {
-        // treat 5xx as retry-able
+        // retry on 5xx
         if (resp.status >= 500 && attempt < retries) {
           const wait = baseDelay * Math.pow(2, attempt) + Math.random()*200;
-          console.warn('Server error, retrying in', wait, 'ms', resp.status);
+          console.warn(`Server ${resp.status}. Retrying in ${Math.round(wait)}ms`);
           await sleep(wait);
           continue;
         }
-        throw new Error('HTTP ' + resp.status + ' for ' + url);
+        throw new Error(`HTTP ${resp.status} for ${url}`);
       }
       return resp;
     } catch (err) {
       if (attempt === retries) throw err;
       const wait = baseDelay * Math.pow(2, attempt) + Math.random()*200;
-      console.warn('Fetch error, retrying in', wait, 'ms', err.message || err);
+      console.warn(`Fetch error, retrying in ${Math.round(wait)}ms:`, err.message || err);
       await sleep(wait);
     }
   }
-  throw new Error('Failed fetch after retries: ' + url);
+  throw new Error('fetchWithRetry failed: ' + url);
 }
 
-// localStorage caching helpers
-function cacheGet(key) {
-  try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : null; } catch(e){ return null; }
-}
-function cacheSet(key, value) {
-  try { localStorage.setItem(key, JSON.stringify(value)); } catch(e){ /* ignore */ }
-}
-
-// get country QID via wbsearchentities (cached)
+// 1) For a country, get QID (cached)
 async function getCountryQid(country) {
-  const cacheKey = `cid:${country}`;
-  const cached = cacheGet(cacheKey);
-  if (cached) return cached;
+  const ck = cacheGet(`cid:${country}`);
+  if (ck) return ck;
   const url = `${WIKIDATA_SEARCH}&action=wbsearchentities&format=json&language=en&limit=10&search=${encodeURIComponent(country)}`;
-  const resp = await fetchWithRetry(url, { headers: {'Accept':'application/json'} });
+  const resp = await fetchWithRetry(url, { headers:{ 'Accept':'application/json' }});
   const data = await resp.json();
   let qid = null;
   if (data.search && data.search.length) {
-    // prefer description mentioning 'country' or 'sovereign state'
     qid = data.search[0].id;
     for (const s of data.search) {
-      const desc = (s.description || '').toLowerCase();
-      if (desc.includes('country') || desc.includes('sovereign state') || desc.includes('state') || desc.includes('nation')) {
-        qid = s.id; break;
-      }
+      const d = (s.description||'').toLowerCase();
+      if (d.includes('country') || d.includes('sovereign state') || d.includes('nation') || d.includes('state')) { qid = s.id; break; }
     }
   }
-  cacheSet(cacheKey, qid);
+  cacheSet(`cid:${country}`, qid);
   return qid;
 }
 
-// build SPARQL for selected country QID
-function buildSparql(countryQid, limit = MAX_PERSONS_PER_COUNTRY) {
-  // uses P35 (head of state), P6 (head of government), and positions subclass-of monarch (Q116)
+// 2) SPARQL: fetch top notable people by sitelinks (popularity proxy)
+//    returns person QID, label, description, birth, death, sitelinks
+function buildSparqlTopPeople(countryQid, limit) {
+  // uses wikibase:sitelinks to get number of sitelinks for notability ranking
   return `
-SELECT DISTINCT ?person ?personLabel ?personDescription ?position ?positionLabel ?start ?end ?birth ?death WHERE {
+SELECT ?person ?personLabel ?personDescription ?birth ?death ?sitelinks WHERE {
   VALUES ?country { wd:${countryQid} }
-
-  {
-    ?country wdt:P35 ?person .
-  } UNION {
-    ?country wdt:P6 ?person .
-  } UNION {
-    ?person wdt:P39 ?pos .
-    ?pos wdt:P279* wd:Q116 .
-    ?person wdt:P27 ?country .
-    BIND(?pos AS ?position)
-  }
-
-  OPTIONAL {
-    ?person p:P39 ?ps .
-    ?ps ps:P39 ?position .
-    OPTIONAL { ?ps pq:P580 ?start. }
-    OPTIONAL { ?ps pq:P582 ?end. }
-  }
-
+  ?person wdt:P31 wd:Q5.                 # human
+  ?person wdt:P27 ?country.              # country of citizenship
   OPTIONAL { ?person wdt:P569 ?birth. }
   OPTIONAL { ?person wdt:P570 ?death. }
-
+  ?person wikibase:sitelinks ?sitelinks.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
+ORDER BY DESC(?sitelinks)
 LIMIT ${limit}
 `.trim();
 }
 
-// run SPARQL query (CORS allowed)
 async function runSparql(query) {
   const url = SPARQL_ENDPOINT + '?query=' + encodeURIComponent(query);
   const resp = await fetchWithRetry(url, { headers: { 'Accept': 'application/sparql-results+json' } }, 6, 900);
-  const json = await resp.json();
-  return json;
+  return resp.json();
 }
 
-// aggregate bindings into unique persons
-function aggregateBindings(bindings) {
+function aggregateTopPeople(bindings) {
   const rows = bindings?.results?.bindings || [];
-  const map = new Map();
-  rows.forEach(r => {
-    const personUri = r.person.value;
-    const qid = personUri.split('/').pop();
-    const label = r.personLabel ? r.personLabel.value : qid;
-    const desc = r.personDescription ? r.personDescription.value : '';
-    const birth = r.birth ? r.birth.value : null;
-    const death = r.death ? r.death.value : null;
-    const posQ = r.position ? r.position.value.split('/').pop() : null;
-    const posLabel = r.positionLabel ? r.positionLabel.value : null;
-    const start = r.start ? r.start.value : null;
-    const end = r.end ? r.end.value : null;
-    if (!map.has(qid)) map.set(qid, { qid, name: label, description: desc, birth, death, positions: [] });
-    if (posQ) map.get(qid).positions.push({ qid: posQ, label: posLabel, start, end });
-  });
-  return Array.from(map.values());
+  return rows.map(r => ({
+    qid: (r.person?.value||'').split('/').pop(),
+    name: r.personLabel?.value || '',
+    description: r.personDescription?.value || '',
+    birth: r.birth?.value || null,
+    death: r.death?.value || null,
+    sitelinks: r.sitelinks?.value ? Number(r.sitelinks.value) : 0
+  }));
 }
 
-// fetch wikidata entity JSON to find enwiki title (cached)
+// 3) Fetch Wikidata entity JSON to get enwiki title (cached)
 async function fetchWikidataEntity(qid) {
-  const cacheKey = `ent:${qid}`;
-  const cached = cacheGet(cacheKey);
-  if (cached) return cached;
+  const ck = cacheGet(`ent:${qid}`);
+  if (ck) return ck;
   const url = `${WIKIDATA_ENTITY}/${qid}.json`;
   const resp = await fetchWithRetry(url, {}, 4, 800);
   const data = await resp.json();
-  cacheSet(cacheKey, data);
+  cacheSet(`ent:${qid}`, data);
   return data;
 }
 function getEnwikiTitleFromEntity(entJson, qid) {
@@ -255,32 +215,41 @@ function getEnwikiTitleFromEntity(entJson, qid) {
     const ent = entJson.entities[qid];
     if (!ent) return null;
     if (ent.sitelinks && ent.sitelinks.enwiki) return ent.sitelinks.enwiki.title;
-    for (const k in ent.sitelinks) if (k.toLowerCase().includes('enwiki')) return ent.sitelinks[k].title;
+    for (const k in ent.sitelinks || {}) if (k.toLowerCase().includes('enwiki')) return ent.sitelinks[k].title;
     return null;
   } catch(e){ return null; }
 }
 
-// fetch Wikipedia REST summary (cached)
-async function fetchWikiSummary(title) {
+// 4) Fetch full plaintext extract from MediaWiki (explaintext=1) via action=query
+async function fetchFullExtract(title) {
   if (!title) return '';
-  const cacheKey = `sum:${title}`;
-  const cached = cacheGet(cacheKey);
-  if (cached) return cached;
-  const url = WIKIPEDIA_REST + encodeURIComponent(title);
+  const ck = cacheGet(`extract:${title}`);
+  if (ck) return ck;
+  const params = new URLSearchParams({
+    action: 'query',
+    prop: 'extracts',
+    explaintext: '1',
+    redirects: '1',
+    format: 'json',
+    titles: title
+  });
+  const url = `${WIKIPEDIA_API}&${params.toString()}`; // origin=* already in WIKIPEDIA_API
   try {
-    const resp = await fetchWithRetry(url, { headers: { 'Accept':'application/json' } }, 5, 800);
+    const resp = await fetchWithRetry(url, { headers:{'Accept':'application/json'} }, 6, 900);
     const data = await resp.json();
-    const extract = data.extract || '';
-    cacheSet(cacheKey, extract);
+    const pages = data.query && data.query.pages ? data.query.pages : null;
+    const pid = pages ? Object.keys(pages)[0] : null;
+    const extract = (pid && pages[pid] && pages[pid].extract) ? pages[pid].extract : '';
+    cacheSet(`extract:${title}`, extract);
     return extract;
   } catch (e) {
-    console.warn('Failed wiki summary', title, e.message || e);
-    cacheSet(cacheKey, '');
+    console.warn('Failed extract for', title, e.message || e);
+    cacheSet(`extract:${title}`, '');
     return '';
   }
 }
 
-// create country card in UI
+// UI helpers
 function createCountryCard(country) {
   const el = document.createElement('div');
   el.className = 'card';
@@ -314,267 +283,220 @@ function populateCard(cardEl, res) {
     return;
   }
 
-  statusEl.textContent = res.leaders && res.leaders.length ? 'ok' : 'no data';
-  statusEl.className = res.leaders && res.leaders.length ? 'status ok' : 'status warn';
+  statusEl.textContent = res.people && res.people.length ? 'ok' : 'no data';
+  statusEl.className = res.people && res.people.length ? 'status ok' : 'status warn';
   qidEl.textContent = res.countryQid || '—';
 
-  const pretty = JSON.stringify(res.leaders || [], null, 2);
+  const pretty = JSON.stringify(res.people || [], null, 2);
   listEl.innerHTML = `<pre class="copybox" id="pre-${id}">${escapeHtml(pretty)}</pre>`;
 
-  copyBtn.addEventListener('click', async ()=>{
-    await copyToClipboard(pretty);
-    copyBtn.textContent = 'Copied ✓';
-    setTimeout(()=>copyBtn.textContent = 'Copy JSON',900);
-  });
-
-  downloadBtn.addEventListener('click', ()=>{
-    const blob = new Blob([pretty], {type:'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${res.country.replace(/\s+/g,'_')}_leaders.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+  copyBtn.onclick = async ()=>{ await copyToClipboard(pretty); copyBtn.textContent='Copied ✓'; setTimeout(()=>copyBtn.textContent='Copy JSON',900); };
+  downloadBtn.onclick = ()=>{
+    const blob = new Blob([pretty], {type:'application/json'}); const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = `${res.country.replace(/\s+/g,'_')}_people.json`; a.click(); URL.revokeObjectURL(url);
+  };
 }
 
-// top-level run
-startBtn.addEventListener('click', async () => {
-  startBtn.disabled = true;
-  resultsEl.innerHTML = '';
-  resultsData = [];
-  done = 0;
-  progressText.textContent = 'Starting...';
-  statsEl.textContent = `0 / ${COUNTRIES.length}`;
-  progressEl.style.width = '0%';
-
-  for (let i=0;i<COUNTRIES.length;i++) {
-    const country = COUNTRIES[i];
-    updateProgress(i, COUNTRIES.length);
-    const card = createCountryCard(country);
-    resultsEl.appendChild(card);
-
-    try {
-      const res = await fetchLeadersForCountry(country);
-      resultsData.push(res);
-      populateCard(card, res);
-    } catch (err) {
-      const res = { country, error: String(err), leaders: [] };
-      resultsData.push(res);
-      populateCard(card, res);
-    }
-
-    done++;
-    statsEl.textContent = `${done} / ${COUNTRIES.length}`;
-    await sleep(COUNTRY_PAUSE_MS);
-  }
-
-  progressText.textContent = 'Completed';
-  progressEl.style.width = '100%';
-  startBtn.disabled = false;
-});
-
-// copy all JSON
+// Copy whole dataset
 copyAllBtn.addEventListener('click', async ()=>{
   const full = JSON.stringify(resultsData, null, 2);
   await copyToClipboard(full);
   alert('All results copied to clipboard.');
 });
 
-// download combined
-downloadBtn.addEventListener('click', ()=>{
+// Download combined
+downloadBtn.addEventListener('click', ()=> {
   const blob = new Blob([JSON.stringify(resultsData, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'leaders_structured.json'; a.click(); URL.revokeObjectURL(url);
+  const a = document.createElement('a'); a.href = url; a.download = 'famous_people_by_country.json'; a.click(); URL.revokeObjectURL(url);
 });
 
-// update progress bar
+// main runner
+startBtn.addEventListener('click', async ()=>{
+  try {
+    startBtn.disabled = true;
+    PER_COUNTRY_LIMIT = Math.max(1, Math.min(200, Number(limitInput.value) || 8));
+    resultsEl.innerHTML = '';
+    resultsData = [];
+    done = 0;
+    progressText.textContent = 'Starting...';
+    statsEl.textContent = `0 / ${COUNTRIES.length}`;
+    progressEl.style.width = '0%';
+
+    for (let i=0;i<COUNTRIES.length;i++) {
+      const country = COUNTRIES[i];
+      updateProgress(i, COUNTRIES.length);
+      const card = createCountryCard(country);
+      resultsEl.appendChild(card);
+
+      try {
+        const res = await gatherFamousPeopleForCountry(country, PER_COUNTRY_LIMIT);
+        resultsData.push(res);
+        populateCard(card, res);
+      } catch (err) {
+        console.error('Country error', country, err);
+        const res = { country, error: String(err), people: [] };
+        resultsData.push(res);
+        populateCard(card, res);
+      }
+
+      done++;
+      statsEl.textContent = `${done} / ${COUNTRIES.length}`;
+      await sleep(COUNTRY_PAUSE_MS);
+    }
+
+    progressText.textContent = 'Completed';
+    progressEl.style.width = '100%';
+    startBtn.disabled = false;
+  } catch (e) {
+    console.error('Run failed', e);
+    alert('Error: ' + (e.message || e));
+    startBtn.disabled = false;
+  }
+});
+
+// progress bar update
 function updateProgress(index, total) {
   const pct = Math.round((index/total)*100);
   progressEl.style.width = `${pct}%`;
   progressText.textContent = `${index} / ${total} started`;
 }
 
-// fetch leaders for one country: qid -> SPARQL -> aggregate -> fetch entity + wiki summary
-async function fetchLeadersForCountry(country) {
+// gather pipeline for one country
+async function gatherFamousPeopleForCountry(country, limit) {
   const countryQid = await getCountryQid(country);
   if (!countryQid) throw new Error('Could not determine country QID');
-  // SPARQL
-  const sparql = buildSparql(countryQid, MAX_PERSONS_PER_COUNTRY);
+  const sparql = buildSparqlTopPeople(countryQid, limit);
   const bindings = await runSparql(sparql);
-  const persons = aggregateBindings(bindings);
-  // optionally limit if huge
-  // persons = persons.slice(0, 300);
+  const people = aggregateTopPeople(bindings); // array of {qid,name,desc,birth,death,sitelinks}
 
-  // fetch persons info with limited concurrency
-  const leaders = [];
+  // fetch details for each person concurrently with limited workers
+  const results = [];
   let idx = 0;
-
-  async function worker() {
+  async function worker(){
     while (true) {
       const i = idx++;
-      if (i >= persons.length) return;
-      const p = persons[i];
+      if (i >= people.length) return;
+      const p = people[i];
       try {
-        // fetch entity JSON
         const ent = await fetchWikidataEntity(p.qid);
-        const enTitle = getEnwikiTitle(ent, p.qid);
-        let wikiExtract = '';
+        const enTitle = getEnwikiTitleFromEntity(ent, p.qid);
+        let extract = '';
         if (enTitle) {
-          wikiExtract = await fetchWikiSummary(enTitle);
+          // fetch full extract
+          extract = await fetchFullExtract(enTitle);
           await sleep(THROTTLE_MS);
         }
-        leaders.push({
+        results.push({
           qid: p.qid,
           name: p.name,
           description: p.description || '',
           birth: p.birth || null,
           death: p.death || null,
-          positions: p.positions || [],
+          sitelinks: p.sitelinks,
           wikipedia_title: enTitle || null,
-          wikipedia_extract: wikiExtract || ''
+          wikipedia_extract: extract || ''
         });
         console.log('  +', p.name);
       } catch (err) {
-        console.warn('person fetch error', p.name, err);
-        leaders.push({ qid: p.qid, name: p.name, error: String(err) });
+        console.warn('person error', p.name, err);
+        results.push({ qid: p.qid, name: p.name, error: String(err) });
       }
     }
   }
 
   const workers = [];
-  const concurrency = Math.max(1, Math.min(CONCURRENCY, persons.length));
+  const concurrency = Math.max(1, Math.min(CONCURRENCY, people.length));
   for (let w=0; w<concurrency; w++) workers.push(worker());
   await Promise.all(workers);
 
-  return { country, countryQid, leaders };
+  return { country, countryQid, people: results };
 }
 
-// ================= helper network / parsing functions =================
-
-// get country qid (uses wbsearchentities via origin=*)
-async function getCountryQid(country) {
-  const cacheKey = `cid:${country}`;
-  const cached = cacheGet(cacheKey);
-  if (cached) return cached;
-
-  const url = `${WIKIDATA_SEARCH}&action=wbsearchentities&format=json&language=en&limit=10&search=${encodeURIComponent(country)}`;
-  const resp = await fetchWithRetry(url, { headers:{ 'Accept':'application/json' } }, 5, 800);
-  const data = await resp.json();
-  let qid = null;
-  if (data.search && data.search.length) {
-    qid = data.search[0].id;
-    for (const s of data.search) {
-      const desc = (s.description || '').toLowerCase();
-      if (desc.includes('country') || desc.includes('sovereign state') || desc.includes('nation') || desc.includes('state')) { qid = s.id; break; }
-    }
-  }
-  cacheSet(cacheKey, qid);
-  return qid;
-}
-
-function buildSparql(countryQid, limit = MAX_PERSONS_PER_COUNTRY) {
+// SPARQL builder for top notable people by sitelinks
+function buildSparqlTopPeople(countryQid, limit) {
   return `
-SELECT DISTINCT ?person ?personLabel ?personDescription ?position ?positionLabel ?start ?end ?birth ?death WHERE {
+SELECT ?person ?personLabel ?personDescription ?birth ?death ?sitelinks WHERE {
   VALUES ?country { wd:${countryQid} }
-
-  {
-    ?country wdt:P35 ?person .
-  } UNION {
-    ?country wdt:P6 ?person .
-  } UNION {
-    ?person wdt:P39 ?pos .
-    ?pos wdt:P279* wd:Q116 .
-    ?person wdt:P27 ?country .
-    BIND(?pos AS ?position)
-  }
-
-  OPTIONAL {
-    ?person p:P39 ?ps .
-    ?ps ps:P39 ?position .
-    OPTIONAL { ?ps pq:P580 ?start. }
-    OPTIONAL { ?ps pq:P582 ?end. }
-  }
-
+  ?person wdt:P31 wd:Q5.
+  ?person wdt:P27 ?country.
   OPTIONAL { ?person wdt:P569 ?birth. }
   OPTIONAL { ?person wdt:P570 ?death. }
-
+  ?person wikibase:sitelinks ?sitelinks.
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
+ORDER BY DESC(?sitelinks)
 LIMIT ${limit}
 `.trim();
 }
 
+// run SPARQL (browser)
 async function runSparql(query) {
   const url = SPARQL_ENDPOINT + '?query=' + encodeURIComponent(query);
   const resp = await fetchWithRetry(url, { headers: { 'Accept': 'application/sparql-results+json' } }, 6, 900);
   return resp.json();
 }
 
-function aggregateBindings(bindings) {
-  const rows = bindings?.results?.bindings || [];
-  const map = new Map();
-  rows.forEach(r => {
-    const personUri = r.person.value;
-    const qid = personUri.split('/').pop();
-    const name = r.personLabel ? r.personLabel.value : qid;
-    const desc = r.personDescription ? r.personDescription.value : '';
-    const birth = r.birth ? r.birth.value : null;
-    const death = r.death ? r.death.value : null;
-    const posQ = r.position ? r.position.value.split('/').pop() : null;
-    const posLabel = r.positionLabel ? r.positionLabel.value : null;
-    const start = r.start ? r.start.value : null;
-    const end = r.end ? r.end.value : null;
-    if (!map.has(qid)) map.set(qid, { qid, name, description: desc, birth, death, positions: [] });
-    if (posQ) map.get(qid).positions.push({ qid: posQ, label: posLabel, start, end });
-  });
-  return Array.from(map.values());
+// fetch entity JSON (cached)
+async function fetchWikidataEntity(qid) {
+  return await (async ()=>{
+    const ck = cacheGet(`ent:${qid}`);
+    if (ck) return ck;
+    const url = `${WIKIDATA_ENTITY}/${qid}.json`;
+    const resp = await fetchWithRetry(url, {}, 4, 800);
+    const data = await resp.json();
+    cacheSet(`ent:${qid}`, data);
+    return data;
+  })();
 }
 
-async function fetchWikidataEntity(qid) {
-  const cacheKey = `ent:${qid}`;
-  const cached = cacheGet(cacheKey);
-  if (cached) return cached;
-  const url = `${WIKIDATA_ENTITY}/${qid}.json`;
-  const resp = await fetchWithRetry(url, {}, 4, 800);
-  const data = await resp.json();
-  cacheSet(cacheKey, data);
-  return data;
+// get enwiki title from entity json
+function getEnwikiTitleFromEntity(entJson, qid) {
+  try {
+    const ent = entJson.entities[qid];
+    if (!ent) return null;
+    if (ent.sitelinks && ent.sitelinks.enwiki) return ent.sitelinks.enwiki.title;
+    for (const k in ent.sitelinks || {}) if (k.toLowerCase().includes('enwiki')) return ent.sitelinks[k].title;
+    return null;
+  } catch(e){ return null; }
 }
-function getEnwikiTitle(entJson, qid) {
-  if (!entJson || !entJson.entities || !entJson.entities[qid]) return null;
-  const ent = entJson.entities[qid];
-  if (ent.sitelinks && ent.sitelinks.enwiki) return ent.sitelinks.enwiki.title;
-  for (const k in ent.sitelinks || {}) if (k.toLowerCase().includes('enwiki')) return ent.sitelinks[k].title;
-  return null;
-}
-async function fetchWikiSummary(title) {
+
+// fetch full plaintext extract (action=query&prop=extracts&explaintext=1)
+async function fetchFullExtract(title) {
   if (!title) return '';
-  const cacheKey = `sum:${title}`;
-  const cached = cacheGet(cacheKey);
-  if (cached) return cached;
-  const url = WIKIPEDIA_REST + encodeURIComponent(title);
-  const resp = await fetchWithRetry(url, { headers: { 'Accept': 'application/json' } }, 5, 700);
+  const ck = cacheGet(`extract:${title}`);
+  if (ck) return ck;
+  const params = new URLSearchParams({
+    action: 'query',
+    prop: 'extracts',
+    explaintext: '1',
+    redirects: '1',
+    format: 'json',
+    titles: title
+  });
+  const url = `${WIKIPEDIA_API}&${params.toString()}`;
+  const resp = await fetchWithRetry(url, { headers: { 'Accept': 'application/json' } }, 6, 1000);
   const data = await resp.json();
-  const extract = data.extract || '';
-  cacheSet(cacheKey, extract);
+  const pages = data.query && data.query.pages ? data.query.pages : null;
+  const pid = pages ? Object.keys(pages)[0] : null;
+  const extract = (pid && pages[pid] && pages[pid].extract) ? pages[pid].extract : '';
+  cacheSet(`extract:${title}`, extract);
   return extract;
 }
 
-// copy to clipboard helper
+// copy helper
 async function copyToClipboard(text) {
-  if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
   const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
   document.execCommand('copy'); ta.remove();
 }
 
-// simple id from string
+// small utility: safe id
 function idFrom(s){ return (s||'').replace(/[^a-z0-9]/gi,'_'); }
-function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
-// localStorage wrappers
-function cacheSet(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
-function cacheGet(k){ try{ const t=localStorage.getItem(k); return t?JSON.parse(t):null; }catch(e){return null;} }
+// initial helpful note: clear old caches? user can clear localStorage manually.
 
 </script>
 </body>
