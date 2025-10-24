@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>city_state_collect.html — ADM1 & Cities Collector (Wikidata → Wikipedia)</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>city_state_collect.html — All Cities & States (Category crawl)</title>
 <style>
   :root{
-    --bg:#071026; --card:#07182a; --muted:#9aa4b2; --accent:#60a5fa; --glass: rgba(255,255,255,0.03);
+    --bg:#071026; --muted:#9aa4b2; --accent:#60a5fa; --glass: rgba(255,255,255,0.03);
     --ok:#16a34a; --warn:#f59e0b; --err:#ef4444;
   }
   html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#041127 0%,#071024 100%);color:#e6eef6}
@@ -30,61 +30,86 @@
   .copybtn{margin-left:8px;padding:6px 9px;border-radius:8px;background:transparent;color:var(--accent);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
   pre.copybox{white-space:pre-wrap;background:#021124;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-family:ui-monospace,monospace;font-size:0.9rem;max-height:360px;overflow:auto}
   label{display:inline-flex;gap:8px;align-items:center;color:var(--muted);font-size:0.9rem}
-  input[type="number"]{width:72px;padding:6px;border-radius:6px;border:none;background:rgba(255,255,255,0.02);color:var(--muted)}
+  input[type="number"]{width:80px;padding:6px;border-radius:6px;border:none;background:rgba(255,255,255,0.02);color:var(--muted)}
   @media(min-width:860px){ .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px} }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <h1>City & State Collector (Wikidata → Wikipedia)</h1>
-        <p class="lead">Collects first-level administrative divisions (states/provinces) and major cities for five countries: Afghanistan, Albania, Algeria, Andorra, Angola. Uses Wikidata SPARQL and retrieves English Wikipedia extracts where available. Results are copyable/downloadable as JSON.</p>
-      </div>
-      <div class="controls">
-        <label>ADM1 limit:
-          <input id="admLimit" type="number" min="1" max="200" value="12" />
-        </label>
-        <label>City limit:
-          <input id="cityLimit" type="number" min="1" max="200" value="12" />
-        </label>
-        <button id="startBtn">Start Fetch</button>
-        <button id="copyAllBtn" class="ghost">Copy All JSON</button>
-        <button id="downloadBtn" class="ghost">Download JSON</button>
-      </div>
-    </header>
-
-    <div class="card" style="margin-top:12px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div><strong>Progress</strong> <span class="small" id="progressText">Idle</span></div>
-        <div><span id="stats" class="small">0 / 0</span></div>
-      </div>
-      <div class="progressbar" aria-hidden><div id="progress" class="progress"></div></div>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>city_state_collect.html — Crawl All Cities & States</h1>
+      <p class="lead">Crawls Wikipedia categories to collect <strong>all</strong> states (ADM1) and cities (populated places) for five countries. For each place it fetches the Wikipedia extract and Wikidata claims (population, area, coordinates, image). Results are copyable/downloadable as JSON.</p>
     </div>
-
-    <div id="results" class="grid"></div>
-
-    <div style="margin-top:14px;color:var(--muted);font-size:0.9rem">
-      Note: This tool runs in your browser. First run may take a few minutes. Results are cached in localStorage to speed repeat runs.
+    <div class="controls">
+      <label>Throttle ms:
+        <input id="throttle" type="number" min="100" max="2000" value="400"/>
+      </label>
+      <label>Concurrency:
+        <input id="concurrency" type="number" min="1" max="8" value="3"/>
+      </label>
+      <button id="startBtn">Start Fetch</button>
+      <button id="copyAllBtn" class="ghost">Copy All JSON</button>
+      <button id="downloadBtn" class="ghost">Download JSON</button>
     </div>
+  </header>
+
+  <div class="card" style="margin-top:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><strong>Progress</strong> <span class="small" id="progressText">Idle</span></div>
+      <div><span id="stats" class="small">0 / 0</span></div>
+    </div>
+    <div class="progressbar"><div id="progress" class="progress"></div></div>
   </div>
 
+  <div id="results" class="grid"></div>
+
+  <div style="margin-top:14px;color:var(--muted);font-size:0.9rem">
+    Note: This will do many requests. Results are cached in <code>localStorage</code> (prefix <code>csc:</code>). Clear storage to force fresh fetches.
+  </div>
+</div>
+
 <script>
-/* city_state_collect.html
-   - Countries: Afghanistan, Albania, Algeria, Andorra, Angola
-   - Fetches ADM1 (first-level administrative divisions) and major cities using SPARQL
-   - Enriches entries with English Wikipedia extract (plain text) where available
-   - Uses caching (localStorage), polite throttling, retries with backoff
+/*
+  city_state_collect.html
+  Browser-only crawler that:
+   - Finds category pages for "cities" and "states" patterns for each country
+   - Uses categorymembers API with continuation (cmlimit=max + cmcontinue) to get all members
+   - For each member (page) fetches pageprops (to get Wikidata QID) and extracts, then fetches Wikidata entity JSON to collect claims
+   - Caches responses in localStorage with prefix csc:
+   - Provides UI for copying/downloading JSON
 */
 
-// === CONFIG ===
+// --- Config / Countries ---
 const COUNTRIES = ["Afghanistan","Albania","Algeria","Andorra","Angola"];
-const SPARQL_ENDPOINT = 'https://query.wikidata.org/sparql';
-const WIKIDATA_SEARCH = 'https://www.wikidata.org/w/api.php?origin=*';
+const WIKIPEDIA_API = "https://en.wikipedia.org/w/api.php?origin=*";
 const WIKIDATA_ENTITY = 'https://www.wikidata.org/wiki/Special:EntityData';
-const WIKIPEDIA_API = 'https://en.wikipedia.org/w/api.php?origin=*';
+const CACHE_PREFIX = 'csc:'; // city_state_collect
 
-// UI
+// category name patterns to try (cities)
+const CITY_CATEGORY_TEMPLATES = [
+  "Category:Cities in {country}",
+  "Category:Populated places in {country}",
+  "Category:Municipalities of {country}",
+  "Category:Towns in {country}",
+  "Category:Villages in {country}",
+  "Category:Settlements in {country}",
+  "Category:Populated places in the {country}" // fallback
+];
+
+// category name patterns to try (ADM1 / first-level subdivisions)
+const ADM1_CATEGORY_TEMPLATES = [
+  "Category:Provinces of {country}",
+  "Category:States of {country}",
+  "Category:Regions of {country}",
+  "Category:Departments of {country}",
+  "Category:Governorates of {country}",
+  "Category:Administrative divisions of {country}",
+  "Category:First-level administrative country subdivisions of {country}",
+  "Category:Districts of {country}"
+];
+
+// UI refs
 const startBtn = document.getElementById('startBtn');
 const resultsEl = document.getElementById('results');
 const progressEl = document.getElementById('progress');
@@ -92,196 +117,424 @@ const progressText = document.getElementById('progressText');
 const statsEl = document.getElementById('stats');
 const copyAllBtn = document.getElementById('copyAllBtn');
 const downloadBtn = document.getElementById('downloadBtn');
-const admLimitInput = document.getElementById('admLimit');
-const cityLimitInput = document.getElementById('cityLimit');
+const throttleInput = document.getElementById('throttle');
+const concurrencyInput = document.getElementById('concurrency');
 
-let resultsData = [];
-let done = 0;
+// runtime settings
+let THROTTLE_MS = Number(throttleInput.value) || 400;
+let CONCURRENCY = Math.max(1, Math.min(8, Number(concurrencyInput.value) || 3));
 
-// throttling & concurrency (tuneable)
-let ADM_LIMIT = Number(admLimitInput.value) || 12;
-let CITY_LIMIT = Number(cityLimitInput.value) || 12;
-const CONCURRENCY = 3;      // concurrency for enrich workers
-const THROTTLE_MS = 700;    // ms delay between fetches to wikipedia extracts
-const COUNTRY_PAUSE_MS = 900;
-
+// small helpers
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const idFrom = s => (s||'').replace(/[^a-z0-9]/gi,'_');
-const escapeHtml = s => (s+'').replace(/[&<>"']/g, m=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const esc = s => (s+'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
-// caching helpers
-function cacheKey(k){ return `city_state_cache:${k}`; }
-function cacheGet(k){ try{ const j = localStorage.getItem(cacheKey(k)); return j?JSON.parse(j):null; } catch(e){ return null; } }
-function cacheSet(k,v){ try{ localStorage.setItem(cacheKey(k), JSON.stringify(v)); } catch(e){} }
+// localStorage cache helpers
+function cacheKey(k){ return CACHE_PREFIX + k; }
+function cacheGet(k){ try{ const j=localStorage.getItem(cacheKey(k)); return j?JSON.parse(j):null;}catch(e){return null;} }
+function cacheSet(k,v){ try{ localStorage.setItem(cacheKey(k), JSON.stringify(v)); }catch(e){} }
+function cacheRemove(k){ try{ localStorage.removeItem(cacheKey(k)); }catch(e){} }
 
-// fetch with retry and Retry-After handling
-async function fetchWithRetry(url, opts = {}, retries = 6, baseDelay = 700) {
-  for (let attempt = 0; attempt <= retries; attempt++) {
+// fetch with retry/backoff & Retry-After support
+async function fetchWithRetry(url, opts = {}, maxRetries = 6, baseDelay = 700) {
+  for (let attempt=0; attempt<=maxRetries; attempt++){
     try {
       const resp = await fetch(url, opts);
       if (resp.status === 429) {
         const ra = resp.headers.get('retry-after');
         const wait = ra ? (isNaN(Number(ra)) ? 5000 : Number(ra)*1000) : baseDelay*(attempt+1);
-        console.warn('Rate-limited (429), waiting', wait, 'ms');
+        console.warn('Rate limited 429; waiting', wait, 'ms');
         await sleep(wait);
         continue;
       }
       if (!resp.ok) {
-        if (resp.status >= 500 && attempt < retries) {
+        if (resp.status >= 500 && attempt < maxRetries) {
           const wait = baseDelay * Math.pow(2, attempt) + Math.random()*200;
-          console.warn('Server error', resp.status, '- retry in', wait);
+          console.warn('Server', resp.status, '— retry in', Math.round(wait), 'ms');
           await sleep(wait);
           continue;
         }
-        throw new Error('HTTP ' + resp.status + ' for ' + url);
+        throw new Error('HTTP ' + resp.status + ' ' + resp.statusText + ' for ' + url);
       }
       return resp;
     } catch (err) {
-      if (attempt === retries) throw err;
+      if (attempt === maxRetries) throw err;
       const wait = baseDelay * Math.pow(2, attempt) + Math.random()*200;
-      console.warn('Fetch error, retrying in', wait, 'ms:', err && err.message ? err.message : err);
+      console.warn('Fetch error; retry in', Math.round(wait), 'ms —', err && err.message ? err.message : err);
       await sleep(wait);
     }
   }
-  throw new Error('fetchWithRetry failed: ' + url);
+  throw new Error('fetchWithRetry exhausted for ' + url);
 }
 
-// === Wikidata / SPARQL helpers ===
+// --------------- Wikipedia category discovery & crawl ---------------
 
-// Get country QID from Wikidata search (cached)
-async function getCountryQid(country) {
-  const ck = cacheGet(`country_qid:${country}`);
-  if (ck) return ck;
-  const url = `${WIKIDATA_SEARCH}&action=wbsearchentities&format=json&language=en&limit=10&search=${encodeURIComponent(country)}`;
-  const resp = await fetchWithRetry(url, { headers: {'Accept':'application/json'} }, 4, 600);
-  const data = await resp.json();
-  let qid = null;
-  if (data && Array.isArray(data.search) && data.search.length) {
-    // prefer result whose description contains 'country' / 'sovereign state'
-    qid = data.search[0].id;
-    for (const s of data.search) {
-      const d = (s.description || '').toLowerCase();
-      if (d.includes('country') || d.includes('sovereign state') || d.includes('nation') || d.includes('state')) { qid = s.id; break; }
-    }
-  }
-  cacheSet(`country_qid:${country}`, qid);
-  return qid;
-}
-
-// Build SPARQL queries
-function buildSparqlADM1(countryQid, limit) {
-  // first-level administrative divisions (ADM1) often use Q10864048 (first-level administrative country subdivision)
-  return `
-SELECT DISTINCT ?admin ?adminLabel ?adminDescription WHERE {
-  VALUES ?country { wd:${countryQid} }
-  ?admin wdt:P31/wdt:P279* wd:Q10864048.
-  ?admin wdt:P17 ?country.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}
-LIMIT ${limit}
-`.trim();
-}
-
-function buildSparqlCities(countryQid, limit) {
-  // cities: Q515; order by population (P1082) descending
-  // Use OPTIONAL population, order by decimal; fallback ordering may be implementation-specific
-  return `
-SELECT DISTINCT ?city ?cityLabel ?population ?coord WHERE {
-  VALUES ?country { wd:${countryQid} }
-  ?city wdt:P31/wdt:P279* wd:Q515.
-  ?city wdt:P17 ?country.
-  OPTIONAL { ?city wdt:P1082 ?population. }
-  OPTIONAL { ?city wdt:P625 ?coord. }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}
-ORDER BY DESC(xsd:decimal(?population))
-LIMIT ${limit}
-`.trim();
-}
-
-async function runSparql(query) {
-  const url = SPARQL_ENDPOINT + '?query=' + encodeURIComponent(query);
-  const resp = await fetchWithRetry(url, { headers: { 'Accept': 'application/sparql-results+json' } }, 6, 900);
-  return resp.json();
-}
-
-function parseBindingsToItems(bindings, key) {
-  const rows = bindings && bindings.results && Array.isArray(bindings.results.bindings) ? bindings.results.bindings : [];
-  return rows.map(r => {
-    const uri = r[key] && r[key].value ? r[key].value : '';
-    return {
-      qid: uri.split('/').pop(),
-      label: r[`${key}Label`]?.value || '',
-      description: r[`${key}Description`]?.value || '',
-      population: r.population?.value ? Number(r.population.value) : null,
-      coord: r.coord?.value || null
-    };
+// Check whether a category exists (by calling query for the category page)
+async function categoryExists(categoryTitle) {
+  // Query pages for the category title
+  const params = new URLSearchParams({
+    action: 'query',
+    titles: categoryTitle,
+    format: 'json'
   });
+  const url = `${WIKIPEDIA_API}&${params.toString()}`;
+  const resp = await fetchWithRetry(url, {}, 3, 600);
+  const data = await resp.json();
+  // If page exists and not missing
+  const pages = data.query && data.query.pages ? data.query.pages : {};
+  const pid = Object.keys(pages)[0];
+  if (!pid) return false;
+  const p = pages[pid];
+  if (!p) return false;
+  return !p.missing;
 }
 
-// Get Wikidata entity JSON (cached)
+// Find an existing category from a list of templates
+async function pickCategory(country, templates) {
+  for (const tmpl of templates) {
+    const title = tmpl.replace('{country}', country);
+    // Many category titles use the country's short name variant (e.g., "United Kingdom" vs "United Kingdom of Great Britain and Northern Ireland")
+    // We try title as-is, and also replace spaces with underscores
+    const normalized = title;
+    if (cacheGet(`cat_exists:${normalized}`) !== null) {
+      const exists = cacheGet(`cat_exists:${normalized}`);
+      if (exists) return normalized;
+      continue;
+    }
+    try {
+      const exists = await categoryExists(normalized);
+      cacheSet(`cat_exists:${normalized}`, exists);
+      if (exists) return normalized;
+    } catch (e) {
+      // continue trying other templates
+    }
+    // also try a version with country words reversed? skip for simplicity
+  }
+  return null;
+}
+
+// Crawl all members of a category using continuation (cmlimit=max)
+async function crawlCategoryMembersAll(categoryTitle) {
+  const cacheKeyName = `cat_members:${categoryTitle}`;
+  const cached = cacheGet(cacheKeyName);
+  if (cached) return cached;
+
+  const allMembers = [];
+  let cmcontinue = null;
+  while (true) {
+    const params = new URLSearchParams({
+      action: 'query',
+      list: 'categorymembers',
+      cmtitle: categoryTitle,
+      cmlimit: 'max',
+      format: 'json'
+    });
+    if (cmcontinue) params.set('cmcontinue', cmcontinue);
+    const url = `${WIKIPEDIA_API}&${params.toString()}`;
+    const resp = await fetchWithRetry(url, {}, 6, 700);
+    const data = await resp.json();
+    const members = data.query && data.query.categorymembers ? data.query.categorymembers : [];
+    allMembers.push(...members);
+    if (data.continue && data.continue.cmcontinue) {
+      cmcontinue = data.continue.cmcontinue;
+      // polite pause
+      await sleep(250);
+      continue;
+    } else break;
+  }
+  cacheSet(cacheKeyName, allMembers);
+  return allMembers;
+}
+
+// Fetch page props (to get wikibase_item) and plaintext extract for a batch of pages
+async function fetchPagesDetails(titlesArray) {
+  // titlesArray is an array of page titles (up to 50 per request)
+  const joined = titlesArray.join('|');
+  const params = new URLSearchParams({
+    action: 'query',
+    prop: 'pageprops|extracts',
+    pageprops: 'wikibase_item',
+    explaintext: '1',
+    redirects: '1',
+    titles: joined,
+    format: 'json',
+    exlimit: 'max'
+  });
+  const url = `${WIKIPEDIA_API}&${params.toString()}`;
+  const resp = await fetchWithRetry(url, {}, 6, 700);
+  const data = await resp.json();
+  const pages = data.query && data.query.pages ? data.query.pages : {};
+  // Return array of { title, pageid, wikibase_item, extract }
+  const out = [];
+  for (const pid of Object.keys(pages)) {
+    const p = pages[pid];
+    if (!p) continue;
+    out.push({
+      pageid: p.pageid || null,
+      title: p.title || null,
+      wikibase_item: p.pageprops && p.pageprops.wikibase_item ? p.pageprops.wikibase_item : null,
+      extract: p.extract || ''
+    });
+  }
+  return out;
+}
+
+// --------------- Wikidata entity helpers ---------------
+
+// Fetch full entity JSON from Wikidata
 async function fetchWikidataEntity(qid) {
-  const ck = cacheGet(`wd_entity:${qid}`);
+  if (!qid) return null;
+  const ck = cacheGet(`ent:${qid}`);
   if (ck) return ck;
   const url = `${WIKIDATA_ENTITY}/${qid}.json`;
-  const resp = await fetchWithRetry(url, {}, 4, 800);
+  const resp = await fetchWithRetry(url, {}, 5, 700);
   const data = await resp.json();
-  cacheSet(`wd_entity:${qid}`, data);
+  cacheSet(`ent:${qid}`, data);
   return data;
 }
 
-// extract English Wikipedia title from entity JSON
-function getEnwikiTitleFromEntity(entJson, qid) {
+// Helper: extract common claims from entity JSON
+function extractClaimsFromEntity(entityJson, qid) {
   try {
-    const ent = entJson.entities && entJson.entities[qid];
-    if (!ent) return null;
-    if (ent.sitelinks && ent.sitelinks.enwiki) return ent.sitelinks.enwiki.title;
-    // fallback: any sitelink containing enwiki
-    for (const k in ent.sitelinks || {}) {
-      if (k.toLowerCase().includes('enwiki')) return ent.sitelinks[k].title;
+    const ent = entityJson.entities && entityJson.entities[qid];
+    if (!ent) return {};
+    const claims = ent.claims || {};
+    function getFirstValue(pid) {
+      const arr = claims[pid];
+      if (!Array.isArray(arr) || !arr.length) return null;
+      const mainsnak = arr[0].mainsnak;
+      if (!mainsnak) return null;
+      // value can be an object depending on type
+      const val = mainsnak.datavalue && mainsnak.datavalue.value ? mainsnak.datavalue.value : null;
+      return val;
     }
-    return null;
+    // Population P1082 (may have qualifiers/date): return numeric amount if available
+    let population = null;
+    const popVal = getFirstValue('P1082');
+    if (popVal) {
+      if (typeof popVal === 'object') {
+        if (popVal.amount) population = Number(popVal.amount);
+        else if (popVal['time']) population = popVal['time'];
+      } else if (!isNaN(Number(popVal))) population = Number(popVal);
+    }
+    // Area P2046
+    let area = null;
+    const areaVal = getFirstValue('P2046');
+    if (areaVal) {
+      if (areaVal.amount) area = Number(areaVal.amount);
+      else if (!isNaN(Number(areaVal))) area = Number(areaVal);
+    }
+    // Coordinates P625
+    let coord = null;
+    const coordVal = getFirstValue('P625');
+    if (coordVal && coordVal.latitude && coordVal.longitude) coord = { lat: coordVal.latitude, lon: coordVal.longitude };
+    // Image P18 -> filename; build URL via special image info not necessary here
+    let image = null;
+    const imgVal = getFirstValue('P18');
+    if (typeof imgVal === 'string') image = imgVal;
+    // Return
+    return { population, area, coord, image };
   } catch (e) {
-    return null;
+    return {};
   }
 }
 
-// fetch wikipedia plaintext extract (cached)
-async function fetchFullExtract(title) {
-  if (!title) return '';
-  const ck = cacheGet(`wiki_extract:${title}`);
-  if (ck) return ck;
-  const params = new URLSearchParams({
-    action: 'query',
-    prop: 'extracts',
-    explaintext: '1',
-    redirects: '1',
-    format: 'json',
-    titles: title
+// --------------- High-level flow per country ---------------
+
+async function collectForCountry(country) {
+  const cacheName = `country_result:${country}`;
+  const cached = cacheGet(cacheName);
+  if (cached) return cached;
+
+  // 1) Discover categories for cities and ADM1
+  const cityCategory = await pickFirstExistingCategory(country, CITY_CATEGORY_TEMPLATES);
+  const admCategory = await pickFirstExistingCategory(country, ADM1_CATEGORY_TEMPLATES);
+
+  const result = { country, cityCategory, admCategory, cities: [], states: [] };
+
+  // 2) Crawl members (if category found)
+  if (admCategory) {
+    try {
+      const admMembers = await crawlCategoryMembersAll(admCategory);
+      // Filter to pages only (namespace 0)
+      const admPages = admMembers.filter(m => m.ns === 0);
+      // Batch titles to fetch pageprops+extract
+      const admDetails = await fetchAllPagesBatched(admPages.map(p=>p.title));
+      // Enrich with wikidata entity claims
+      const admEnriched = await enrichWithWikidata(admDetails);
+      result.states = admEnriched;
+    } catch (e) {
+      result.statesError = String(e);
+    }
+  } else {
+    result.statesError = 'No ADM1 category found by templates';
+  }
+
+  if (cityCategory) {
+    try {
+      const cityMembers = await crawlCategoryMembersAll(cityCategory);
+      const cityPages = cityMembers.filter(m => m.ns === 0);
+      // fetch details
+      const cityDetails = await fetchAllPagesBatched(cityPages.map(p=>p.title));
+      const cityEnriched = await enrichWithWikidata(cityDetails);
+      result.cities = cityEnriched;
+    } catch (e) {
+      result.citiesError = String(e);
+    }
+  } else {
+    result.citiesError = 'No city category found by templates';
+  }
+
+  cacheSet(cacheName, result);
+  return result;
+}
+
+// Try templates and return first category that exists (with some normalization)
+async function pickFirstExistingCategory(country, templates) {
+  for (const tmpl of templates) {
+    const title = tmpl.replace('{country}', country);
+    // Try exact
+    try {
+      if (await categoryExists(title)) return title;
+    } catch(e){}
+    // try alternative: replace spaces with underscores
+    const alt = title.replace(/ /g,'_');
+    try {
+      if (await categoryExists(alt)) return alt;
+    } catch(e){}
+  }
+  // last attempt: try "Category:Populated places in <Country>" with no punctuation changes
+  return null;
+}
+
+// Fetch all page details by batching (titles per request up to 50)
+async function fetchAllPagesBatched(titles) {
+  const batchSize = 40; // keep safe under 50
+  const out = [];
+  for (let i=0;i<titles.length;i+=batchSize) {
+    const batch = titles.slice(i, i+batchSize);
+    try {
+      const details = await fetchPagesDetails(batch);
+      out.push(...details);
+      // throttle
+      await sleep(THROTTLE_MS);
+    } catch (e) {
+      // on error, push minimal entries
+      for (const t of batch) out.push({ title: t, pageid: null, wikibase_item: null, extract: '' });
+    }
+  }
+  return out;
+}
+
+// Enrich pages (page props + extract already present) with Wikidata claims
+async function enrichWithWikidata(pageDetails) {
+  // Build list of unique QIDs
+  const items = pageDetails.map(d => ({
+    title: d.title,
+    pageid: d.pageid,
+    qid: d.wikibase_item,
+    extract: d.extract || ''
+  }));
+
+  // For items with qid, fetch entities in concurrent workers
+  const toFetch = items.filter(it => it.qid);
+  const qidList = Array.from(new Set(toFetch.map(it => it.qid)));
+
+  // concurrent worker function to fetch wikidata entities
+  const enrichedMap = {};
+  let idx = 0;
+  async function worker() {
+    while (true) {
+      const i = idx++;
+      if (i >= qidList.length) return;
+      const qid = qidList[i];
+      try {
+        const ent = await fetchWikidataEntity(qid);
+        const claims = extractClaimsFromEntity(ent, qid);
+        enrichedMap[qid] = { qid, claims };
+        await sleep(THROTTLE_MS);
+      } catch (e) {
+        enrichedMap[qid] = { qid, claims: {}, error: String(e) };
+      }
+    }
+  }
+  const workers = [];
+  const concurrency = Math.max(1, Math.min(CONCURRENCY, qidList.length || 1));
+  for (let w=0; w<concurrency; w++) workers.push(worker());
+  await Promise.all(workers);
+
+  // build final enriched items array
+  const final = items.map(it => {
+    const qinfo = it.qid ? enrichedMap[it.qid] || { qid: it.qid, claims: {} } : null;
+    return {
+      title: it.title,
+      pageid: it.pageid,
+      qid: it.qid || null,
+      extract: it.extract || '',
+      population: qinfo && qinfo.claims ? qinfo.claims.population || null : null,
+      area: qinfo && qinfo.claims ? qinfo.claims.area || null : null,
+      coordinates: qinfo && qinfo.claims ? qinfo.claims.coord || null : null,
+      image: qinfo && qinfo.claims ? qinfo.claims.image || null : null,
+      wikidata_error: qinfo && qinfo.error ? qinfo.error : null
+    };
   });
-  const url = `${WIKIPEDIA_API}&${params.toString()}`;
-  try {
-    const resp = await fetchWithRetry(url, { headers: {'Accept':'application/json'} }, 6, 900);
-    const data = await resp.json();
-    const pages = data.query && data.query.pages ? data.query.pages : null;
-    const pid = pages ? Object.keys(pages)[0] : null;
-    const extract = (pid && pages[pid] && pages[pid].extract) ? pages[pid].extract : '';
-    cacheSet(`wiki_extract:${title}`, extract);
-    return extract;
-  } catch (err) {
-    console.warn('fetchFullExtract failed for', title, err && err.message ? err.message : err);
-    cacheSet(`wiki_extract:${title}`, '');
-    return '';
-  }
+
+  return final;
 }
 
-// UI helpers
+// --------------- UI wiring ---------------
+
+startBtn.addEventListener('click', async () => {
+  try {
+    THROTTLE_MS = Math.max(50, Number(throttleInput.value) || 400);
+    CONCURRENCY = Math.max(1, Math.min(8, Number(concurrencyInput.value) || 3));
+    resultsEl.innerHTML = '';
+    resultsData = [];
+    let completed = 0;
+    progressText.textContent = 'Starting...';
+    statsEl.textContent = `0 / ${COUNTRIES.length}`;
+    progressEl.style.width = '0%';
+    startBtn.disabled = true;
+
+    for (let i=0;i<COUNTRIES.length;i++) {
+      const country = COUNTRIES[i];
+      updateProgress(i, COUNTRIES.length);
+      const card = createCountryCard(country);
+      resultsEl.appendChild(card);
+
+      try {
+        const res = await collectForCountry(country);
+        resultsData.push(res);
+        populateCard(card, res);
+      } catch (e) {
+        console.error('Country collect error', country, e);
+        const res = { country, error: String(e), cities: [], states: [] };
+        resultsData.push(res);
+        populateCard(card, res);
+      }
+
+      completed++;
+      statsEl.textContent = `${completed} / ${COUNTRIES.length}`;
+      // polite pause between countries
+      await sleep(800);
+    }
+
+    progressText.textContent = 'Completed';
+    progressEl.style.width = '100%';
+    startBtn.disabled = false;
+  } catch (err) {
+    console.error('Run error', err);
+    alert('Error: ' + (err.message || err));
+    startBtn.disabled = false;
+  }
+});
+
 function createCountryCard(country) {
   const el = document.createElement('div');
   el.className = 'card';
   el.innerHTML = `
-    <h3>${escapeHtml(country)} <span class="status" id="status-${idFrom(country)}">queued</span></h3>
-    <div class="meta small">Country QID: <span id="qid-${idFrom(country)}">—</span></div>
+    <h3>${esc(country)} <span class="status" id="status-${idFrom(country)}">queued</span></h3>
+    <div class="meta small">City category: <span id="catc-${idFrom(country)}">—</span> | State category: <span id="catd-${idFrom(country)}">—</span></div>
     <div id="list-${idFrom(country)}" class="result-list small">Waiting...</div>
     <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
       <button class="copybtn" id="copy-${idFrom(country)}">Copy JSON</button>
@@ -294,16 +547,19 @@ function createCountryCard(country) {
 function populateCard(cardEl, res) {
   const id = idFrom(res.country);
   const statusEl = cardEl.querySelector(`#status-${id}`);
-  const qidEl = cardEl.querySelector(`#qid-${id}`);
+  const catCityEl = cardEl.querySelector(`#catc-${id}`);
+  const catAdmEl = cardEl.querySelector(`#catd-${id}`);
   const listEl = cardEl.querySelector(`#list-${id}`);
   const copyBtn = cardEl.querySelector(`#copy-${id}`);
   const downloadBtn = cardEl.querySelector(`#download-${id}`);
 
+  catCityEl.textContent = res.cityCategory || '—';
+  catAdmEl.textContent = res.admCategory || '—';
+
   if (res.error) {
     statusEl.textContent = 'error';
     statusEl.className = 'status err';
-    qidEl.textContent = '—';
-    listEl.innerHTML = `<div class="line">Error: ${escapeHtml(res.error)}</div>`;
+    listEl.innerHTML = `<div class="line">Error: ${esc(res.error)}</div>`;
     copyBtn.disabled = true;
     downloadBtn.disabled = true;
     return;
@@ -311,235 +567,87 @@ function populateCard(cardEl, res) {
 
   statusEl.textContent = 'ok';
   statusEl.className = 'status ok';
-  qidEl.textContent = res.countryQid || '—';
 
-  const pretty = JSON.stringify({
+  const out = {
     country: res.country,
-    countryQid: res.countryQid,
-    admin_divisions: res.admins,
-    cities: res.cities
-  }, null, 2);
-  listEl.innerHTML = `<pre class="copybox" id="pre-${id}">${escapeHtml(pretty)}</pre>`;
+    cityCategory: res.cityCategory || null,
+    admCategory: res.admCategory || null,
+    cities: res.cities || [],
+    states: res.states || [],
+    citiesError: res.citiesError || null,
+    statesError: res.statesError || null
+  };
+
+  const pretty = JSON.stringify(out, null, 2);
+  listEl.innerHTML = `<pre class="copybox">${esc(pretty)}</pre>`;
 
   copyBtn.onclick = async ()=>{ await copyToClipboard(pretty); copyBtn.textContent='Copied ✓'; setTimeout(()=>copyBtn.textContent='Copy JSON',900); };
   downloadBtn.onclick = ()=>{ const blob = new Blob([pretty], {type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `${res.country.replace(/\s+/g,'_')}_places.json`; a.click(); URL.revokeObjectURL(url); };
 }
 
-// copy all & download combined
-copyAllBtn.addEventListener('click', async ()=>{
+// update progress bar
+function updateProgress(i, total) {
+  const pct = Math.round((i/total)*100);
+  progressEl.style.width = pct + '%';
+  progressText.textContent = `${i} / ${total} started`;
+}
+
+// copy all / download all
+copyAllBtn.addEventListener('click', async () => {
   const full = JSON.stringify(resultsData, null, 2);
   await copyToClipboard(full);
   alert('All results copied to clipboard.');
 });
-downloadBtn.addEventListener('click', ()=> {
+downloadBtn.addEventListener('click', () => {
   const blob = new Blob([JSON.stringify(resultsData, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'places_by_country.json'; a.click(); URL.revokeObjectURL(url);
+  const a = document.createElement('a'); a.href = url; a.download = 'all_places.json'; a.click(); URL.revokeObjectURL(url);
 });
 
-// main runner
-startBtn.addEventListener('click', async ()=>{
-  try {
-    startBtn.disabled = true;
-    ADM_LIMIT = Math.max(1, Math.min(200, Number(admLimitInput.value) || 12));
-    CITY_LIMIT = Math.max(1, Math.min(200, Number(cityLimitInput.value) || 12));
-
-    resultsEl.innerHTML = '';
-    resultsData = [];
-    done = 0;
-    progressText.textContent = 'Starting...';
-    statsEl.textContent = `0 / ${COUNTRIES.length}`;
-    progressEl.style.width = '0%';
-
-    for (let i=0;i<COUNTRIES.length;i++) {
-      const country = COUNTRIES[i];
-      updateProgress(i, COUNTRIES.length);
-      const card = createCountryCard(country);
-      resultsEl.appendChild(card);
-
-      try {
-        const res = await gatherPlacesForCountry(country, ADM_LIMIT, CITY_LIMIT);
-        resultsData.push(res);
-        populateCard(card, res);
-      } catch (err) {
-        console.error('Country error', country, err);
-        const res = { country, error: String(err), admins: [], cities: [] };
-        resultsData.push(res);
-        populateCard(card, res);
+// pageprops + extract fetch (single title or batch via fetchAllPagesBatched)
+async function fetchPagesDetails(titlesArray) {
+  // batch up to 40 titles per request
+  const batchSize = 40;
+  const results = [];
+  for (let i=0;i<titlesArray.length;i+=batchSize) {
+    const batch = titlesArray.slice(i, i+batchSize);
+    const joined = batch.join('|');
+    const params = new URLSearchParams({
+      action: 'query',
+      prop: 'pageprops|extracts',
+      pageprops: 'wikibase_item',
+      explaintext: '1',
+      redirects: '1',
+      titles: joined,
+      exlimit: 'max',
+      format: 'json'
+    });
+    const url = `${WIKIPEDIA_API}&${params.toString()}`;
+    try {
+      const resp = await fetchWithRetry(url, {}, 6, 700);
+      const data = await resp.json();
+      const pages = data.query && data.query.pages ? data.query.pages : {};
+      for (const pid of Object.keys(pages)) {
+        const p = pages[pid];
+        results.push({
+          pageid: p.pageid || null,
+          title: p.title || null,
+          wikibase_item: p.pageprops && p.pageprops.wikibase_item ? p.pageprops.wikibase_item : null,
+          extract: p.extract || ''
+        });
       }
-
-      done++;
-      statsEl.textContent = `${done} / ${COUNTRIES.length}`;
-      await sleep(COUNTRY_PAUSE_MS);
+    } catch (err) {
+      // on error, still create minimal placeholders for each title in batch
+      for (const t of batch) results.push({ pageid: null, title: t, wikibase_item: null, extract: '' });
     }
-
-    progressText.textContent = 'Completed';
-    progressEl.style.width = '100%';
-    startBtn.disabled = false;
-  } catch (e) {
-    console.error('Run failed', e);
-    alert('Error: ' + (e.message || e));
-    startBtn.disabled = false;
+    await sleep(THROTTLE_MS);
   }
-});
-
-// update progress
-function updateProgress(index, total) {
-  const pct = Math.round((index/total)*100);
-  progressEl.style.width = `${pct}%`;
-  progressText.textContent = `${index} / ${total} started`;
+  return results;
 }
 
-// pipeline per country
-async function gatherPlacesForCountry(country, admLimit, cityLimit) {
-  const countryQid = await getCountryQid(country);
-  if (!countryQid) throw new Error('Could not determine country QID for ' + country);
-
-  // ADM1
-  const admQuery = buildSparqlADM1(countryQid, admLimit);
-  const admBindings = await runSparql(admQuery);
-  const admItems = parseBindingsToItems(admBindings, 'admin');
-
-  // Cities
-  const cityQuery = buildSparqlCities(countryQid, cityLimit);
-  const cityBindings = await runSparql(cityQuery);
-  const cityItems = parseBindingsToItems(cityBindings, 'city');
-
-  // Enrich items (get enwiki title + extract)
-  async function enrich(list, label) {
-    const out = [];
-    let idx = 0;
-    async function worker(){
-      while (true) {
-        const i = idx++;
-        if (i >= list.length) return;
-        const it = list[i];
-        try {
-          const ent = await fetchWikidataEntity(it.qid);
-          const enTitle = getEnwikiTitleFromEntity(ent, it.qid);
-          let extract = '';
-          if (enTitle) {
-            extract = await fetchFullExtract(enTitle);
-            await sleep(THROTTLE_MS);
-          }
-          out.push(Object.assign({}, it, { wikipedia_title: enTitle || null, wikipedia_extract: extract || '' }));
-          console.log('  +', label, it.label || it.qid);
-        } catch (err) {
-          console.warn('Enrich error', it.qid, err && err.message ? err.message : err);
-          out.push(Object.assign({}, it, { error: String(err) }));
-        }
-      }
-    }
-    const workers = [];
-    const concurrency = Math.max(1, Math.min(CONCURRENCY, list.length));
-    for (let w=0; w<concurrency; w++) workers.push(worker());
-    await Promise.all(workers);
-    return out;
-  }
-
-  const admins = await enrich(admItems, 'ADM1');
-  const cities = await enrich(cityItems, 'City');
-
-  return { country, countryQid, admins, cities };
-}
-
-// Build SPARQL strings & run
-function buildSparqlADM1(countryQid, limit) {
-  return `
-SELECT DISTINCT ?admin ?adminLabel ?adminDescription WHERE {
-  VALUES ?country { wd:${countryQid} }
-  ?admin wdt:P31/wdt:P279* wd:Q10864048.
-  ?admin wdt:P17 ?country.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}
-LIMIT ${limit}
-`.trim();
-}
-
-function buildSparqlCities(countryQid, limit) {
-  return `
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-SELECT DISTINCT ?city ?cityLabel ?population ?coord WHERE {
-  VALUES ?country { wd:${countryQid} }
-  ?city wdt:P31/wdt:P279* wd:Q515.
-  ?city wdt:P17 ?country.
-  OPTIONAL { ?city wdt:P1082 ?population. }
-  OPTIONAL { ?city wdt:P625 ?coord. }
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}
-ORDER BY DESC(xsd:decimal(?population))
-LIMIT ${limit}
-`.trim();
-}
-
-async function runSparql(query) {
-  const url = SPARQL_ENDPOINT + '?query=' + encodeURIComponent(query);
-  const resp = await fetchWithRetry(url, { headers: { 'Accept': 'application/sparql-results+json' } }, 6, 900);
-  return resp.json();
-}
-
-// Parse bindings helper
-function parseBindingsToItems(bindings, key) {
-  const rows = bindings?.results?.bindings || [];
-  return rows.map(r => {
-    const uri = r[key]?.value || '';
-    return {
-      qid: uri.split('/').pop(),
-      label: r[`${key}Label`]?.value || '',
-      description: r[`${key}Description`]?.value || '',
-      population: r.population?.value ? Number(r.population.value) : null,
-      coord: r.coord?.value || null
-    };
-  });
-}
-
-// get Wikidata entity JSON (cached)
-async function fetchWikidataEntity(qid) {
-  const ck = cacheGet(`wd_entity:${qid}`);
-  if (ck) return ck;
-  const url = `${WIKIDATA_ENTITY}/${qid}.json`;
-  const resp = await fetchWithRetry(url, {}, 4, 800);
-  const data = await resp.json();
-  cacheSet(`wd_entity:${qid}`, data);
-  return data;
-}
-
-function getEnwikiTitleFromEntity(entJson, qid) {
-  try {
-    const ent = entJson.entities && entJson.entities[qid];
-    if (!ent) return null;
-    if (ent.sitelinks && ent.sitelinks.enwiki) return ent.sitelinks.enwiki.title;
-    for (const k in ent.sitelinks || {}) if (k.toLowerCase().includes('enwiki')) return ent.sitelinks[k].title;
-    return null;
-  } catch (e) { return null; }
-}
-
-async function fetchFullExtract(title) {
-  if (!title) return '';
-  const ck = cacheGet(`wiki_extract:${title}`);
-  if (ck) return ck;
-  const params = new URLSearchParams({
-    action: 'query',
-    prop: 'extracts',
-    explaintext: '1',
-    redirects: '1',
-    format: 'json',
-    titles: title
-  });
-  const url = `${WIKIPEDIA_API}&${params.toString()}`;
-  const resp = await fetchWithRetry(url, { headers: {'Accept':'application/json'} }, 6, 900);
-  const data = await resp.json();
-  const pages = data.query && data.query.pages ? data.query.pages : null;
-  const pid = pages ? Object.keys(pages)[0] : null;
-  const extract = (pid && pages[pid] && pages[pid].extract) ? pages[pid].extract : '';
-  cacheSet(`wiki_extract:${title}`, extract);
-  return extract;
-}
-
-// copy helper
-async function copyToClipboard(text) {
-  if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
-  const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+// Wrapper fetchPagesDetails for use elsewhere (keeps compatibility)
+async function fetchAllPagesBatched(titles) {
+  return await fetchPagesDetails(titles);
 }
 
 </script>
